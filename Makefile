@@ -16,7 +16,7 @@ endif
 
 
 .PHONY: default
-default: clean compile view
+default: clean compile
 
 compile:
 	pdflatex $(BASENAME)
