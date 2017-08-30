@@ -96,7 +96,19 @@ To perform comparison of the original C implementation and its ported Java versi
 
 The following producer-consumer strategy is employed. The producer is the \texttt{./src/compare.ipynb} script which is responsible for compiling both C and Java implementations as well as dispatching computation tasks. The results are then collected into the \texttt{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \texttt{./src/plot.ipynb} script which reads the data from the SQLite database and plots the figures shown below.
 
+Conceptually, Lyra2 provides two main adjustable parameters: time and memory cost. This is why this performance comparison includes sections where one of these parameters is fixed and the other is changed. This is done for several Lyra2 configurations and their running time as well as memory consumption is compared. For the exact comparison steps you could consult \href{https://github.com/all3fox/lyra2-compare/blob/master/src/compare.ipynb}{the script} but here is a quick summary:
+
+\begin{itemize}
+\item Separate configurations are run in parallel, creating one process per configuration.
+\item Running time is measured as the time between the creation of the process and its termination.
+\item Memory consumption of the created process is measured externally and the peak value is recorded.
+\end{itemize}
+
+There is also a section where both time and memory costs are changed at the same time. This produces 3-dimensional plots. Direct comparison of such plots is difficult but they still provide a good feel for how the running time and memory consumption are changing.
+
 \subsection{Fixed time cost}
+
+There are two figures that show how running time and consumed memory depend on memory cost when the time cost is fixed. Figure \ref{figure:mcost_256} shows a 256-column and figure \ref{figure:mcost_2048} shows a 2048-column configuration of Lyra2. Both these figures clearly show that the original C implementation works faster and consumes less memory than its Java counterpart. A nice property is that both the running time and memory consumption are changing roughly linearly as the memory cost parameter is changed. This is consistent with the fact that the memory cost parameter corresponds to the number of rows of the in-memory matrix.
 
 \begin{figure}
     \centering
@@ -114,6 +126,9 @@ The following producer-consumer strategy is employed. The producer is the \textt
 
 \subsection{Fixed memory cost}
 
+There are two figures that show how running time and consumed memory depend on time cost when the memory cost is fixed. Figure \ref{figure:tcost_256} shows a 256-column and figure \ref{figure:tcost_2048} shows a 2048-column configuration of Lyra2. Both these figures clearly show that the original C implementation works faster and consumes less memory than its Java counterpart.
+The running time changes roughly linearly as the time cost parameter is changed which is consistent with the fact that time cost corresponds to the number of iterations done by Lyra2. Memory consumption stays roughly the same which is also consistent with the fact that the largest memory consumer is the in-memory matrix. This matrix has the same size for all of the configurations.
+
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/tcost_256}
@@ -129,6 +144,8 @@ The following producer-consumer strategy is employed. The producer is the \textt
 \end{figure}
 
 \subsection{Changing time and memory costs}
+
+There are four figures that show running time and memory consumption of Lyra2 when both time and memory costs change. Figures \ref{figure:tcost_mcost_blake2b_256} and \ref{figure:tcost_mcost_blake2b_2048} correspond to a 256- and 2048-column configurations of Lyra2 that both use the Blake2b sponge. Figures \ref{figure:tcost_mcost_blamka_256} and \ref{figure:tcost_mcost_blamka_2048} are the 256- and 2048-column configurations of Lyra2 with the BlaMka sponge. All of these four figures share the same properties. First of all, the original C implementation is still faster and consumes less memory than the Java one. Secondly, the running time as well as required space depend roughly linearly on the time and memory cost parameters simultaneously. The second observation goes somewhat against my intuition: my expectations where to see quadratic dependency since both the size of the matrix and the number of iterations are increased at the same time. 
 
 \begin{figure}
     \centering
