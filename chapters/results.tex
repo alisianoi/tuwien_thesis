@@ -89,3 +89,71 @@ $ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcos
 For automated testing a separate test harness was developed for the original Lyra2 implementation. It is located in the \verb|Lyra2/tests| directory on the \verb|harness| branch of the \href{https://github.com/all3fox/Lyra/tree/harness}{Lyra2 fork}. There is a \href{https://github.com/leocalm/Lyra/pull/7}{corresponding pull request} to the original Lyra2 repository. In short, the \texttt{./tests/harness.py compile} script will compile several Lyra2 configurations at once. The exact configurations can be adjusted in \verb|tests/harness.yml|. After the compilation step, the \texttt{./tests/harness.py compute} will compute a number of hash values for you (the exact details for runtime parameters such as \verb|password|, \verb|salt| and so on can again be configured via \verb|harness.yml|). Finally, the \verb|tests/take.py| script will choose \verb|N| random hash values for you and prepare them to be used as unit-testing data for the Java implementation.
 
 There are not less than 600 randomly chosen unit-tests which are currently included into a continuous integration cycle on the Travis CI service through the Maven build system and the JUnit testing library. Testing status can be \href{https://travis-ci.org/all3fox/lyra2-java}{checked here}.
+
+\section{Performance comparison}
+
+To perform comparison of the original C implementation and its ported Java version, a separate project was created and is hosted in \href{https://github.com/all3fox/lyra2-compare}{a public GitHub repository}. At the core of this project lies the open-source \href{https://jupyter.org/}{Jupyter Notebook} which simplifies reproduction of comparison results.
+
+The following producer-consumer strategy is employed. The producer is the \texttt{./src/compare.ipynb} script which is responsible for compiling both C and Java implementations as well as dispatching computation tasks. The results are then collected into the \texttt{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \texttt{./src/plot.ipynb} script which reads the data from the SQLite database and plots the figures shown below.
+
+\subsection{Fixed time cost}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/mcost_256}
+    \caption{Original \texttt{lyra2-c} compared to \texttt{lyra2-java}: 256 columns, fixed time cost of 10}
+    \label{figure:mcost_256}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/mcost_2048}
+    \caption{Original \texttt{lyra2-c} compared to \texttt{lyra2-java}: 2048 columns, fixed time cost of 10}
+    \label{figure:mcost_2048}
+\end{figure}
+
+\subsection{Fixed memory cost}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/tcost_256}
+    \caption{Original \texttt{lyra2-c} compared to \texttt{lyra2-java}: 256 columns, fixed memory cost of 20}
+    \label{figure:tcost_256}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/tcost_2048}
+    \caption{Original \texttt{lyra2-c} compared to \texttt{lyra2-java}: 2048 columns, fixed memory cost of 20}
+    \label{figure:tcost_2048}
+\end{figure}
+
+\subsection{Changing time and memory costs}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/tcost_mcost_blake2b_256}
+    \caption{Original \texttt{lyra2-c} compared to \texttt{lyra2-java}: Blake2b sponge, 256 columns. TODO: java version still computing}
+    \label{figure:tcost_mcost_blake2b_256}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/tcost_mcost_blake2b_2048}
+    \caption{Original \texttt{lyra2-c} compared to \texttt{lyra2-java}: Blake2b sponge, 2048 columns. TODO: java version still computing}
+    \label{figure:tcost_mcost_blake2b_2048}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/tcost_mcost_blamka_256}
+    \caption{Original \texttt{lyra2-c} compared to \texttt{lyra2-java}: BlaMka sponge, 256 columns. TODO: java version still computing}
+    \label{figure:tcost_mcost_blamka_256}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/tcost_mcost_blamka_2048}
+    \caption{Original \texttt{lyra2-c} compared to \texttt{lyra2-java}: BlaMka sponge, 2048 columns. TODO: java version still computing}
+    \label{figure:tcost_mcost_blamka_2048}
+\end{figure}
