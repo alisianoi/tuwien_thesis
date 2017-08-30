@@ -709,8 +709,8 @@
 
 % settings of hyperlinks
 \hypersetup{
-  linkcolor=black,
-  urlcolor=black,
+  linkcolor=red,
+  urlcolor=blue,
   citecolor=black,
   breaklinks=true,
   colorlinks=true,
