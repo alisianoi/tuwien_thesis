@@ -1,15 +1,87 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Ergebnisse}
+\chapter{Results}
 \label{sec:results}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Die Resultate der Arbeit präsentieren und nach Möglichkeit aussagekräftige, eigenständige Abbildungen einbauen. Namen des Kapitels konkretisieren, an jeweilige Arbeit anpassen -- Lösungsvorschlag/Implementierung im Titel des Kapitels benennen.
-\makeatletter\ifthesis@masterthesis
-Bei einer Soft\-ware-Ent\-wicklungs\-arbeit ggf. eine Beschreibung der Qualitätsmerkmale der neuen Implementierung (Performance, Sicherheit, Messergebnisse etc.) geben.
+\section{Algorithm-level compatibility}
 
-Bei einer Arbeit zu einem abstrakteren Architekturthema können hier die Eigenschaften nach der Anwendung der konzipierten Architektur beschrieben werden. Kommt sie in mehreren Fallbeispielen zum Einsatz, erfolgt hier ein Vergleich der jeweiligen Ergebnisse (z.B. gab es Unterschiede im Umsetzungserfolg, die sich auf konkrete Eigenschaften der betrachteten Fallbeispiele zurückführen lassen).
+The most important part of this work was to port the Lyra2 PHS to Java in such a way that the program would produce exactly the same hashes as the original C implementation. Of course, formal verification would be the ideal way of proving the two implementations to be identical. However, this is definitely even more work than porting from one language into the other. Therefore, the following two-step approach is used instead: there are several manual tests followed by a larger collection of randomly generated tests.
 
-Bei einer Arbeit zur Softwareauswahl und Einführung wird eine Beschreibung von Qualitätseigenschaften des mit der Einführung neu geschaffenen SOLL-Zustands gegeben.
+\subsection{Configuration choice}
+By design Lyra2 provides a large number of possible configurations and modes of operation. This section will provide rationale for choosing particular values for the configuration parameters. The summary can be found in the following table \ref{table:configuration-summary}.
 
-Bei einer Arbeit, deren Fokus auf der Durchführung und Auswertung von Fragebögen liegt, erfolgt in diesem Kapitel die Auswertung der Fragebögen.
-\fi\makeatother
+There are three sponges that could be tested: Blake2b, BlaMka and half-round BlaMka. Just the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values make it into the shortlist. The columns of the memory matrix can be any positive number, so the values of 256 and 512 are chosen, primarily because 256 is used in the original paper. Finally, time and memory cost are fixed at an arbitrary value of 100 and the output length is 10 for representation purposes.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{l r}
+Parameter & Value \\ \hline
+Sponge & Blake2b, BlaMka \\
+Sponge blocks & 8, 12 \\
+Columns in the memory matrix & 256, 512 \\
+Time cost (number of iterations) & 100 \\
+Memory cost (number of rows in the memory matrix) & 100 \\
+Output length (bytes) & 10 \\
+\end{tabular}
+\end{center}
+\caption{Summary of parameter values for tested configurations}
+\label{table:configuration-summary}
+\end{table}
+
+\subsection{Manual testing}
+
+Below is a log of manual tests. New line delimits different lyra2 configurations. The first line of each group represents the particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
+
+\tiny
+\begin{verbatim}
+$ lyra2 --sponge blake2b --blocks 8 --columns 256 --outlen 10 --tcost 100 --mcost 100
+> "password" "salt"
+> 19 FD 3B 50 9A 03 0C DF 95 DA
+> "The quick brown fox jumped over the lazy dog" "0123456789"
+> 04 A0 BF 30 D1 E5 A5 05 53 E9
+
+$ lyra2 --sponge blake2b --blocks 8 --columns 512 --outlen 10 --tcost 100 --mcost 100
+> "password" "salt"
+> 73 39 79 B6 C1 3C C1 F3 D7 17
+> "The quick brown fox jumped over the lazy dog" "0123456789"
+> A1 B0 18 F6 B6 79 5F E0 2A A4
+
+$ lyra2 --sponge blake2b --blocks 12 --columns 256 --outlen 10 --tcost 100 --mcost 100
+> "password" "salt"
+> 9C 52 2A B9 18 30 F9 E7 09 55
+> "The quick brown fox jumped over the lazy dog" "0123456789"
+> 7D B2 9D C8 31 B4 E9 0E 10 22
+
+$ lyra2 --sponge blake2b --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcost 100
+> "password" "salt"
+> AC F2 B6 50 2D BC F0 62 DD 29
+> "The quick brown fox jumped over the lazy dog" "0123456789"
+> 4F 1B 03 6B C9 A2 09 C4 BC DA
+
+$ lyra2 --sponge blamka --blocks 8 --columns 256 --outlen 10 --tcost 100 --mcost 100
+> "password" "salt"
+> 53 32 F3 D7 C4 9C 46 38 3C 1B
+> "The quick brown fox jumped over the lazy dog" "0123456789"
+> E7 6E 4B A0 81 B8 3C CF D6 64
+
+$ lyra2 --sponge blamka --blocks 8 --columns 512 --outlen 10 --tcost 100 --mcost 100
+> "password" "salt"
+> D9 F9 F5 65 0D 05 88 D0 DF F6
+> "The quick brown fox jumped over the lazy dog" "0123456789"
+> 3A 3D 40 00 3E 33 44 45 B3 DD
+
+$ lyra2 --sponge blamka --blocks 12 --columns 256 --outlen 10 --tcost 100 --mcost 100
+> "password" "salt"
+> C1 BC 48 80 99 1C E7 E6 52 18
+> "The quick brown fox jumped over the lazy dog" "0123456789"
+> 2E 4E 56 C7 5B 3D B7 F9 E0 30
+
+$ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcost 100
+> "password" "salt"
+> 82 AF EB 03 5B E7 12 11 BE 63
+> "The quick brown fox jumped over the lazy dog" "0123456789"
+> F7 A8 56 D5 81 16 AA E5 C7 4D
+\end{verbatim}
+\normalsize
+
+\subsection{Automated testing}
