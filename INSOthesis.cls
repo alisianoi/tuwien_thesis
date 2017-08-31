@@ -709,7 +709,7 @@
 
 % settings of hyperlinks
 \hypersetup{
-  linkcolor=red,
+  linkcolor=black,
   urlcolor=blue,
   citecolor=black,
   breaklinks=true,
