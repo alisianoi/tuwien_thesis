@@ -2,52 +2,33 @@
 \chapter{Introduction}
 \label{sec:introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\makeatletter
-\makeatother
-
-In der Einleitung soll die Zielsetzung der Arbeit beschrieben, ihre Einordnung in einen übergeordneten Kontext hergestellt und die Bedeutung des Themas erörtert werden.
-\begin{itemize}
-	\item Problemstellung
-	\item Motivation
-	\item Zielsetzung
-	\item Aufbau der Arbeit
-\end{itemize}
+Passwords are currently the backbone of user authentication. Usually, passwords are stored in a hashed form in some kind of a database. Inevitably these databases are compromised and then the only thing which then stands between the attacker and the password cleartext is the hashing mechanism used to produce the hash value.
 
 %=======================================================================
-\section{Problem setting}
+\section{Problem Description}
 %=======================================================================
+Processing power increases with time while simultaneously getting cheaper. This works both for the legitimate users as well as the attackers. Password Hashing Schemes (PHSs) are therefore continuously adjusted to stay irreversible. However, recent advances in highly parallelized hardware (conventional multicore GPUs as well as the more specialized FPGAs and ASICs) present a new challenge for the commonly used cryptographic hash functions: a large amount of simultaneous hash computation attempts can be performed in the time it takes a legitimate user to compute just one.
 
-Formulierung der Problemstellung, Einbettung in das Forschungsumfeld und Theorie, auf die sich die Arbeit beziehen. Tendenziell kurz, allgemeiner und sehr gut verständlich -- detaillierter im Kapitel \enquote{Grundlagen}.
+This is one of the reasons why a Password Hashing Competition was announced in 2013 and concluded in 2015. Its evaluation criteria stress that proposed candidates should provide minimal speed-up for the highly parallelized hardware. The winner was declared to be Argon2 and special recognition was also given to Catena, Lyra2, Makwa and yescrypt.
 
 %=======================================================================
 \section{Motivation}
 %=======================================================================
-
-In diesem Kapitel wird der Forschungsbedarf aufgezeigt. Nach dem Lesen dieses Kapitels sollten folgende Punkte klar dargestellt sein:
-\begin{itemize}
-	\item Aktueller Stand der Wissenschaft in Bezug auf die zuvor formulierte Problemstellung und klare Darstellung, was hier unzureichend/offen ist.
-	\item GGf. Darstellung des größeren Forschungsbereichs, in den die Diplomarbeit eingebettet ist.
-	\item Darlegung der Bedeutung des Themas für den Stand oder die Weiterentwicklung eines Bereichs der Informatik (z.B. Datenbanksysteme, Mobile Anwendungen, Java-Programmierung, Rechenzentrumsbetrieb, \dots) oder eines Fachbereichs (z.B. Bankwesen, Wertpapierhandel, Gesundheitswesen, Transportwesen, Flugsicherheit \dots). Erklärung, was durch die Lösung des Problems z.B. kostengünstiger/schneller/hochwertiger/sicherer/anwendbarer/\enquote{schöner} etc. wird.
-\end{itemize}
+Even though the theoretical designs and their proof-of-concept implementations were presented back in 2015, the adoption of these new cryptographic algorithms could be improved. There are many ways to do so: provide better documentation, detailed usage examples and success stories. Porting reference implementations to different programming languages could also help programmers adopt these new cryptograhic algorithms.
 
 %=======================================================================
-\section{Methodological approach}
+\section{Contribution}
 %=======================================================================
+This work describes the porting process of the Lyra2 reference implementation into Java. The resulting implementation is hosted on the Maven central repository and is available for easy inclusion as a dependency into any Java project. It is licensed under the MIT license which is a well-established permissive free software license. Finally, the source code is publicly available and can be inspected and improved if necessary.
 
-Nachdem die Problemstellung und die Motivation zu deren Lösung formuliert wurden, wird in diesem Kapitel das zu erarbeitende Resultat beschrieben.
+The primary goal of this porting effort is to provide a drop-in replacement for the reference implementation. This means that given the same input parameters, both implementations should produce the same hash values. Although this might sound as a natural and automatic requirement, the paper will highlight the discrepancies between the C and Java ecosystems.
 
-Nach dem Lesen dieses Kapitels sollten folgende Punkte klar dargestellt sein:
-\begin{itemize}
-	\item Umfang, in dem die Problemstellung am Ende der Arbeit gelöst sein soll bzw. mit welchen Einschränkungen.
-	\item Methode zur Erarbeitung des Resultats.
-	\item Gibt es einen Theorie- und einen Praxisteil?
-	\item Schwerpunkte des Praxisteils (z.B. Durchführung einer Umfrage, Programmierung, Herstellung von Hardware, Erprobung einer Methode in einem konkreten Projekt)?
-	\item Art des Resultats (z.B. ein Programm, eine Formel, eine Methode, die Erweiterung einer existierenden Methode, ein Konzept, ein Framework, Hardware-Prototyp, eine bewiesene Erkenntnis)?
-\end{itemize}
+The secondary goal is to compare the ported implementation to the original. The comparison project is done in the spirit of reproducible research, is hosted publicly and can be used to verify results presented in this paper.
+
+The final goal is to use the ported implementation to write an Android application. This will demonstrate the ease of adoption of Lyra2 on a platform where using the reference implementation is much less straightforward.
 
 %=======================================================================
-\section{Structure of this work}
+\section{Outline of the Work}
 %=======================================================================
 
 % \begin{itemize}
