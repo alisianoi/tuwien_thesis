@@ -153,7 +153,7 @@
 \RequirePackage{url}
 \RequirePackage[table]{xcolor}
 \RequirePackage{varioref}
-\RequirePackage[pdfusetitle]{hyperref}					% links in pdf
+\RequirePackage[pdfusetitle]{hyperref}
 \RequirePackage[all]{hypcap}
 \RequirePackage{graphicx}
 \RequirePackage{tabularx}
@@ -237,14 +237,13 @@
 
 % optional packages
 \RequirePackage{fix-cm}
-\RequirePackage{verbatim}            			% Code-Environment
+\RequirePackage{verbatim}
 \RequirePackage{needspace}
 \RequirePackage{ifdraft}
 
 % test packages
 \RequirePackage{morewrites}
 %\RequirePackage {splitidx}
-% \RequirePackage{comment} % wurde entfernt, weil keine streams mehr vorhanden waren. Latex unterstüzt nur 16 offene Write-Streams.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
