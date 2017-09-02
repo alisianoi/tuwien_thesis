@@ -7,7 +7,7 @@ A \emph{sponge function} or a \emph{sponge construction} is a class of algorithm
 
 \begin{figure}
   \begin{tikzpicture}[
-    ostyle/.style={
+  ostyle/.style={
       shape=rectangle
       ,draw
       ,minimum width=0.5cm,
@@ -20,30 +20,50 @@ A \emph{sponge function} or a \emph{sponge construction} is a class of algorithm
       ,minimum height=5cm
       }
     ,xstyle/.style={
-      shape=circle
-      ,draw
     }
   ]
 
-  \draw (-0.5, 5) node (A0) {};
-  \draw (-0.5, 3) node (A1) {};
-  \draw (-0.5, 0) node (A2) {};
+  \coordinate (A0) at (-0.5, 5) {};
+  \coordinate (A1) at (-0.5, 3) {};
+  \coordinate (A2) at (-0.5, 0) {};
 
-  \draw [<->,semithick] (A0) to node [left] {b} (A1);
-  \draw [<->,semithick] (A1) to node [left] {c} (A2);
+  \draw [<->,semithick] (A0) to node [left] {\(b\)} (A1);
+  \draw [<->,semithick] (A1) to node [left] {\(c\)} (A2);
 
-  \node [ostyle,minimum height=2cm] (00) at (0.5, 4  ) {0};
-  \node [ostyle,minimum height=3cm] (01) at (0.5, 1.5) {0};
+  \node [ostyle,minimum height=2cm] (00) at (0.5, 4  ) {\(0\)};
+  \node [ostyle,minimum height=3cm] (01) at (0.5, 1.5) {\(0\)};
 
-  \node [xstyle] (x0) at (1.5, 4) {x};
-  \node [xstyle] (x1) at (3.5, 4) {x};
-  \node [xstyle] (x2) at (5.5, 4) {x};
+  \node [shape=rectangle,draw] (padded message) at (-0.5, 6) {padded message};
 
-  \node [fstyle] (f0) at (2.5, 2.5) {f};
-  \node [fstyle] (f1) at (4.5, 2.5) {f};
-  \node [fstyle] (f2) at (6.5, 2.5) {f};
-  \node [fstyle] (f3) at (8.5, 2.5) {f};
-  \node [fstyle] (f4) at (10.5, 2.5) {f};
+  \coordinate (y0) at (1.5, 6) {};
+  \coordinate (y1) at (3.5, 6) {};
+  \coordinate (y2) at (5.5, 6) {};
+  \coordinate (y3) at (7.5, 6) {};
+  \coordinate (y4) at (9.5, 6) {};
+  \draw [-] (padded message) to (y0) to (y1) to (y2);
+
+  \node [xstyle] (x0) at (1.5, 4) {\(\oplus\)};
+  \node [xstyle] (x1) at (3.5, 4) {\(\oplus\)};
+  \node [xstyle] (x2) at (5.5, 4) {\(\oplus\)};
+  \coordinate (x3) at (7.5, 4) {};
+  \coordinate (x4) at (9.5, 4) {};
+
+  \node [shape=rectangle] (absorb) at (3.5, -1) {absorbing phase};
+  \node [shape=rectangle] (squeeze) at (9.5, -1) {squeezing phase};
+
+  \draw [thick,dashed] (7.25, 6.5) -- (7.25, -1.5);
+
+  \draw [->] (y0) to node [right,near start] {1\textsuperscript{st} \(b\) bits} (x0);
+  \draw [->] (y1) to node [right,near start] {2\textsuperscript{nd} \(b\) bits} (x1);
+  \draw [->] (y2) to node [right,near start] {3\textsuperscript{rd} \(b\) bits} (x2);
+  \draw [->] (x3) to node [right,near end] {1\textsuperscript{st} \(b\) bits} (y3);
+  \draw [->] (x4) to node [right,near end] {2\textsuperscript{nd} \(b\) bits} (y4);
+
+  \node [fstyle] (f0) at ( 2.5, 2.5) {\(f\)};
+  \node [fstyle] (f1) at ( 4.5, 2.5) {\(f\)};
+  \node [fstyle] (f2) at ( 6.5, 2.5) {\(f\)};
+  \node [fstyle] (f3) at ( 8.5, 2.5) {\(f\)};
+  \node [fstyle] (f4) at (10.5, 2.5) {\(f\)};
 
   \draw [->] (00) to (x0);
   \draw [->] (x0) -- (x0 -| f0.west);
@@ -51,8 +71,10 @@ A \emph{sponge function} or a \emph{sponge construction} is a class of algorithm
   \draw [->] (x1) -- (x1 -| f1.west);
   \draw [->] ($(f1.east) + (0, 1.5)$) -- (x2);
   \draw [->] (x2) -- (x2 -| f2.west);
-  \draw [->] ($(f2.east) + (0, 1.5)$) -- ($(f3.west) + (0, 1.5)$);
-  \draw [->] ($(f3.east) + (0, 1.5)$) -- ($(f4.west) + (0, 1.5)$);
+  \draw [-] ($(f2.east) + (0, 1.5)$) -- (x3);
+  \draw [-] (x3) -- ($(f3.west) + (0, 1.5)$);
+  \draw [-] ($(f3.east) + (0, 1.5)$) -- (x4);
+  \draw [-] (x4) -- ($(f4.west) + (0, 1.5)$);
   \draw [->] ($(f4.east) + (0, 1.5)$) -- ($(f4.east) + (1, 1.5)$);
 
   \draw [->] (01) -- (01 -| f0.west);
