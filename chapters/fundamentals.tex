@@ -3,6 +3,69 @@
 \label{sec:fundamentals}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+A \emph{sponge function} or a \emph{sponge construction} is a class of algorithms with finite internal state that take an input bit stream of any length and produce an output bit stream of any desired length \cite{wiki:2017:sponge-function}. The internal state consists of \(w = b + c\) bits, where \(w\) is known as the \emph{width} of the sponge, \(b\) is called its \emph{bitrate} and \(c\) its \emph{capacity}.
+
+\begin{figure}
+  \begin{tikzpicture}[
+    ostyle/.style={
+      shape=rectangle
+      ,draw
+      ,minimum width=0.5cm,
+    }
+    ,fstyle/.style={
+      shape=rectangle
+      ,draw
+      ,rounded corners=5pt
+      ,minimum width=0.5cm
+      ,minimum height=5cm
+      }
+    ,xstyle/.style={
+      shape=circle
+      ,draw
+    }
+  ]
+
+  \draw (-0.5, 5) node (A0) {};
+  \draw (-0.5, 3) node (A1) {};
+  \draw (-0.5, 0) node (A2) {};
+
+  \draw [<->,semithick] (A0) to node [left] {b} (A1);
+  \draw [<->,semithick] (A1) to node [left] {c} (A2);
+
+  \node [ostyle,minimum height=2cm] (00) at (0.5, 4  ) {0};
+  \node [ostyle,minimum height=3cm] (01) at (0.5, 1.5) {0};
+
+  \node [xstyle] (x0) at (1.5, 4) {x};
+  \node [xstyle] (x1) at (3.5, 4) {x};
+  \node [xstyle] (x2) at (5.5, 4) {x};
+
+  \node [fstyle] (f0) at (2.5, 2.5) {f};
+  \node [fstyle] (f1) at (4.5, 2.5) {f};
+  \node [fstyle] (f2) at (6.5, 2.5) {f};
+  \node [fstyle] (f3) at (8.5, 2.5) {f};
+  \node [fstyle] (f4) at (10.5, 2.5) {f};
+
+  \draw [->] (00) to (x0);
+  \draw [->] (x0) -- (x0 -| f0.west);
+  \draw [->] ($(f0.east) + (0, 1.5)$) -- (x1);
+  \draw [->] (x1) -- (x1 -| f1.west);
+  \draw [->] ($(f1.east) + (0, 1.5)$) -- (x2);
+  \draw [->] (x2) -- (x2 -| f2.west);
+  \draw [->] ($(f2.east) + (0, 1.5)$) -- ($(f3.west) + (0, 1.5)$);
+  \draw [->] ($(f3.east) + (0, 1.5)$) -- ($(f4.west) + (0, 1.5)$);
+  \draw [->] ($(f4.east) + (0, 1.5)$) -- ($(f4.east) + (1, 1.5)$);
+
+  \draw [->] (01) -- (01 -| f0.west);
+  \draw [->] ($(f0.east) + (0, -1)$) -- ($(f1.west) + (0, -1)$);
+  \draw [->] ($(f1.east) + (0, -1)$) -- ($(f2.west) + (0, -1)$);
+  \draw [->] ($(f2.east) + (0, -1)$) -- ($(f3.west) + (0, -1)$);
+  \draw [->] ($(f3.east) + (0, -1)$) -- ($(f4.west) + (0, -1)$);
+  \draw [->] ($(f4.east) + (0, -1)$) -- ($(f4.east) + (1, -1)$);
+
+  \end{tikzpicture}
+  \caption{The Sponge Construction}
+\end{figure}
+
 %=======================================================================
 \section{State of the Art}
 %=======================================================================
