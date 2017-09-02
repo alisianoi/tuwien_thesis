@@ -9,7 +9,7 @@ Passwords are currently the backbone of user authentication. Usually, passwords 
 %=======================================================================
 Processing power increases with time while simultaneously getting cheaper. This works both for the legitimate users as well as the attackers. Password Hashing Schemes (PHSs) are therefore continuously adjusted to stay irreversible. However, recent advances in highly parallelized hardware (conventional multicore GPUs as well as the more specialized FPGAs and ASICs) present a new challenge for the commonly used cryptographic hash functions: a large amount of simultaneous hash computation attempts can be performed in the time it takes a legitimate user to compute just one.
 
-This is one of the reasons why a Password Hashing Competition was announced in 2013 and concluded in 2015. Its evaluation criteria stress that proposed candidates should provide minimal speed-up for the highly parallelized hardware. The winner was declared to be Argon2 and special recognition was also given to Catena, Lyra2, Makwa and yescrypt.
+This is one of the reasons why a Password Hashing Competition was announced in 2013 and concluded in 2015. Its evaluation criteria stress that proposed candidates should provide minimal speed-up for the highly parallelized hardware. The winner was declared to be Argon2 and special recognition was also given to Catena, Lyra2 \cite{andrade:2016:lyra2}, Makwa and yescrypt.
 
 %=======================================================================
 \section{Motivation}
