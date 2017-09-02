@@ -224,7 +224,7 @@
 \fi
 \RequirePackage{fancyhdr}
 \RequirePackage{tikz}
-\usetikzlibrary{arrows,automata}
+\usetikzlibrary{arrows,automata,calc}
 %\RequirePackage[standard]{ntheorem}
 
 % necessary packages
