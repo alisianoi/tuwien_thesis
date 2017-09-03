@@ -1,10 +1,180 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Details of the Ported Implementation}
-\label{sec:problemdescription}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{itemize}
-	\item Im Kapitel \enquote{Design} sollte die konzeptionelle Lösung vorgestellt, diskutiert und begründet werden. Das Ergebnis dieses Kapitels könnte beispielsweise eine Protokoll-Architektur sein.
-	\item Im Kapitel \enquote{Modelle} erfolgt üblicherweise das Feindesign. In diesem Kapitel könnten beispielsweise einzelne Protokolle bzw. Algorithmen aus der vorher definierten Protokoll-Architektur eingeführt und diskutiert werden. Achtung: Generell darauf achten, bei der eingangs erläuterten Notation zu bleiben und nicht Synonyme zu verwenden, verwirrt den Leser.
-	\item Das Kapitel \enquote{Implementierung} sollte sich dann vorwiegend mit den Details der Umsetzung befassen. In diesem Kapitel sollte nur im Ausnahmefall exemplarisch Quellcode vorgesehen werden. Vielmehr sollten alle Probleme, die bei der Realisierung aufgetreten sind, dokumentiert, interpretiert und die Lösung erläutert werden.
-\end{itemize}
+\begin{tikzpicture}
+    \begin{umlpackage}{lyra2}
+        \umlclass{Main}{}{
+            \umlstatic{
+                + main(argv: String[]): void
+            }
+        }
+
+        \umlclass[right=1cm of Main]{mem}{}{
+            \umlstatic{
+                + copy(dst: byte[], offset: int, src: int): void
+            } \\
+            \umlstatic{
+                + flip(x: long): long
+            }
+        }
+
+        \umlclass[below=0.5cm of Main]{echo}{}{
+            \umlstatic{
+                + bytes(bytes: byte[], n: int, m: int, s: int): void
+            } \\
+            \umlstatic{
+                + bytes(bytes: byte[], n: int): void
+            } \\
+            \umlstatic{
+                + bytes(longs: long[], n: int, m: int, s: int): void
+            } \\
+            \umlstatic{
+                + bytes(longs: long[], n: int): void
+            } \\
+            \umlstatic{
+                + params(params: LyraParams): void
+            }
+        }
+
+        \umlclass[right=1cm of echo]{pack}{}{
+            \umlstatic{
+                + bytes(x: long): byte[]
+            } \\
+            \umlstatic{
+                + bytes(longs: long[]): byte[]
+            } \\
+            \umlstatic{
+                + longs(bytes: byte[]): longs[]
+            } \\
+            \umlstatic{
+                + bytes(strings: String[]): byte[]
+            }
+        }
+
+
+        \umlclass[below right=0.5cm and -6cm of echo]{Lyra2}{}
+        {
+            \umlstatic{
+                + phs(hash: byte[], pass: byte[], salt: byte[], params: LyraParams): void
+            } \\
+            \umlstatic{
+                + hash(hash: byte[], pass: byte[], salt: byte[], params: LyraParams): void
+            }
+        }
+
+        \umlclass[below=0.5cm of Lyra2]{Sponge}{
+            + state: long[]
+        }{
+            + absorb(src: long[], len: int, offset: int): void \\
+            + squeeze(dst: byte[], len: int): void \\
+            + sponge\_lyra(rounds: int): void \\
+            \umlstatic{
+                + rotr64(word: long, b: int): void
+            } \\
+            \umlstatic{
+                + rotl64(word: long, b: int): void
+            } \\
+            \umlvirt{
+                + G(a: int, b: int, c: int, d: int): void
+            } \\
+            + reduced\_squeeze\_row0(dst: long[], offset: int): void \\
+            + reduced\_duplex\_row1\_and\_row2(dst: long[], offset1: int, offset2: int): void \\
+            + reduced\_duplex\_row\_filling(dst: long[], offset0: int, offset1: int, offset2: int, offset3: int): void \\
+            + reduced\_duplex\_row\_wandering(dst: long[], offset0: int, offset1: int, offset2: int, offset3: int): void
+        }
+
+        \umlclass[below left=0.5cm and -6cm of Sponge]{SpongeBlake2b}{}{
+            + G(a: int, b: int, c: int, d: int): void
+        }
+
+        \umlclass[below left=0.5cm and -15cm of Sponge]{SpongeBlamka}{}{
+            + G(a: int, b: int, c: int, d: int): void
+        }
+
+        \umlclass[below=3cm of Sponge]{SpongeHalfBlamka}{}{
+            + G(a: int, b: int, c: int, d: int): void
+        }
+
+        \umlHVinherit{SpongeBlake2b}{Sponge}
+        \umlHVinherit{SpongeBlamka}{Sponge}
+        \umlHVinherit{SpongeHalfBlamka}{Sponge}
+      \end{umlpackage}
+  \end{tikzpicture}
+
+% \begin{figure}
+% \small
+% \begin{minted}{java}
+% public abstract class Sponge {
+%     public long[] state;
+%
+%     public void absorb(long[] src, int len, int offset) {
+%         /* default implementation */
+%     }
+%
+%     public void squeeze(byte[] dst, int len) {
+%         /* default implementation */
+%     }
+%
+%     public abstract void G(int a, int b, int c, int d);
+%
+%     public void permute_state(int rounds) {
+%         for (int round = 0; round != rounds; ++round) {
+%             /* call G to permute the state of the sponge */
+%         }
+%     }
+%
+%     public void reduced_squeeze_row0(long[] dst, int offset) {
+%         /* custom squeeze, reduced number of rounds */
+%     }
+%
+%     public void reduced_duplex_row1_and_row2(
+%         long[] dst, int offset1, int offset2
+%     ) {
+%         /* custom absorb + squeeze, reduced number of rounds */
+%     }
+%
+%     public void reduced_duplex_row_filling(
+%         long dst[], int offset0, int offset1, int offset2, int offset3
+%     ) {
+%         /* custom absorb + squeeze, reduced number of rounds */
+%     }
+%
+%     public void reduced_duplex_row_wandering(
+%         long[] dst, int offset0, int offset1, int offset2, int offset3
+%     ) {
+%         /* custom absorb + squeeze, reduced number of rounds */
+%     }
+% }
+% \end{minted}
+% \normalsize
+% \caption{Outline of the abstract Sponge class}
+% \label{fig:sponge}
+% \end{figure}
+
+\begin{figure}
+\small
+\begin{minted}{java}
+    public class SpongeBlake2b extends Sponge {
+        @Override
+        public void G(final int a, final int b, final int c, final int d) {
+            state[a] = mem.flip(mem.flip(state[a]) + mem.flip(state[b]));
+            state[d] = rotl64(state[d] ^ state[a], 32);
+
+            state[c] = mem.flip(mem.flip(state[c]) + mem.flip(state[d]));
+            state[b] = rotl64(state[b] ^ state[c], 24);
+
+            state[a] = mem.flip(mem.flip(state[a]) + mem.flip(state[b]));
+            state[d] = rotl64(state[d] ^ state[a], 16);
+
+            state[c] = mem.flip(mem.flip(state[c]) + mem.flip(state[d]));
+            // Cannot use the left rotation trick here: 63 % 8 != 0, so
+            // individual bytes do not stay the same, they change too.
+            state[b] = mem.flip(rotr64(mem.flip(state[b] ^ state[c]), 63));
+        }
+    }
+\end{minted}
+\normalsize
+\caption{Blake2b as instance of the Sponge class, optimized rotations}
+\label{fig:sponge-blake2b}
+\end{figure}
