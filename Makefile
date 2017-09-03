@@ -19,13 +19,13 @@ endif
 default: clean compile
 
 compile:
-	pdflatex $(BASENAME)
+	pdflatex -shell-escape $(BASENAME)
 	makeglossaries $(BASENAME)
-	pdflatex $(BASENAME)
+	pdflatex -shell-escape $(BASENAME)
 	makeglossaries $(BASENAME)
 	bibtex $(BASENAME)
-	pdflatex $(BASENAME)
-	pdflatex $(BASENAME)
+	pdflatex -shell-escape $(BASENAME)
+	pdflatex -shell-escape $(BASENAME)
 
 view:
 	$(VIEWER) $(VIEWER_OPTIONS) $(BASENAME).pdf

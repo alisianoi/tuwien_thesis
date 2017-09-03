@@ -168,6 +168,7 @@
 \RequirePackage{ifpdf}
 \let\footruleskip\relax % for compatibility of memoir and fancyhdr
 \RequirePackage[breakall]{truncate}
+\RequirePackage{minted}
 
 % important packages
 \RequirePackage{styles/INSO}
