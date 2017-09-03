@@ -146,6 +146,8 @@
 % standard packages
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{libertine}
 \RequirePackage[bf, hang]{caption}
 \RequirePackage[german,ngerman,english]{babel}
 \RequirePackage{csquotes}
@@ -225,12 +227,14 @@
 \fi
 \RequirePackage{fancyhdr}
 \RequirePackage{tikz}
+\RequirePackage{tikz-uml}
 \usetikzlibrary{arrows.meta,automata,calc}
 %\RequirePackage[standard]{ntheorem}
 
 % necessary packages
 \RequirePackage{lastpage}
 \RequirePackage{pgf}
+\RequirePackage{pgfopts}
 \DisemulatePackage{setspace}
 \RequirePackage{setspace}
 %\RequirePackage{titlesec}
