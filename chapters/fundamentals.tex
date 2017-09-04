@@ -87,7 +87,7 @@ As shown in figure \ref{figure:sponge-construction}, a sponge function conceptua
   \draw [->] ($(f4.east) + (0, -1)$) -- ($(f4.east) + (1, -1)$);
 
   \end{tikzpicture}
-  \caption{The Sponge Construction, adapted from \cite{bertoni:2011:duplexing}}
+  \caption{The sponge construction, adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}}
   \label{figure:sponge-construction}
 \end{figure}
 
@@ -168,20 +168,15 @@ As shown in figure \ref{figure:sponge-construction}, a sponge function conceptua
   \draw [->] ($(f2.east) + (0, 1.5)$) -- (x13);
   \draw [->] (x13) -- ($(f3.west) + (0, 1.5)$);
   \draw [->,dashed] ($(f3.east) + (0, 1.5)$) -- (x14);
-  % \draw [-] ($(f3.east) + (0, 1.5)$) -- (x4);
-  % \draw [-] (x4) -- ($(f4.west) + (0, 1.5)$);
-  % \draw [->] ($(f4.east) + (0, 1.5)$) -- ($(f4.east) + (1, 1.5)$);
 
   \draw [->] (01) -- (01 -| f0.west);
   \draw [->] ($(f0.east) + (0, -1)$) -- ($(f1.west) + (0, -1)$);
   \draw [->] ($(f1.east) + (0, -1)$) -- ($(f2.west) + (0, -1)$);
   \draw [->] ($(f2.east) + (0, -1)$) -- ($(f3.west) + (0, -1)$);
   \draw [->,dashed] ($(f3.east) + (0, -1)$) -- (x24);
-  % \draw [->] ($(f3.east) + (0, -1)$) -- ($(f4.west) + (0, -1)$);
-  % \draw [->] ($(f4.east) + (0, -1)$) -- ($(f4.east) + (1, -1)$);
 
   \end{tikzpicture}
-  \caption{The Duplex Construction}
+  \caption{The duplex construction, adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}}
   \label{figure:duplex-construction}
 \end{figure}
 
