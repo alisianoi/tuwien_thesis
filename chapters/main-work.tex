@@ -2,6 +2,17 @@
 \chapter{Details of the Ported Implementation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+One of the immediate issues that needs to be addressed is the class/inheritance structure of the project. The reference implementation is written in C and relies heavily on functions and conditional compilation. This presents a difficulty conditionally compiled functions do not directly translate to a clean class hierarchy. Furthermore, it is borderline impossible to design an architecture and not have to change it later on. Figure \ref{fig:uml} in part shows the final architecture of the Java project.
+
+The \texttt{Main} class is the usual entry point of the project. An implementational detail that is not shown in figure \ref{fig:uml} is that the \texttt{Main} class relies on a 3\textsuperscript{rd} party command line library that parses input parameters (like the password, the salt and a few others) and constructs an instance of \texttt{LyraParams} class. That class is also not shown in the figure, it simply stores a number of parametrs and constants relevant to Lyra2's operation. Finally, the \texttt{echo} class is a collection of methods for pretty-printing different types of arrays as a table of bytes to the console.
+
+The \texttt{mem} and \texttt{pack} classes are responsible for certain memory manipulations. In particular, the \texttt{mem} class deals with the little- and big-endian discrepancies between the C and Java ecosystems on the \texttt{x86\_64} architecture. At the same time the \texttt{pack} class provides methods that allow to emulate the recasting of the \texttt{void*} pointer to other kinds of pointers (for instance, the \texttt{uint64\_t*} or the \texttt{char*} pointers).
+
+The \texttt{Lyra2} class contains the main logic of the single-threaded Lyra2 PHS. The functionality related to the sponge construction is collected in the \texttt{Sponge} \emph{abstract} class and its subclasses \texttt{SpongeBlake2b}, \texttt{SpongeBlamka} and \texttt{SpongeHalfBlamka} capture the specifics of the fixed-width permutation \(f\).
+
+An insteresting detail is that the Sponge class in the Java project makes use of both left- and right bit rotations, done by the \texttt{rotl64} and \texttt{rotr64} methods respectively. This is despite the fact that the original Lyra2 reference implementation requires just one direction for rotations. Both types of rotations are helpful in the Java project because they allow to avoid a number of bit rotations related to endianness. For example see figure \ref{fig:sponge-blake2b}, lines \(5, 8\), and \(11\) do not call \texttt{mem.flip} while line \(16\) cannot use the same trick and has to perform a right-rotation and endianness conversions.
+
+\begin{figure}
 \begin{tikzpicture}
     \begin{umlpackage}{lyra2}
         \umlclass{Main}{}{
@@ -101,6 +112,9 @@
         \umlHVinherit{SpongeHalfBlamka}{Sponge}
       \end{umlpackage}
   \end{tikzpicture}
+  \caption{Approximate class diagram for \texttt{com.github.all3fox.lyra2} package}
+  \label{fig:uml}
+  \end{figure}
 
 % \begin{figure}
 % \small
@@ -154,7 +168,7 @@
 
 \begin{figure}
 \small
-\begin{minted}{java}
+\begin{minted}[linenos]{java}
     public class SpongeBlake2b extends Sponge {
         @Override
         public void G(final int a, final int b, final int c, final int d) {
@@ -175,6 +189,6 @@
     }
 \end{minted}
 \normalsize
-\caption{Blake2b as instance of the Sponge class, optimized rotations}
+\caption{Blake2b as instance of the Sponge class, illustrating optimized rotations}
 \label{fig:sponge-blake2b}
 \end{figure}
