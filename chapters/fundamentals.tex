@@ -91,6 +91,100 @@ As shown in figure \ref{figure:sponge-construction}, a sponge function conceptua
   \label{figure:sponge-construction}
 \end{figure}
 
+\begin{figure}
+  \begin{tikzpicture}[
+  ostyle/.style={
+      shape=rectangle
+      ,draw
+      ,minimum width=0.5cm,
+    }
+    ,fstyle/.style={
+      shape=rectangle
+      ,draw
+      ,rounded corners=5pt
+      ,minimum width=0.5cm
+      ,minimum height=5cm
+      }
+    ,xstyle/.style={
+    }
+  ]
+
+  \coordinate (A0) at (-0.5, 5) {};
+  \coordinate (A1) at (-0.5, 3) {};
+  \coordinate (A2) at (-0.5, 0) {};
+
+  \draw [<->,semithick] (A0) to node [left] {\(b\)} (A1);
+  \draw [<->,semithick] (A1) to node [left] {\(c\)} (A2);
+
+  \node [ostyle,minimum height=2cm] (00) at (0.5, 4  ) {\(0\)};
+  \node [ostyle,minimum height=3cm] (01) at (0.5, 1.5) {\(0\)};
+
+  \coordinate (x00) at ( 1.5, 6) {};
+  \coordinate (x01) at ( 4.5, 6) {};
+  \coordinate (x02) at ( 7.5, 6) {};
+  \coordinate (x03) at (10.5, 6) {};
+
+  \node [xstyle] (x10) at ( 1.5, 4) {\(\oplus\)};
+  \node [xstyle] (x11) at ( 4.5, 4) {\(\oplus\)};
+  \node [xstyle] (x12) at ( 7.5, 4) {\(\oplus\)};
+  \node [xstyle] (x13) at (10.5, 4) {\(\oplus\)};
+
+  \draw [->] (x00) to node [anchor=south,rotate=90] {1\textsuperscript{st} \(b\) bits} (x10);
+  \draw [->] (x01) to node [anchor=south,rotate=90] {2\textsuperscript{nd} \(b\) bits} (x11);
+  \draw [->] (x02) to node [anchor=south,rotate=90] {3\textsuperscript{rd} \(b\) bits} (x12);
+  \draw [->] (x03) to node [anchor=south,rotate=90] {4\textsuperscript{th} \(b\) bits} (x13);
+
+  \coordinate (x14) at (13.5, 4) {};
+  \coordinate (x24) at (13.5, 1.5) {};
+
+  \coordinate (y00) at (3.5, 6) {};
+  \coordinate (y01) at (6.5, 6) {};
+  \coordinate (y02) at (9.5, 6) {};
+
+  \coordinate (y10) at (3.5, 4) {};
+  \coordinate (y11) at (6.5, 4) {};
+  \coordinate (y12) at (9.5, 4) {};
+
+  \draw [<-] (y00) to node [anchor=south,rotate=90] {1\textsuperscript{st} \(b\) bits} (y10);
+  \draw [<-] (y01) to node [anchor=south,rotate=90] {2\textsuperscript{nd} \(b\) bits} (y11);
+  \draw [<-] (y02) to node [anchor=south,rotate=90] {3\textsuperscript{rd} \(b\) bits} (y12);
+
+  \draw [->] (y10) -- (y00);
+  \draw [->] (y11) -- (y01);
+  \draw [->] (y12) -- (y02);
+
+  \node [fstyle] (f0) at ( 2.5, 2.5) {\(f\)};
+  \node [fstyle] (f1) at ( 5.5, 2.5) {\(f\)};
+  \node [fstyle] (f2) at ( 8.5, 2.5) {\(f\)};
+  \node [fstyle,dashed] (f3) at (11.5, 2.5) {\(f\)};
+
+  \draw [->] (00) to (x10);
+  \draw [->] (x0) -- (x0 -| f0.west);
+  \draw [->] ($(f0.east) + (0, 1.5)$) -- (x11);
+  \draw [->] (y10) -- (y00);
+  \draw [->] (x11) -- (x11 -| f1.west);
+  \draw [->] ($(f1.east) + (0, 1.5)$) -- (x12);
+  \draw [->] (x12) -- (x12 -| f2.west);
+  \draw [->] ($(f2.east) + (0, 1.5)$) -- (x13);
+  \draw [->] (x13) -- ($(f3.west) + (0, 1.5)$);
+  \draw [->,dashed] ($(f3.east) + (0, 1.5)$) -- (x14);
+  % \draw [-] ($(f3.east) + (0, 1.5)$) -- (x4);
+  % \draw [-] (x4) -- ($(f4.west) + (0, 1.5)$);
+  % \draw [->] ($(f4.east) + (0, 1.5)$) -- ($(f4.east) + (1, 1.5)$);
+
+  \draw [->] (01) -- (01 -| f0.west);
+  \draw [->] ($(f0.east) + (0, -1)$) -- ($(f1.west) + (0, -1)$);
+  \draw [->] ($(f1.east) + (0, -1)$) -- ($(f2.west) + (0, -1)$);
+  \draw [->] ($(f2.east) + (0, -1)$) -- ($(f3.west) + (0, -1)$);
+  \draw [->,dashed] ($(f3.east) + (0, -1)$) -- (x24);
+  % \draw [->] ($(f3.east) + (0, -1)$) -- ($(f4.west) + (0, -1)$);
+  % \draw [->] ($(f4.east) + (0, -1)$) -- ($(f4.east) + (1, -1)$);
+
+  \end{tikzpicture}
+  \caption{The Duplex Construction}
+  \label{figure:duplex-construction}
+\end{figure}
+
 %=======================================================================
 \section{State of the Art}
 %=======================================================================
