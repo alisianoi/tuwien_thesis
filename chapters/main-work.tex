@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Details of the Ported Implementation}
+\chapter{Implementation details}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 One of the immediate issues that needs to be addressed is the class/inheritance structure of the project. The reference implementation is written in C and relies heavily on functions and conditional compilation. This presents a difficulty conditionally compiled functions do not directly translate to a clean class hierarchy. Furthermore, it is borderline impossible to design an architecture and not have to change it later on. Figure \ref{fig:uml} in part shows the final architecture of the Java project.
@@ -115,56 +115,6 @@ An insteresting detail is that the Sponge class in the Java project makes use of
   \caption{Approximate class diagram for \texttt{com.github.all3fox.lyra2} package}
   \label{fig:uml}
   \end{figure}
-
-% \begin{figure}
-% \small
-% \begin{minted}{java}
-% public abstract class Sponge {
-%     public long[] state;
-%
-%     public void absorb(long[] src, int len, int offset) {
-%         /* default implementation */
-%     }
-%
-%     public void squeeze(byte[] dst, int len) {
-%         /* default implementation */
-%     }
-%
-%     public abstract void G(int a, int b, int c, int d);
-%
-%     public void permute_state(int rounds) {
-%         for (int round = 0; round != rounds; ++round) {
-%             /* call G to permute the state of the sponge */
-%         }
-%     }
-%
-%     public void reduced_squeeze_row0(long[] dst, int offset) {
-%         /* custom squeeze, reduced number of rounds */
-%     }
-%
-%     public void reduced_duplex_row1_and_row2(
-%         long[] dst, int offset1, int offset2
-%     ) {
-%         /* custom absorb + squeeze, reduced number of rounds */
-%     }
-%
-%     public void reduced_duplex_row_filling(
-%         long dst[], int offset0, int offset1, int offset2, int offset3
-%     ) {
-%         /* custom absorb + squeeze, reduced number of rounds */
-%     }
-%
-%     public void reduced_duplex_row_wandering(
-%         long[] dst, int offset0, int offset1, int offset2, int offset3
-%     ) {
-%         /* custom absorb + squeeze, reduced number of rounds */
-%     }
-% }
-% \end{minted}
-% \normalsize
-% \caption{Outline of the abstract Sponge class}
-% \label{fig:sponge}
-% \end{figure}
 
 \begin{figure}
 \small
