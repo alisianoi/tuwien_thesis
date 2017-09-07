@@ -5,12 +5,14 @@
 
 \section{Algorithm-level compatibility}
 
-The most important part of this work was to port the Lyra2 PHS to Java in such a way that the program would produce exactly the same hashes as the original C implementation. Of course, formal verification would be the ideal way of proving the two implementations to be identical. However, this is definitely even more work than porting from one language into the other. Therefore, the following two-step approach is used instead: there are several manual tests followed by a larger collection of randomly generated tests.
+The primary goal of this work was to port Lyra2 to Java so that it would produce the same hash values as the reference implementation when given the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in section \ref{sec:manual-testing} and section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit-testing framework that uses those vectors to verify hash results.
 
 \subsection{Configuration choice}
-By design Lyra2 provides a large number of possible configurations and modes of operation. This section will provide rationale for choosing particular values for the configuration parameters. The summary can be found in the following table \ref{table:configuration-summary}.
+By design Lyra2 has a large number of configurable parameters. This section will provide rationale for choosing particular values. The short summary can be found in the following table \ref{table:configuration-summary}.
 
-There are three sponges that could be tested: Blake2b, BlaMka and half-round BlaMka. Just the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values make it into the shortlist. The columns of the memory matrix can be any positive number, so the values of 256 and 512 are chosen, primarily because 256 is used in the original paper. Finally, time and memory cost are fixed at an arbitrary value of 100 and the output length is 10 for representation purposes.
+There are three sponges that could be tested: Blake2b, BlaMka and half-round BlaMka. Just the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values made it into the shortlist. The columns of the memory matrix can be any positive number. The \path{Lyra2/src/runBenchCPU.sh} benchmarking script as well as other sources suggest that the values of 256 and 512 should be chosen.
+
+Finally, time and memory cost are fixed at an arbitrary value of 100. The output length is chosen to be 10 so that the resulting hash value would fit easily on the page.
 
 \begin{table}
 \begin{center}
@@ -29,6 +31,7 @@ Output length (bytes) & 10 \\
 \end{table}
 
 \subsection{Manual testing}
+\label{sec:manual-testing}
 
 Below is a log of manual tests. New line delimits different lyra2 configurations. The first line of each group represents the particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
 
@@ -85,6 +88,7 @@ $ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcos
 \normalsize
 
 \subsection{Automated testing}
+\label{sec:automated-testing}
 
 For automated testing a separate test harness was developed for the original Lyra2 implementation. It is located in the \verb|Lyra2/tests| directory on the \verb|harness| branch of the \href{https://github.com/all3fox/Lyra/tree/harness}{Lyra2 fork}. There is a \href{https://github.com/leocalm/Lyra/pull/7}{corresponding pull request} to the original Lyra2 repository. In short, the \texttt{./tests/harness.py compile} script will compile several Lyra2 configurations at once. The exact configurations can be adjusted in \verb|tests/harness.yml|. After the compilation step, the \texttt{./tests/harness.py compute} will compute a number of hash values for you (the exact details for runtime parameters such as \verb|password|, \verb|salt| and so on can again be configured via \verb|harness.yml|). Finally, the \verb|tests/take.py| script will choose \verb|N| random hash values for you and prepare them to be used as unit-testing data for the Java implementation.
 
