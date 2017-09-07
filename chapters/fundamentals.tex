@@ -3,9 +3,25 @@
 \label{sec:fundamentals}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A \emph{sponge function} or a \emph{sponge construction} is a class of algorithms with finite internal state that take an input bit stream of any length and produce an output bit stream of any desired length \cite{wiki:2017:sponge-function}. The internal state \(S\) consists of \(w = b + c\) bits, where \(w\) is known as the \emph{width} of the sponge, \(b\) is called its \emph{bitrate} and \(c\) its \emph{capacity}. At the heart of every sponge function lies a \emph{fixed-width permutation} \(f\) which takes \(w\) bits as input and produces \(w\) bits as output. A common example of \(f\) is Blake2b, which in its 64-bit modification operates on 128-byte chunks.
+\emph{Password hashing} is the process of transforming a password into a hash value. Given the resulting hash value it should be computationally infeasible to restore the original password.
 
-As shown in figure \ref{figure:sponge-construction}, a sponge function conceptually consists of two parts: the absorbing and the squeezing phase. To start with, an incoming message is padded so that its length is a multiple of \(b\) bits. Secondly, the internal state of the sponge is initialized with zeros. Then the absorbing phase begins: the next \(b\) bits of the message are XOR-ed with the first \(b\) bits of \(S\) and then the \(f\) permutation is applied to the whole \(S\). This process repeats until the entire message has been absorbed. At this point the squeezing phase starts: the first \(b\) bits of \(S\) are emitted and then the \(f\) permutation is applied to the whole \(S\). This keeps going until the desired output length is reached.
+Password hashing is common practice when user authentication is required. The user provides a password which is then hashed using some password hashing algorithm and the result is compared against a hash value which was computed before with the correct password. If both hashes match, the user passes authentication.
+
+When a password database is leaked, the password hashing process is what prevents the attackers from gaining the original plaintext passwords. One of the early password hashing schemes, which is widely used today, is PBKDF2, described in section 5.2 of \cite{moriarty:2017:pkcs}. The fundamental idea behind it (which is shared among a few other early password hashing schemes) is to apply a \emph{pseudo-random function} a number of times, treating it as a parameter for computational cost.
+
+However, it is often the case that an attacker can to compute a large number of hashes in parallel. If so, the increased individual computational cost of one hash is not enough if a lot of such hashes are computed simultaneously. Parallel systems (such as general-purpose GPUs or specialized ASICs and FPGAs) usually have significantly less memory per one processing unit. Therefore, if a password hashing process offers a memory cost parameter, an attacker will face greater costs per one parallel computation.
+
+Arguably the first password hashing scheme to address this was scrypt, which was recently published as as RFC 7914 \cite{percival:2016:scrypt}. However, this scheme is sometimes criticized for being overly complicated and not offering a decoupled way to control time and memory costs. In other words, there is a single parameter that controls both time and memory costs.
+
+The password hashing competition was announced in 2013 and concluded in 2015 \cite{wetzels:2016:phc}. It was a call for better designs and Lyra2 is one of the finalists to receive special recognition.
+
+%=======================================================================
+\section{Lyra2: a brief description}
+%=======================================================================
+
+At the heart of Lyra2 is a \emph{sponge function} or a \emph{sponge construction} which is a class of algorithms with finite internal state that take an input bit stream of any length and produce an output bit stream of any desired length \cite{wiki:2017:sponge-function}. The internal state \(S\) consists of \(w = b + c\) bits, where \(w\) is known as the \emph{width} of the sponge, \(b\) is called its \emph{bitrate} and \(c\) its \emph{capacity}. At the heart of every sponge function lies a \emph{fixed-width permutation} \(f\) which takes \(w\) bits as input and produces \(w\) bits as output. A common example of \(f\) is Blake2b, which in its 64-bit modification operates on 128-byte chunks.
+
+As shown in figure \ref{figure:sponge-construction}, a sponge function conceptually consists of two parts: the absorbing and the squeezing phase. To start with, an incoming message is padded so that its length is a multiple of \(b\) bits. Secondly, the internal state of the sponge is initialized with zeros. Then the absorbing phase begins: the next \(b\) bits of the message are XORed with the first \(b\) bits of \(S\) and then the \(f\) permutation is applied to the whole \(S\). This process repeats until the entire message has been absorbed. At this point the squeezing phase starts: the first \(b\) bits of \(S\) are emitted and then the \(f\) permutation is applied to the whole \(S\). This keeps going until the desired output length is reached.
 
 \begin{figure}
   \begin{tikzpicture}[
@@ -90,6 +106,8 @@ As shown in figure \ref{figure:sponge-construction}, a sponge function conceptua
   \caption{The sponge construction, adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}}
   \label{figure:sponge-construction}
 \end{figure}
+
+A similar cryptographic primitive is the \emph{duplex construction}. The idea is similar to the sponge construction but the main difference is that both the absorbtion of incoming bits and the squeezing of the outgoing bits happens simultaneously. The name is based on an analogy between the half- and full-duplex modes of communication. A formal description can be found in \cite{bertoni:2011:duplexing} and an explanatory figure is provided \ref{figure:duplex-construction}. An important detail is that \cite{bertoni:2011:duplexing} provides an inductive lemma to prove that the sponge and duplex constructions are equally secure.
 
 \begin{figure}
   \begin{tikzpicture}[
@@ -180,6 +198,6 @@ As shown in figure \ref{figure:sponge-construction}, a sponge function conceptua
   \label{figure:duplex-construction}
 \end{figure}
 
-%=======================================================================
-\section{State of the Art}
-%=======================================================================
+Another important component of Lyra2 design is the memory matrix. Its size is directly controlled by the memory cost parameter (which is the number of rows of the matrix). An implementation detail are two other parameters: number of columns (switch \verb|--columns|) and block length (switch \verb|--blocks|). Their product equals the number of 64-bit words in a single row of the memory matrix. The reference C implementation makes thier users set both of these parameters at compile time while the Java implementation exposes these as runtime parameters.
+
+Conceptually, Lyra2 is a sequential application of a duplex construction which continuously reads and writes blocks to and from the memory matrix. The algorithm is structured into four main phases that happen one after the other: \emph{Bootstrapping}, \emph{Setup}, \emph{Wandering}, and \emph{Wrap-up}.
