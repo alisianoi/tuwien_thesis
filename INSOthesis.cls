@@ -145,10 +145,8 @@
 
 % standard packages
 \RequirePackage[utf8]{inputenc}
-\RequirePackage[T1]{fontenc}
-\RequirePackage{lmodern}
-\RequirePackage{libertine}
-\RequirePackage[bf, hang]{caption}
+\RequirePackage[T2A]{fontenc}
+\RequirePackage[bf,hang]{caption}
 \RequirePackage[german,ngerman,english]{babel}
 \RequirePackage{csquotes}
 \RequirePackage{geometry}[2010/09/12]
