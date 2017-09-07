@@ -2,6 +2,25 @@
 \chapter{Implementation details}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Reference implementation}
+
+This section will present a quick overview of relevant parts of the reference implementation.
+
+The reference implementation is hosted as a public GitHub repository \cite{github:2017:lyra}. There are several projects in the same repository (both Lyra2 and Lyra, as well as documentation). The Lyra2 directory of the master branch contains the latest version of the code and documentation. In particular, \path{Lyra2/src} is the root directory for code, \path{Lyra2/src/bench} contains a benchmarking shell scripts, \path{Lyra2/src/cuda} contains code that studies how Lyra2 withstands GPU-based attacks, \path{Lyra2/src/sse} contains an sse-optimized implementation. Finally, the \path{Lyra2/src} contains the reference implementation in C99 and is the primary focus of this work.
+
+The original public repository \cite{github:2017:lyra} was forked to \cite{github:2017:lyra-copy} and the following modifications were made. The reference implementation uses \verb|make| as its build system and the \path{Lyra2/src/makefile} provides clear compilation instructions. However, only one version of Lyra2 could conveniently be compiled and the provided test vectors are hard-coded into the program.
+
+In order to be able to compare this existing implementation to its ported Java version, the following functionality was missing:
+
+\begin{itemize}
+    \item Compile multiple versions of Lyra2 which could be used simultaneously.
+    \item Compute and store hash values of some test inputs for each version of Lyra2.
+  \end{itemize}
+
+This functionality can be found on the \verb|harness| branch of the forked repository \cite{github:2017:lyra-copy} and a pull request \cite{github:2017:lyra-pr} to the original public repository.
+
+\section{Java implementation}
+
 One of the immediate issues that needs to be addressed is the class/inheritance structure of the project. The reference implementation is written in C and relies heavily on functions and conditional compilation. This presents a difficulty conditionally compiled functions do not directly translate to a clean class hierarchy. Furthermore, it is borderline impossible to design an architecture and not have to change it later on. Figure \ref{fig:uml} in part shows the final architecture of the Java project.
 
 The \texttt{Main} class is the usual entry point of the project. An implementational detail that is not shown in figure \ref{fig:uml} is that the \texttt{Main} class relies on a 3\textsuperscript{rd} party command line library that parses input parameters (like the password, the salt and a few others) and constructs an instance of \texttt{LyraParams} class. That class is also not shown in the figure, it simply stores a number of parametrs and constants relevant to Lyra2's operation. Finally, the \texttt{echo} class is a collection of methods for pretty-printing different types of arrays as a table of bytes to the console.
