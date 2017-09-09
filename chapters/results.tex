@@ -90,11 +90,15 @@ $ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcos
 \subsection{Automated testing}
 \label{sec:automated-testing}
 
-For automated testing a separate test harness was developed for the original Lyra2 implementation. It is located in the \verb|Lyra2/tests| directory on the \verb|harness| branch of the \href{https://github.com/all3fox/Lyra/tree/harness}{Lyra2 fork}. There is a \href{https://github.com/leocalm/Lyra/pull/7}{corresponding pull request} to the original Lyra2 repository. In short, the \texttt{./tests/harness.py compile} script will compile several Lyra2 configurations at once. The exact configurations can be adjusted in \verb|tests/harness.yml|. After the compilation step, the \texttt{./tests/harness.py compute} will compute a number of hash values for you (the exact details for runtime parameters such as \verb|password|, \verb|salt| and so on can again be configured via \verb|harness.yml|). Finally, the \verb|tests/take.py| script will choose \verb|N| random hash values for you and prepare them to be used as unit-testing data for the Java implementation.
+The automated testing is possible because of the additional code that was added to the reference implementation. As mentioned in section \ref{sec:reference-implementation}, there is a \verb|harness| branch which could be found in the forked GitHub project \cite{github:2017:lyra-copy} and the corresponding pull request \cite{github:2017:lyra-pr}. This branch introduces the \verb|Lyra2/tests/harness.py| script written in Python 3 which allows to compile several configurations of Lyra2 and then use those to compute and store hash values.
 
-There are not less than 600 randomly chosen unit-tests which are currently included into a continuous integration cycle on the Travis CI service through the Maven build system and the JUnit testing library. Testing status can be \href{https://travis-ci.org/all3fox/lyra2-java}{checked here}.
+Additionally, the \verb|Lyra2/tests/take.py| Python 3 script was used to choose a number of random hash values from those previously precomputed. These were then used in the Java project to unit-test the implementation. They were also included into the continuous integration service and their status can be verified by following \cite{travis:2017:lyra}. In conclusion, both manual and automated testing indicate that the ported implementation does not contain immediately visible problems.
 
 \section{Performance comparison}
+
+The single-threaded configuration of the reference C implementation was compared to the ported Java implementation. For that, a separate GitHub repository 
+
+\subsection{Project structure}
 
 To perform comparison of the original C implementation and its ported Java version, a separate project was created and is hosted in \href{https://github.com/all3fox/lyra2-compare}{a public GitHub repository}. At the core of this project lies the open-source \href{https://jupyter.org/}{Jupyter Notebook} which simplifies reproduction of comparison results.
 
