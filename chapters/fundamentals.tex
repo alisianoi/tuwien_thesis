@@ -16,7 +16,7 @@ Arguably the first password hashing scheme to address this was scrypt, which was
 The password hashing competition was announced in 2013 and concluded in 2015 \cite{wetzels:2016:phc}. It was a call for better designs and Lyra2 is one of the finalists to receive special recognition.
 
 %=======================================================================
-\section{Lyra2: a brief description}
+\section{Lyra2: a Brief Description}
 %=======================================================================
 
 At the heart of Lyra2 is a \emph{sponge function} or a \emph{sponge construction} which is a class of algorithms with finite internal state that take an input bit stream of any length and produce an output bit stream of any desired length \cite{wiki:2017:sponge-function}. The internal state \(S\) consists of \(w = b + c\) bits, where \(w\) is known as the \emph{width} of the sponge, \(b\) is called its \emph{bitrate} and \(c\) its \emph{capacity}. At the heart of every sponge function lies a \emph{fixed-width permutation} \(f\) which takes \(w\) bits as input and produces \(w\) bits as output. A common example of \(f\) is Blake2b, which in its 64-bit modification operates on 128-byte chunks.

@@ -3,11 +3,11 @@
 \label{sec:results}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Algorithm-level compatibility}
+\section{Algorithm-level Compatibility}
 
 The primary goal of this work was to port Lyra2 to Java so that it would produce the same hash values as the reference implementation when given the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in section \ref{sec:manual-testing} and section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit-testing framework them to verify hash results.
 
-\subsection{Configuration choice}
+\subsection{Configuration Choice}
 By design Lyra2 has a large number of configurable parameters. This section will provide rationale for choosing particular values. The short summary can be found in table \ref{table:configuration-summary}.
 
 There are three sponges that could be tested: Blake2b, BlaMka and half-round BlaMka. Just the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values made it into the shortlist. The columns of the memory matrix can be any positive number. The \path{Lyra2/src/runBenchCPU.sh} benchmarking script as well as other sources suggest that the values of 256 and 512 should be chosen.
@@ -30,7 +30,7 @@ Output length (bytes) & 10 \\
 \label{table:configuration-summary}
 \end{table}
 
-\subsection{Manual testing}
+\subsection{Manual Testing}
 \label{sec:manual-testing}
 
 Below is a log of manual tests. New line delimits different Lyra2 configurations. The first line of each group represents a particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
@@ -87,18 +87,18 @@ $ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcos
 \end{verbatim}
 \normalsize
 
-\subsection{Automated testing}
+\subsection{Automated Testing}
 \label{sec:automated-testing}
 
 The automated testing is possible because of the additional code that was added to the reference implementation. As mentioned in section \ref{sec:reference-implementation}, there is a \verb|harness| branch which could be found in the forked GitHub project \cite{github:2017:lyra-copy} and the corresponding pull request \cite{github:2017:lyra-pr}. This branch introduces the \verb|Lyra2/tests/harness.py| script written in Python 3 which allows to compile several configurations of Lyra2 and then use those to compute and store hash values.
 
 Additionally, the \verb|Lyra2/tests/take.py| Python 3 script was used to choose a number of random hash values from those previously precomputed. These were then used in the Java project to unit-test the implementation. They were also included into the continuous integration service and their status can be verified by following \cite{travis:2017:lyra}. In conclusion, both manual and automated testing indicate that the ported implementation does not contain immediately visible problems.
 
-\section{Performance comparison}
+\section{Performance Comparison}
 
 The single-threaded configuration of the reference C implementation was compared to the ported Java implementation. For that, a separate GitHub repository was set up \cite{github:2017:lyra2-compare}. This repository needs to control software written in both C and Java which is why an expressive, high-level scripting language was chosen to complete this task: Python 3.
 
-\subsection{Project structure}
+\subsection{Project Structure}
 
 The comparison project \cite{github:2017:lyra2-compare} is a combination of two Jupyter Notebooks \cite{jupyter:2017:jupyter} and an SQlite database. The two created notebooks follow the producer-consumer strategy. The producer is the \texttt{src/compare.ipynb} notebook which is responsible for compiling both C and Java implementations as well as dispatching computation tasks. The results are then collected into the \texttt{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \texttt{src/plot.ipynb} notebook which reads the data from the SQLite database and plots the figures shown below.
 
@@ -115,7 +115,7 @@ Configurations were run in parallel, creating one process per configuration. Run
 
 Finally, in section \ref{sec:no-fixed-costs} the grid of time and memory cost parameters is \(200 \times 200\) with a step of \(10\), which results in a total of \(8 \times 21 \times 21 = 3528\) measurements used to build all the graphics.
 
-\subsection{Fixed time cost}
+\subsection{Fixed Time Cost}
 \label{sec:fixed-time-cost}
 
 There are two figures that show how running time and consumed memory depend on memory cost when the time cost is fixed. Figure \ref{figure:mcost_256} shows a 256-column and figure \ref{figure:mcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the reference implementation works faster and consumes less memory than its Java counterpart. A nice property is that both the running time and memory consumption are changing roughly linearly as the memory cost parameter is changed. This is consistent with the fact that the memory cost parameter corresponds to the number of rows of the in-memory matrix.
@@ -134,7 +134,7 @@ There are two figures that show how running time and consumed memory depend on m
     \label{figure:mcost_2048}
 \end{figure}
 
-\subsection{Fixed memory cost}
+\subsection{Fixed Memory Cost}
 \label{sec:fixed-memory-cost}
 
 There are two figures that show how running time and consumed memory depend on time cost when the memory cost is fixed. Figure \ref{figure:tcost_256} shows a 256-column and figure \ref{figure:tcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the original C implementation works faster and consumes less memory than its Java counterpart. The running time changes roughly linearly as the time cost parameter is changed which is consistent with the fact that time cost corresponds to the number of iterations done by Lyra2. Memory consumption stays roughly the same which is also consistent with the fact that the largest memory consumer is the in-memory matrix. This matrix has the same size for all of the configurations. Admittedly, there are some deviations in memory consumption of the Java implementation. The possible reasons for that include: the built-in garbage collector and the fact that the measurements run for several days, resulting in potentially different system loads.
@@ -153,7 +153,7 @@ There are two figures that show how running time and consumed memory depend on t
     \label{figure:tcost_2048}
 \end{figure}
 
-\subsection{Variable time and memory costs}
+\subsection{Variable Time and Memory Costs}
 \label{sec:no-fixed-costs}
 
 There are four figures that show running time and memory consumption of Lyra2 when both time and memory costs change. Figures \ref{figure:tcost_mcost_blake2b_256} and \ref{figure:tcost_mcost_blake2b_2048} correspond to a 256- and 2048-column configurations of Lyra2 that both use the Blake2b sponge. Figures \ref{figure:tcost_mcost_blamka_256} and \ref{figure:tcost_mcost_blamka_2048} are the 256- and 2048-column configurations of Lyra2 with the BlaMka sponge. All of these four figures share the same properties. First of all, the reference implementation is faster and consumes less memory than its Java counterpart. Secondly, the running time as well as required space depend roughly linearly on the time and memory cost parameters. However, together they create a quadratic time growth during the \emph{Wandering phase}. This still allows for predictable and fine-tuned control of the time- and memory resources required by the algorithm.
