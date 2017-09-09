@@ -96,27 +96,29 @@ Additionally, the \verb|Lyra2/tests/take.py| Python 3 script was used to choose 
 
 \section{Performance comparison}
 
-The single-threaded configuration of the reference C implementation was compared to the ported Java implementation. For that, a separate GitHub repository 
+The single-threaded configuration of the reference C implementation was compared to the ported Java implementation. For that, a separate GitHub repository was set up \cite{github:2017:lyra2-compare}. This repository needs to control software written in both C and Java which is why an expressive, high-level scripting language was chosen to complete this task: Python 3.
 
 \subsection{Project structure}
 
-To perform comparison of the original C implementation and its ported Java version, a separate project was created and is hosted in \href{https://github.com/all3fox/lyra2-compare}{a public GitHub repository}. At the core of this project lies the open-source \href{https://jupyter.org/}{Jupyter Notebook} which simplifies reproduction of comparison results.
+The comparison project \cite{github:2017:lyra2-compare} is a combination of two Jupyter Notebooks \cite{jupyter:2017:jupyter} and an SQlite database. The two created notebooks follow the producer-consumer strategy. The producer is the \texttt{src/compare.ipynb} notebook which is responsible for compiling both C and Java implementations as well as dispatching computation tasks. The results are then collected into the \texttt{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \texttt{src/plot.ipynb} notebook which reads the data from the SQLite database and plots the figures shown below.
 
-The following producer-consumer strategy is employed. The producer is the \texttt{./src/compare.ipynb} script which is responsible for compiling both C and Java implementations as well as dispatching computation tasks. The results are then collected into the \texttt{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \texttt{./src/plot.ipynb} script which reads the data from the SQLite database and plots the figures shown below.
-
-Conceptually, Lyra2 provides two main adjustable parameters: time and memory cost. This is why this performance comparison includes sections where one of these parameters is fixed and the other is changed. This is done for several Lyra2 configurations and their running time as well as memory consumption is compared. For the exact comparison steps you could consult \href{https://github.com/all3fox/lyra2-compare/blob/master/src/compare.ipynb}{the script} but here is a quick summary:
+Lyra2 provides two main adjustable parameters: time and memory cost. Changing both of the parameters at the same time cannot be easily shown on a single graph which is why the comparison contains three main parts. Sections \ref{sec:fixed-time-cost} and \ref{sec:fixed-memory-cost} show how several Lyra2 configurations behave when the time cost and the memory cost is fixed, respectively. Section \ref{sec:no-fixed-costs} shows a grid of values for both time and memory costs. In all the sections, the two projects are compared using four configurations:
 
 \begin{itemize}
-\item Separate configurations are run in parallel, creating one process per configuration.
-\item Running time is measured as the time between the creation of the process and its termination.
-\item Memory consumption of the created process is measured externally and the peak value is recorded.
-\end{itemize}
+    \item Blake2b sponge with 256 columns, figures \ref{figure:mcost_256}, \ref{figure:tcost_256} and \ref{figure:tcost_mcost_blake2b_256}
+    \item Blake2b sponge with 2048 columns, figures \ref{figure:mcost_2048}, \ref{figure:tcost_2048} and \ref{figure:tcost_mcost_blake2b_2048}
+    \item BlaMka sponge with 256 columns, figures \ref{figure:mcost_256}, \ref{figure:tcost_256} and \ref{figure:tcost_mcost_blamka_256}
+    \item BlaMka sponge with 2048 columns, figures \ref{figure:mcost_2048}, \ref{figure:tcost_2048} and \ref{figure:tcost_mcost_blamka_2048}
+  \end{itemize}
 
-There is also a section where both time and memory costs are changed at the same time. This produces 3-dimensional plots. Direct comparison of such plots is difficult but they still provide a good feel for how the running time and memory consumption are changing.
+Configurations were run in parallel, creating one process per configuration. Running time was measured as the time between process creation and its termination. Memory consumption was recorded from the parent process and its peak value was stored. For more details, please consult the \texttt{src/compare.ipynb} and \texttt{src/plot.ipynb} notebooks from \cite{github:2017:lyra2-compare}.
+
+Finally, in section \ref{sec:no-fixed-costs} the grid of time and memory cost parameters is \(200 \times 200\) with a step of \(10\), which results in a total of \(8 \times 21 \times 21 = 3528\) measurements used to build all the graphics.
 
 \subsection{Fixed time cost}
+\label{sec:fixed-time-cost}
 
-There are two figures that show how running time and consumed memory depend on memory cost when the time cost is fixed. Figure \ref{figure:mcost_256} shows a 256-column and figure \ref{figure:mcost_2048} shows a 2048-column configuration of Lyra2. Both these figures clearly show that the original C implementation works faster and consumes less memory than its Java counterpart. A nice property is that both the running time and memory consumption are changing roughly linearly as the memory cost parameter is changed. This is consistent with the fact that the memory cost parameter corresponds to the number of rows of the in-memory matrix.
+There are two figures that show how running time and consumed memory depend on memory cost when the time cost is fixed. Figure \ref{figure:mcost_256} shows a 256-column and figure \ref{figure:mcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the reference implementation works faster and consumes less memory than its Java counterpart. A nice property is that both the running time and memory consumption are changing roughly linearly as the memory cost parameter is changed. This is consistent with the fact that the memory cost parameter corresponds to the number of rows of the in-memory matrix.
 
 \begin{figure}[H]
     \centering
@@ -133,9 +135,9 @@ There are two figures that show how running time and consumed memory depend on m
 \end{figure}
 
 \subsection{Fixed memory cost}
+\label{sec:fixed-memory-cost}
 
-There are two figures that show how running time and consumed memory depend on time cost when the memory cost is fixed. Figure \ref{figure:tcost_256} shows a 256-column and figure \ref{figure:tcost_2048} shows a 2048-column configuration of Lyra2. Both these figures clearly show that the original C implementation works faster and consumes less memory than its Java counterpart.
-The running time changes roughly linearly as the time cost parameter is changed which is consistent with the fact that time cost corresponds to the number of iterations done by Lyra2. Memory consumption stays roughly the same which is also consistent with the fact that the largest memory consumer is the in-memory matrix. This matrix has the same size for all of the configurations.
+There are two figures that show how running time and consumed memory depend on time cost when the memory cost is fixed. Figure \ref{figure:tcost_256} shows a 256-column and figure \ref{figure:tcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the original C implementation works faster and consumes less memory than its Java counterpart. The running time changes roughly linearly as the time cost parameter is changed which is consistent with the fact that time cost corresponds to the number of iterations done by Lyra2. Memory consumption stays roughly the same which is also consistent with the fact that the largest memory consumer is the in-memory matrix. This matrix has the same size for all of the configurations. Admittedly, there are some deviations in memory consumption of the Java implementation. The possible reasons for that include: the built-in garbage collector and the fact that the measurements run for several days, resulting in potentially different system loads.
 
 \begin{figure}[H]
     \centering
@@ -151,9 +153,10 @@ The running time changes roughly linearly as the time cost parameter is changed 
     \label{figure:tcost_2048}
 \end{figure}
 
-\subsection{Changing time and memory costs}
+\subsection{Variable time and memory costs}
+\label{sec:no-fixed-costs}
 
-There are four figures that show running time and memory consumption of Lyra2 when both time and memory costs change. Figures \ref{figure:tcost_mcost_blake2b_256} and \ref{figure:tcost_mcost_blake2b_2048} correspond to a 256- and 2048-column configurations of Lyra2 that both use the Blake2b sponge. Figures \ref{figure:tcost_mcost_blamka_256} and \ref{figure:tcost_mcost_blamka_2048} are the 256- and 2048-column configurations of Lyra2 with the BlaMka sponge. All of these four figures share the same properties. First of all, the original C implementation is still faster and consumes less memory than the Java one. Secondly, the running time as well as required space depend roughly linearly on the time and memory cost parameters simultaneously. The second observation goes somewhat against my intuition: my expectations where to see quadratic dependency since both the size of the matrix and the number of iterations are increased at the same time.
+There are four figures that show running time and memory consumption of Lyra2 when both time and memory costs change. Figures \ref{figure:tcost_mcost_blake2b_256} and \ref{figure:tcost_mcost_blake2b_2048} correspond to a 256- and 2048-column configurations of Lyra2 that both use the Blake2b sponge. Figures \ref{figure:tcost_mcost_blamka_256} and \ref{figure:tcost_mcost_blamka_2048} are the 256- and 2048-column configurations of Lyra2 with the BlaMka sponge. All of these four figures share the same properties. First of all, the reference implementation is faster and consumes less memory than its Java counterpart. Secondly, the running time as well as required space depend roughly linearly on the time and memory cost parameters. However, together they create a quadratic time growth during the \emph{Wandering phase}. This still allows for predictable and fine-tuned control of the time- and memory resources required by the algorithm.
 
 \begin{figure}[H]
     \centering
@@ -185,10 +188,4 @@ There are four figures that show running time and memory consumption of Lyra2 wh
 
 \subsection{Comparison Conclusion}
 
-Even though Java version is outperformed by the original C implementation, it should be taken into account that there are a lot of extra steps on the Java side that are required to achieve byte-level compatibility. Finally, the measurements were collected across several days of computation on a personal machine which explains a couple outliers present in the figures.
-
-\subsubsection{Endianness}
-To start with, the C implementation uses \texttt{memcpy} which relies on the endianness of the underlying system (little-endian for the \texttt{x86-64} architecture). At the same time, the Java Virtual Machine stores its bytes in network order (big-endian). At the heart of Lyra2 is a memory matrix that is constantly written to and read from. So, the Java version suffers a performance penalty (nearly) each time because the byte-order has to be explicitly accounter for.
-
-\subsubsection{Unsigned integers}
-The C language supports both signed and unsigned (fixed) width integers. The Java specification provides unsigned integers starting with the 8th version of the language as a separate class and not a primitive, which also contributes to the overhead. Finally, there is also a difference between \texttt{Math.floorMod} and \texttt{\%} in Java with regards to the signs of the arguments and results. Using a library function instead of something built-in also contributes to the overhead.
+The Java implementation was outperformed by the reference C implementation. This could in part be attributed to language ecosystems or programming skills but it also cannot be denied that the ported version takes a lot of extra steps in order to ensure algorithm-level compatibility. These include the extra rotations requried to simulate little-endian behaviour, as well as simulating pointer arithmetic or unsigned arithmetic for large 64-bit integers.
