@@ -5,14 +5,14 @@
 
 \section{Algorithm-level compatibility}
 
-The primary goal of this work was to port Lyra2 to Java so that it would produce the same hash values as the reference implementation when given the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in section \ref{sec:manual-testing} and section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit-testing framework that uses those vectors to verify hash results.
+The primary goal of this work was to port Lyra2 to Java so that it would produce the same hash values as the reference implementation when given the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in section \ref{sec:manual-testing} and section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit-testing framework them to verify hash results.
 
 \subsection{Configuration choice}
-By design Lyra2 has a large number of configurable parameters. This section will provide rationale for choosing particular values. The short summary can be found in the following table \ref{table:configuration-summary}.
+By design Lyra2 has a large number of configurable parameters. This section will provide rationale for choosing particular values. The short summary can be found in table \ref{table:configuration-summary}.
 
 There are three sponges that could be tested: Blake2b, BlaMka and half-round BlaMka. Just the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values made it into the shortlist. The columns of the memory matrix can be any positive number. The \path{Lyra2/src/runBenchCPU.sh} benchmarking script as well as other sources suggest that the values of 256 and 512 should be chosen.
 
-Finally, time and memory cost are fixed at an arbitrary value of 100. The output length is chosen to be 10 so that the resulting hash value would fit easily on the page.
+Finally, time and memory costs are fixed at an arbitrary value of 100. The output length is chosen to be 10 so that the resulting hash value would fit easily on the page.
 
 \begin{table}
 \begin{center}
@@ -33,7 +33,7 @@ Output length (bytes) & 10 \\
 \subsection{Manual testing}
 \label{sec:manual-testing}
 
-Below is a log of manual tests. New line delimits different lyra2 configurations. The first line of each group represents the particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
+Below is a log of manual tests. New line delimits different Lyra2 configurations. The first line of each group represents a particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
 
 \tiny
 \begin{verbatim}
