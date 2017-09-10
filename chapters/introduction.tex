@@ -2,30 +2,30 @@
 \chapter{Introduction}
 \label{sec:introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Passwords are currently the backbone of user authentication. Usually, passwords are stored in a hashed form in some kind of a database. Inevitably these databases are compromised and then the only thing which then stands between the attacker and the password cleartext is the hashing mechanism used to produce the hash value.
+Passwords are currently the backbone of user authentication. Usually, passwords are stored in a hashed form in some kind of a database. Such databases are fairly often compromised and then the hashing mechanism is what stands between the attacker and the password cleartext.
 
 %=======================================================================
 \section{Problem Description}
 %=======================================================================
-Processing power increases with time while simultaneously getting cheaper. This works both for the legitimate users as well as the attackers. Password Hashing Schemes (PHSs) are therefore continuously adjusted to stay irreversible. However, recent advances in highly parallelized hardware (conventional multicore GPUs as well as the more specialized FPGAs and ASICs) present a new challenge for the commonly used cryptographic hash functions: a large amount of simultaneous hash computation attempts can be performed in the time it takes a legitimate user to compute just one.
+Processing power increases with time while simultaneously getting cheaper. This works both for the legitimate users as well as the attackers. Password Hashing Schemes (PHSs) are therefore continuously adjusted to stay irreversible. However, recent advances in highly parallelized hardware (conventional multicore GPUs as well as the more specialized FPGAs and ASICs) present a new challenge for the commonly used cryptographic hash functions. An attacker can heavily parallelize the computation, trying several thousands of password and salt combination in the time it takes a legitimate user to compute just one.
 
-This is one of the reasons why a Password Hashing Competition was announced in 2013 and concluded in 2015 \cite{wetzels:2016:phc}. Its evaluation criteria stress that proposed candidates should provide minimal speed-up for the highly parallelized hardware. The winner was declared to be Argon2 \cite{biryukov:2015:argon2} and special recognition was also given to Catena \cite{forler:2013:catena}, Lyra2 \cite{andrade:2016:lyra2,marcos:2015:lyra2}, Makwa \cite{pornin:2015:makwa} and yescrypt \cite{peslyak:2015:yescrypt}.
+In order to limit the throutput a potential attacker could achieve, the Password Hashing Competition was announced in 2013 and concluded in 2015 \cite{wetzels:2016:phc}. Its evaluation criteria stress that proposed candidates should provide minimal speed-up for the highly parallelized hardware. The winner was declared to be Argon2 \cite{biryukov:2015:argon2} and special recognition was also given to Catena \cite{forler:2013:catena}, Lyra2 \cite{andrade:2016:lyra2,marcos:2015:lyra2}, Makwa \cite{pornin:2015:makwa} and yescrypt \cite{peslyak:2015:yescrypt}.
 
 %=======================================================================
 \section{Motivation}
 %=======================================================================
-Even though the theoretical designs and their proof-of-concept implementations were presented back in 2015, the adoption of these new cryptographic algorithms could be improved. There are many ways to do so: provide better documentation, detailed usage examples and success stories. Porting reference implementations to different programming languages could also help programmers adopt these new cryptograhic algorithms.
+Even though the theoretical designs and their proof-of-concept implementations were presented back in 2015, the adoption of these new cryptographic algorithms could be better. There are many ways to do so: provide better documentation, detailed usage examples and success stories. A ported implementation should also ease the adoption of an algorithm in programs that use the same programming ecosystem.
 
 %=======================================================================
 \section{Contribution}
 %=======================================================================
-This work describes the porting process of the Lyra2 reference implementation into Java. The resulting implementation is hosted on the Maven central repository and is available for easy inclusion as a dependency into any Java project. It is licensed under the MIT license which is a well-established permissive free software license. Finally, the source code is publicly available and can be inspected and improved if necessary.
+This work describes the porting process of the Lyra2 reference implementation into Java. The resulting implementation is hosted in the Maven central repository \cite{maven:2017:lyra2} as well as on GitHub \cite{github:2017:lyra2-java}. This makes it available for seamless inclusion as a dependency into any Java project. It is licensed under the MIT license which gives the potential user a lot of freedom with regards to how the project can be used. Finally, the source code is publicly available and can be inspected or improved if necessary.
 
-The primary goal of this porting effort is to provide a drop-in replacement for the reference implementation. This means that given the same input parameters, both implementations should produce the same hash values. Although this might sound as a natural and automatic requirement, the paper will highlight the discrepancies between the C and Java ecosystems.
+The primary goal of this porting effort is to provide a drop-in replacement for the reference implementation. Given the same input parameters, both implementations should produce the same hash values. Although this might sound like an automatic requirement, it is not in fact the case. The paper will highlight the challenges in details about the Java implementation section \ref{sec:java-implementation}.
 
-The secondary goal is to compare the ported implementation to the original. The comparison project is done in the spirit of reproducible research, is hosted publicly and can be used to verify results presented in this paper.
+The secondary goal is to compare the ported implementation to the original. The comparison project is done in the spirit of reproducible research, is hosted publicly on GitHub \ref{github:2017:lyra2-compare} and can be used to verify the results presented in this paper.
 
-The final goal is to use the ported implementation to write an Android application. This will demonstrate the ease of adoption of Lyra2 on a platform where using the reference implementation is much less straightforward.
+The final goal is to use the ported implementation to write an Android application. This will demonstrate the ease of adoption of Lyra2 on a platform where using the reference implementation is not as straightforward.
 
 %=======================================================================
 \section{Outline of the Work}
