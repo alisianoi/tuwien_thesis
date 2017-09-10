@@ -4,15 +4,17 @@
 \begin{otherlanguage}{english}
 \chapter*{Abstract}
 
-\emph{Writing an abstract}:
-The abstract summarizes the most important information within less than one page. Within the first paragraph, present the motivation and context for your work, followed by the specific aims. In the next paragraph, describe your methodology / approach, and / or the specific case you are working on. The third paragraph describes the results and the contribution of your work.
+This work describes the process of porting a password hashing scheme called Lyra2 from C99 to Java. Adding a native Java implementation should ease integration with other Java projects and simplify its usage on other platforms, such as Android phones.
 
-\emph{Comprehensibility}:
-People with different backgrounds who are novel to your area of work should be able to understand the abstract. Therefore, acronyms should only be used after their full definition has given. E.g., ``This work relates to non-governmental organizations (NGOs), \ldots''.
+This paper follows a straightforward approach. First, a brief description of the basic Lyra2 configuration is given, followed by an overview of the C99 project. Then follows a description of the ported Java project along with a number of notable challenges.
+
+The results section \ref{sec:results} opens with both manual and automated testing which shows that both projects generate the same outputs given the same inputs. A performance comparison section \ref{sec:performance-comparison} follows, showing several thousands of measurements.
+
+In summary, the ported Java project could be found on GitHub \cite{github:2017:lyra2-java} and on Maven Central \cite{maven:2017:lyra2}. The comparison project is hosted on GitHub as well \cite{github:2017:lyra2-compare} and could be reproduced. Generally, the ported implementation requires more processing time and memory. The main reasons for that could be found in comparison conclusion \ref{sec:comparison-conclusion}.
 
 \bigskip
 
 \section*{Keywords}
-%Keyword, important, SubjectOfMyPaper, FieldOfWork.
+Password Hashing Scheme, Lyra2, Memory Hard Functions, Java
 
 \end{otherlanguage}
