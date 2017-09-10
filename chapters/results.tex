@@ -95,6 +95,7 @@ The automated testing is possible because of the additional code that was added 
 Additionally, the \verb|Lyra2/tests/take.py| Python 3 script was used to choose a number of random hash values from those previously precomputed. These were then used in the Java project to unit-test the implementation. They were also included into the continuous integration service and their status can be verified by following \cite{travis:2017:lyra}. In conclusion, both manual and automated testing indicate that the ported implementation does not contain immediately visible problems.
 
 \section{Performance Comparison}
+\label{sec:performance-comparison}
 
 The single-threaded configuration of the reference C implementation was compared to the ported Java implementation. For that, a separate GitHub repository was set up \cite{github:2017:lyra2-compare}. This repository needs to control software written in both C and Java which is why an expressive, high-level scripting language was chosen to complete this task: Python 3.
 
@@ -187,5 +188,6 @@ There are four figures that show running time and memory consumption of Lyra2 wh
 \end{figure}
 
 \subsection{Comparison Conclusion}
+\label{sec:comparison-conclusion}
 
 The Java implementation was outperformed by the reference C implementation. This could in part be attributed to language ecosystems or programming skills but it also cannot be denied that the ported version takes a lot of extra steps in order to ensure algorithm-level compatibility. These include the extra rotations requried to simulate little-endian behaviour, as well as simulating pointer arithmetic or unsigned arithmetic for large 64-bit integers.

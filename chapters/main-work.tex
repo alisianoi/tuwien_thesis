@@ -19,6 +19,7 @@ The original public repository \cite{github:2017:lyra} was forked to \cite{githu
 This functionality can be found on the \verb|harness| branch of the forked repository \cite{github:2017:lyra-copy} and a pull request \cite{github:2017:lyra-pr} to the original public repository. It is a Python 3 script \verb|Lyra2/tests/harness.py| which can be configured both on the command line and the \verb|Lyra2/tests/harness.yml| configuration file. The \verb|Lyra2/tests/harness.py compile| compiles several Lyra2 reference implementations and the \verb|Lyra2/tests/harness.py compute| runs those implementations on a series of test vectors and records the resulting hash values.
 
 \section{Java Implementation}
+\label{sec:java-implementation}
 
 It is well known that C is primarily a function-based language. At the same time Java is a lot more object-oriented. Therefore, the C functions from the reference implementation need to be translated into (abstract) classes and interfaces in Java. An additional challenge is the fact that the reference implementation uses conditional compilation, so a function with the same name actually contains different code depending on the instructions received by the compiler.
 
