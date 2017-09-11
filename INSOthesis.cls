@@ -147,6 +147,7 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T2A]{fontenc}
 \RequirePackage[bf,hang]{caption}
+\RequirePackage{subcaption}
 \RequirePackage[german,ngerman,english]{babel}
 \RequirePackage{csquotes}
 \RequirePackage{geometry}[2010/09/12]
