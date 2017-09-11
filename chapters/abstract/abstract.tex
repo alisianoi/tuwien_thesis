@@ -4,17 +4,17 @@
 \begin{otherlanguage}{english}
 \chapter*{Abstract}
 
-This work describes the process of porting a password hashing scheme called Lyra2 from C99 to Java. Adding a native Java implementation should ease integration with other Java projects and simplify its usage on other platforms, such as Android phones.
+This work describes the process of porting a password hashing scheme called Lyra2 from C99 to Java 1.8. A native Java implementation should ease integration with other Java projects and simplify its usage on other platforms, such as Android phones.
 
-This paper follows a straightforward approach. First, a brief description of the basic Lyra2 configuration is given, followed by an overview of the C99 project. Then follows a description of the ported Java project along with a number of notable challenges.
+This paper follows a straightforward approach. First, a brief description of the basic Lyra2 configuration is given, followed by an overview of the reference implementation. Then follows a description of the ported Java project along with a number of notable challenges.
 
-The results section \ref{sec:results} opens with both manual and automated testing which shows that both projects generate the same outputs given the same inputs. A performance comparison section \ref{sec:performance-comparison} follows, showing several thousands of measurements.
+Section \ref{sec:results} presents the results. It opens with both manual and automated testing which shows that both projects generate the same hash values when given the same inputs. A performance comparison follows in section \ref{sec:performance-comparison}, showing several thousands of measurements. Finally, section \ref{sec:mobile-application} demonstrates a small proof-of-concept mobile application that uses Lyra2.
 
-In summary, the ported Java project could be found on GitHub \cite{github:2017:lyra2-java} and on Maven Central \cite{maven:2017:lyra2}. The comparison project is hosted on GitHub as well \cite{github:2017:lyra2-compare} and could be reproduced. Generally, the ported implementation requires more processing time and memory. The main reasons for that could be found in comparison conclusion \ref{sec:comparison-conclusion}.
+In summary, the ported Java project could be found on GitHub \cite{github:2017:lyra2-java} and on Maven Central \cite{maven:2017:lyra2}. The comparison project and the source code for the mobile application are hosted on GitHub as well, projects \cite{github:2017:lyra2-compare} and \cite{github:2017:lyra2-mobile} respectively. Generally, the ported implementation requires more processing time and memory. The main reasons for that could be found in comparison conclusion \ref{sec:comparison-conclusion}. However, it integrates easily into the Android ecosystem which may justify the performance drop.
 
 \bigskip
 
 \section*{Keywords}
-Password Hashing Scheme, Lyra2, Memory Hard Functions, Java
+Password Hashing Scheme, Lyra2, Memory Hard Functions, Java, Android
 
 \end{otherlanguage}
