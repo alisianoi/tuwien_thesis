@@ -6,12 +6,12 @@
 \section{Algorithm-level Compatibility}
 \label{sec:it-works}
 
-The primary goal of this work was to port Lyra2 to Java so that it would produce the same hash values as the reference implementation when given the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in section \ref{sec:manual-testing} and section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit-testing framework them to verify hash results.
+The primary goal of this work was to port Lyra2 to Java so that it would produce the same hash values as the reference implementation when given the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in section \ref{sec:manual-testing} and section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit-testing framework which uses them to verify hash results.
 
 \subsection{Configuration Choice}
 By design Lyra2 has a large number of configurable parameters. This section will provide rationale for choosing particular values. The short summary can be found in table \ref{table:configuration-summary}.
 
-There are three sponges that could be tested: Blake2b, BlaMka and half-round BlaMka. Just the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values made it into the shortlist. The columns of the memory matrix can be any positive number. The \path{Lyra2/src/runBenchCPU.sh} benchmarking script as well as other sources suggest that the values of 256 and 512 should be chosen.
+There are three sponges that could be tested: Blake2b, BlaMka and half-round BlaMka. Only the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values made it into the shortlist. The columns of the memory matrix can be any positive number. The \path{Lyra2/src/runBenchCPU.sh} benchmarking script as well as other sources suggest that the values of 256 and 512 should be chosen.
 
 Finally, time and memory costs are fixed at an arbitrary value of 100. The output length is chosen to be 10 so that the resulting hash value would fit easily on the page.
 
@@ -98,7 +98,7 @@ Additionally, the \verb|Lyra2/tests/take.py| Python 3 script was used to choose 
 \section{Performance Comparison}
 \label{sec:performance-comparison}
 
-The single-threaded configuration of the reference C implementation was compared to the ported Java one. For that, a separate GitHub repository was set up \cite{github:2017:lyra2-compare}. This repository needs to control software written in both C and Java which is why an expressive, high-level scripting language was chosen to complete this task: Python 3.
+The single-threaded configuration of the reference C implementation was compared to its ported Java counterpart. For that, a separate GitHub repository was set up in \cite{github:2017:lyra2-compare}. This repository needs to control software written in both C and Java which is why an expressive, high-level scripting language was chosen to complete this task: Python 3.
 
 \subsection{Project Structure}
 
@@ -192,3 +192,28 @@ There are four figures that show running time and memory consumption of Lyra2 wh
 \label{sec:comparison-conclusion}
 
 The Java implementation was outperformed by the reference C implementation. This could in part be attributed to language ecosystems or programming skills but it also cannot be denied that the ported version takes a lot of extra steps in order to ensure algorithm-level compatibility. These include the extra rotations requried to simulate little-endian behaviour, as well as simulating pointer arithmetic or unsigned arithmetic for large 64-bit integers.
+
+\section{Android Application}
+\label{sec:mobile-application}
+
+Part of the porting effort was a small proof-of-concept mobile application. The ported Lyra2 library was indeed easy to add: Android Studio picked it up from the Maven Central repository without any issues. A notable caveat is that \mintinline{shell}{lyra2-java} was written using some features of Java 1.8 which limits the version of Android API to 24 and above. Admittedly, this mostly includes relatively modern devices and does not work on older smartphones.
+
+The screenshots demonstrate that \mintinline{shell}{lyra2-java} can be configured. The default values match those from section \ref{sec:manual-testing} and the hash values are the same. The souce code for this application can be found in \cite{github:2017:lyra2-mobile}.
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-main-clean}
+  \caption{Main screen}
+  \label{fig:lyra2-mobile-main}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-result-clean}
+  \caption{Resulting hash}
+  \label{fig:lyra2-mobile-result}
+\end{subfigure}
+\caption{Android application running Lyra2}
+\label{fig:lyra2-mobile-demo}
+\end{figure}
