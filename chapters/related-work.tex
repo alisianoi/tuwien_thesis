@@ -3,6 +3,22 @@
 
 \section{Cryptographic Competitions}
 
-It is common practice to announce a competition in order to develop standard cryptographic primitives. For example, the symmetric block cipher Rijndael was chosen to become the Advanced Encryption Standard (AES) in a competitive selection process that lasted from 1997 to 2000. The competition was organized by the National Institute of Standards and Technology (NIST) and included 15 different designs which were narrowed down to 5 during the final phase: Rijndael, Serpent, Twofish, RC6 and MARS. Such an open standartisation process was highly praised by the cryptographic community. So, another competition was held by NIST between 2007 and 2012 in order to select the next hash function standard, SHA-3. The final phase again included 5 designs: BLAKE, Grøstl, JH, Sklein and Keccak, the last of which ultimately became the winner of this second competition.
+It is common practice to announce a competition in order to develop standard cryptographic primitives. For example, the symmetric block cipher Rijndael \cite{daemen:2002:DRA} was chosen to become the Advanced Encryption Standard (AES) \cite{aes-fips} in a competitive selection process that lasted from 1997 to 2000. The competition was organized by the National Institute of Standards and Technology (NIST) and included 15 different designs which were narrowed down to 5 during the final phase: Rijndael, Serpent, Twofish, RC6 and MARS. Such an open standartization process was highly praised by the cryptographic community. So, another competition was held by NIST between 2007 and 2012 in order to select the next hash function standard, SHA-3. The final round included 5 designs: BLAKE, Grøstl, JH, Sklein and Keccak, the last of which ultimately became the winner of the competition.
 
-Choosing cryptographic primitives through an open competitive process is an effective approach. Therefore, it should not come as a surprise that when the need for an updated, memory-hard password hashing scheme became apparent, a Password Hashing Competition was held. This time, however, it was not organized by NIST but directly by the cryptographic community. In particular, well-known cryptographers Dmitry Khovratovich and Jean-Philippe Aumasson are listed as direct contacts on the password-hashing.net website. The password hashing competition concluded in 2015, with Argon2 selected as its winner and Catena, Lyra2, Makwa and yescrypt receiving special recognition. 
+Choosing cryptographic primitives through an open competitive process is an effective approach. Therefore, when the need for an updated, memory-hard password hashing scheme became apparent, a Password Hashing Competition was held. This time, however, it was not organized by NIST but directly by the cryptographic community. In particular, well-known cryptographers Dmitry Khovratovich and Jean-Philippe Aumasson are listed as direct contacts on the password-hashing.net website. The password hashing competition concluded in 2015, with Argon2 selected as its winner and Catena, Lyra2, Makwa and yescrypt receiving special recognition.
+
+Lyra2 is the primary focus of this work and will be discussed later. This section is meant to provide an overview of other related password hashing schemes.
+
+\section{Main Features of Catena}
+
+\section{Main Features of Makwa}
+
+\section{Main Features of yescrypt}
+
+\section{Main Features of Argon2}
+
+\emph{Argon2} has two distinct configurations: \emph{Argon2i} and \emph{Argon2d}. The former revists the blocks of the in-memory matrix in the data-\emph{independent} fashion while the latter does so in a data-\emph{dependent} manner. This means that \emph{Argon2i} is better suited for scenarios when \emph{side-channel attacks} are a viable concern, such as during password hashing or key derivation. At the same time \emph{Argon2d} is more resistant to \emph{time-memory tradeoffs} which makes it more suitable for digital cryptocurrencies or other cases where proof-of-work is important.
+
+From a design standpoint, Argon2 accepts roughly the same set of parameters as Lyra2: password, salt, degree of paralelism, length of the produced hash (called a \emph{tag} in \cite{biryukov:2015:argon2}), memory cost, time cost, version number (for compatibility reasons, currently at \texttt{0x13}), secret value, associated data and type of configuration to use (\emph{Argon2i} or \emph{Argon2d}).
+
+The more interesting parameters are the degree of parallelism as well as secret value together with associated data. The last two add more flexibility to the scheme. The degree of parallelism directly corresponds to the number of rows of the in-memory matrix.
