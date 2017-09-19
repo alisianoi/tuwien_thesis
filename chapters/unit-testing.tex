@@ -31,8 +31,31 @@ Although the reference reference Lyra2 project in \cite{github:2017:lyra} has au
 
 Secondly, when it comes to the \texttt{C/C++} ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness in \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will try to explain why. Section \ref{sec:unit-junit-testng} will provide motivation for my choice of the unit testing framework for the Java port and section \ref{sec:unit-pytest} will describe the test suite for the Python 3 harness.
 
-\subsection{Boost.Test and Google Test}
+\subsection{Boost.Test}
 \label{sec:unit-boost-google}
+
+Admittedly, there is a wide choice of unit testing frameworks for the \texttt{C/C++} ecosystem. An extensive list can be found in \cite{wiki:2017:frameworks-c, wiki:2017:frameworks-cpp}. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, it is far more simple to write a separate test file that would run a few sanity checks.
+
+Consider the case of Argon2. As one can see in \cite{github:2017:argon2}, the in-house \texttt{src/test.c} test harness for Argon2 was introduced on 25\textsuperscript{th} of January 2016. The commit hash starts with \texttt{7450df88} and it is number 317 out of (current) almost 600 in the version control history. It is safe to say that this testing was introduced at the later stages of the project when the need for it was apparent \footnote{https://github.com/P-H-C/phc-winner-argon2/issues/85}.
+
+A similar story could be observed for the reference Lyra2 project \cite{github:2017:lyra}. The rest of this section will attempt to answer the question why a rather popular unit-testing library \textsc{Boost.Test} is not the best fit for the password hashing projects. The main features of the library are summarized in table \ref{table:framework-features-cpp}.
+
+\textsc{Boost} is a large collection of different libraries for \texttt{C++}. It was originally founded by Beman Dawes and David Abrahams but today the number of contributors is in the hundreds. The scope of the libraries spans from concurrent programming to regular expressions to linear algebra. There is a formal submission process \footnote{http://www.boost.org/development/submissions.html} for any library that would like to be included into the collection as well as rigorous review in the mailing lists \footnote{http://www.boost.org/community/groups.html\#main}. Many of the ideas that originate in \textsc{Boost} are later adopted by the \texttt{C++} language standard.
+
+The \textsc{Boost.Test} is a well-designed and thought through unit-testing framework. It is licensed under the Boost Software License which is a free software license, OSI-approved and compatible with GPL. The library supports both parametrized tests as well as parallel execution.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{llll}
+    Name & License & Parametrization & Parallelism \\ \hline
+\textsc{Boost.Test} & Boost Software License & yes & needs 3\textsuperscript{rd} party runner
+% Google Test & MIT & parameters? & yes
+\end{tabular}
+\end{center}
+\caption{Main features of \textsc{Boost.Test}, adapted from \cite{wiki:2017:frameworks-cpp}}
+\label{table:framework-features-cpp}
+\end{table}
+
 \subsection{JUnit and TestNG}
 \label{sec:unit-junit-testng}
 \subsection{Unit Testing with py.test}
