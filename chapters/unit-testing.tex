@@ -27,9 +27,9 @@ Other types of coverage include: \emph{function} and \emph{statement} coverage (
 
 \section{Choice of the Unit Testing Framework}
 
-Although the reference reference Lyra2 project in \cite{github:2017:lyra} has automated tests, it does not use a dedicated unit testing framework. This is a reasonable choice which has its advantages. To start with, it allows to keep the complexity of the project low and not rely on external libraries. The build process is somewhat simplified as well.
+Although the reference Lyra2 project in \cite{github:2017:lyra} has automated tests, it does not use a dedicated unit testing framework. This is a reasonable choice which has its advantages. To start with, it allows to keep the complexity of the project low and not rely on external libraries. The build process is somewhat simplified as well.
 
-Secondly, when it comes to the \texttt{C/C++} ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness in \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will try to explain why. Section \ref{sec:unit-junit-testng} will provide motivation for my choice of the unit testing framework for the Java port and section \ref{sec:unit-pytest} will describe the test suite for the Python 3 harness.
+Secondly, when it comes to the \texttt{C/C++} ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness in \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will try to explain why. Section \ref{sec:unit-junit-testng} will provide motivation for my choice of the unit testing framework for the Java Lyra2 port and section \ref{sec:unit-pytest} will describe the test suite for the Python scripts harness.
 
 \subsection{Boost.Test}
 \label{sec:unit-boost-google}
@@ -40,23 +40,59 @@ Consider the case of Argon2. As one can see in \cite{github:2017:argon2}, the in
 
 A similar story could be observed for the reference Lyra2 project \cite{github:2017:lyra}. The rest of this section will attempt to answer the question why a rather popular unit-testing library \textsc{Boost.Test} is not the best fit for the password hashing projects. The main features of the library are summarized in table \ref{table:framework-features-cpp}.
 
-\textsc{Boost} is a large collection of different libraries for \texttt{C++}. It was originally founded by Beman Dawes and David Abrahams but today the number of contributors is in the hundreds. The scope of the libraries spans from concurrent programming to regular expressions to linear algebra. There is a formal submission process \footnote{http://www.boost.org/development/submissions.html} for any library that would like to be included into the collection as well as rigorous review in the mailing lists \footnote{http://www.boost.org/community/groups.html\#main}. Many of the ideas that originate in \textsc{Boost} are later adopted by the \texttt{C++} language standard.
+\textsc{Boost} itself is a large collection of different libraries for \texttt{C++}. It was originally founded by Beman Dawes and David Abrahams but today the number of contributors is in the hundreds. The scope of the libraries spans from concurrent programming to regular expressions to linear algebra. There is a formal submission process \footnote{http://www.boost.org/development/submissions.html} for any library that would like to be included into the collection as well as rigorous review in the mailing lists \footnote{http://www.boost.org/community/groups.html\#main}. Many of the ideas that originate in \textsc{Boost} are later adopted by the \texttt{C++} language standard.
 
-The \textsc{Boost.Test} is a well-designed and thought through unit-testing framework. It is licensed under the Boost Software License which is a free software license, OSI-approved and compatible with GPL. The library supports both parametrized tests as well as parallel execution.
+The \textsc{Boost.Test} is a unit-testing framework that is part of \textsc{Boost}. It is licensed under the Boost Software License which is a free software license, OSI-approved and compatible with GPL. The library documnetation is located in \cite{boost:2017:test-docs}.
+
+\textsc{Boost.Test} provides all the common features of a unit-testing library: a developer can decouple the tests from the implementation, subdivide the tests into suits and automatically register them with the test runner. The registration can be accomplished a single \mintinline{cpp}{#include<...>} and a call to the \mintinline{cpp}{BOOST_AUTO_TEST_CASE} macro, as shown in \ref{figure:boost-auto-test-case}.
+
+\begin{figure}
+\centering
+\begin{minted}{cpp}
+#define BOOST_TEST_MODULE example
+#include <boost/test/included/unit_test.hpp>
+
+BOOST_AUTO_TEST_CASE(name_of_test_function)
+{
+  BOOST_TEST( true /* test assertion */ );
+}
+  \end{minted}
+  \caption{Automatic unit test registration with the \textsc{Boost.Test} framework}
+  \label{figure:boost-auto-test-case}
+  \end{figure}
+
+Apart from that \textsc{Boost.Test} has a few convenience features. First of all, it is supposed to be used as a header-only library, so the project compilation process has to be modified just slightly. Secondly, \textsc{Boost.Test} supports parametrized tests which are called "Data-Driven Test Cases" and declared with the \mintinline{cpp}{BOOST_DATA_TEST_CASE}. More details about the usage of this (and similar) macros can be found in \cite{boost:2017:test-docs-data-macro}. The data also has to be wrapped into a dataset, the procedure is described in detail in \cite{boost:2017:test-docs-dataset}.
+
+This section should have given the reader a hint that setting up \texttt{Boost.Test} for real-world usage is not easy. Even though the documentation provides a decent and accurate description of the process, developers often choose an in-house testing set up. At least this is the case with Lyra2 and Argon2, which code their own simplified version of parametrized unit-tests.
 
 \begin{table}
-\begin{center}
 \begin{tabular}{llll}
     Name & License & Parametrization & Parallelism \\ \hline
 \textsc{Boost.Test} & Boost Software License & yes & needs 3\textsuperscript{rd} party runner
 % Google Test & MIT & parameters? & yes
 \end{tabular}
-\end{center}
 \caption{Main features of \textsc{Boost.Test}, adapted from \cite{wiki:2017:frameworks-cpp}}
 \label{table:framework-features-cpp}
 \end{table}
 
 \subsection{JUnit and TestNG}
 \label{sec:unit-junit-testng}
+
+The Java ecosystem offers JUnit, which is a unit-testing framework inspired by xUnit. The latter is just a collective name for an architecture that such unit-testing frameworks follow. This architecture includes: a \emph{test case}, which is essentially a class that contains testing logic. Such a class might have special methods called \emph{fixtures} which are responsible for setting up and tearing down the context in which a test is executed. For example, this might include repeatedly creating a set of objects or opening a database connection. Several test cases can be collected into a single \emph{test suite}. Finally, a program called a \emph{test runner} is responsible for discovering the test cases, running them and reporting the results back to the user.
+
+As well as JUnit, the Java ecosystem has a unit testing framework called TestNG \cite{testng:2017:home}. There are several in-depth comparisons available online in \cite{mkyong:2017:testng-vs-junit, wiki:2017:testng-vs-junit} but arguably the most important differences are described shortly.
+
+Firstly, both frameworks allow to implement parametrization tests but the implementation details are significantly different. Junit4 requires the developer to mark the class with the \mintinline{java}{@RunWith} decorator as well as provide a class method marked with \mintinline{java}{@Parameters} and return a single \mintinline{java}{Collections<Object[]>} of data. On the other hand, TestNG has two distinct mechanisms, one of which uses \texttt{testng.xml} and the other is a \mintinline{java}{@DataProvider} method which returns either a single \mintinline{java}{Object[][]} or an \mintinline{java}{Iterator<Object[]>}. With the first mechanism, the test data is stored separately in \texttt{testng.xml} while the second approach allows to have a function that generates the data \footnote{http://testng.org/doc/documentation-main.html\#parameters}.
+
+Formally, the way TestNG implements parametrized tests in a more flexible manner. However, in practice the \texttt{testng.xml} is not that widely used and the \mintinline{java}{Collections<Object[]>} Junit4 API is arguably cleaner than the generic-free way of TestNG. Finally, Junit4 is usually readily provided by Java IDEs and does not require additional setup. The feature parity with TestNG and general availability were the deciding factors in using this testing framework for the Java port of Lyra2.
+
 \subsection{Unit Testing with py.test}
 \label{sec:unit-pytest}
+
+Python is a very popular high-level general purpose scripting language created by Guido van Rossum. It is widely used in web development (i.e. the Django web framework \cite{django:2017:homepage}), in machine learning (the scikit-learn package), in network security (the Scapy project), etc. The Python ecosystem also produced the Jupyter project (formerly known as IPython Notebook) which advances the ideas of literate programming and reproducible research.
+
+Python has a built-in unit testing framework called \texttt{unittest} which comes together with the interpreter. It keeps a fairly compatible interface with the xUnit architecture described in \cite{sec:unit-junit-testng}. Other two notable unit testing frameworks in Python are \texttt{Node} and \texttt{py.test}. They both support an xUnit compatible layer and come as an external dependency. The features offered by these two external frameworks are somewhat superior to those provided by the built-in \texttt{unittest}.
+
+\emph{Parametrized testing} is tricky when it comes to a scripting language like Python. Even the built-in \texttt{unittest} framework could dynamically generate test classes, as demonstrated on stackoverflow \footnote{https://stackoverflow.com/a/20870875/1269892}. However, there is no \emph{designed} way to do so. The \textsc{Nose} library allows for parametrized testing through an elegant mechanism of Python generators (the \mintinline{python}{yield} keyword) that return functions to be run as test cases. The \texttt{py.test} framework goes the more xUnit-inspired route of using the \mintinline{python}{@mark.parametrized} decorator.
+
+Unfortunately, the \textsc{Nose} unit testing framework has been in maintenance mode. This framework is no longer in active development and therefore is not recommended for new projects. This is why the Python build harness for the reference Lyra2 implementation uses \texttt{py.test}.
