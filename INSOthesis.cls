@@ -149,6 +149,9 @@
 \RequirePackage[bf,hang]{caption}
 \RequirePackage{subcaption}
 \RequirePackage[german,ngerman,english]{babel}
+\RequirePackage{amssymb}
+\RequirePackage{amsmath}
+\RequirePackage{IEEEtrantools}
 \RequirePackage{csquotes}
 \RequirePackage{geometry}[2010/09/12]
 \RequirePackage{url}
