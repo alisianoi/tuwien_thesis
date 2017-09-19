@@ -7,30 +7,45 @@ It is common practice to announce a competition in order to develop standard cry
 
 Choosing cryptographic primitives through an open competitive process is an effective approach. Therefore, when the need for an updated, memory-hard password hashing scheme became apparent, a Password Hashing Competition was held. This time, however, it was not organized by NIST but directly by the cryptographic community. In particular, well-known cryptographers Dmitry Khovratovich and Jean-Philippe Aumasson are listed as direct contacts on the password-hashing.net website. The password hashing competition concluded in 2015, with Argon2 selected as its winner and Catena, Lyra2, Makwa and yescrypt receiving special recognition.
 
-Lyra2 is the primary focus of this work and will be discussed later. This section is meant to provide an overview of other related password hashing schemes.
+\section{Password Hashing Fundamentals}
+\label{sec:fundamentals}
+
+\emph{Password hashing} is the process of transforming a password into a hash value. Given the resulting hash value it should be computationally infeasible to restore the original password.
+
+Password hashing is common practice when user authentication is required. The user provides a password which is then hashed using some password hashing algorithm. The resulting hash is then compared against a hash value which is stored in the database and is known to be correct. If both hashes match, the user is authenticated.
+
+When a password database is leaked, the password hashing process is what prevents the attackers from gaining the original plaintext passwords. One of the early password hashing schemes, which is widely used today, is PBKDF2, described in section 5.2 of \cite{moriarty:2017:pkcs}. The fundamental idea behind it (which is shared among a few other early password hashing schemes) is to apply a \emph{pseudo-random function} a number of times, treating it as a parameter for computational cost.
+
+It is often the case that an attacker can compute a large number of hashes in parallel. If so, the increased individual computational time cost of one hash does not prevent the attacker from trying many combinations at once. However, parallel systems (such as general-purpose GPUs or specialized ASICs and FPGAs) usually have significantly less memory per one processing unit. Therefore, if a password hashing process offers a memory cost parameter, an attacker will face greater costs per one parallel computation.
+
+Arguably the first password hashing scheme to address this was scrypt, which was recently published as RFC 7914 \cite{percival:2016:scrypt}. However, this scheme is sometimes criticized for being overly complicated and not offering a decoupled way to control time and memory costs. In other words, there is a single parameter that controls both time and memory costs.
+
+The password hashing competition was announced in 2013 and concluded in 2015 \cite{wetzels:2016:phc}. Its winner (Argon2) and all of the finalists except Lyra2 will be mentioned below. Lyra2 is the main focus of this work and will be described in \ref{chapter:lyra2}.
 
 \section{Main Features of Catena}
 
-\textsc{Catena} is a password-scrambling framework based on bit-reversal graphs. It packs such features as \emph{client-independent updates} which allows a hash value to be updated using larger time or memory cost parameters without having to wait for a user to re-login. \textsc{Catena} also offers a \emph{server-relief} feature which allows to offload most of the hash computation to the client machine rather than the server, hence increasing the number of concurrent logins.
+\textsc{Catena} is a password-scrambling framework based on bit-reversal graphs. It packs such features as \emph{client-independent updates} which allows a hash value to be updated using larger time or memory cost parameters without the need to wait for a user to login. \textsc{Catena} also offers a \emph{server-relief} feature which allows to offload most of the hash computation to the client machine rather than the server, hence increasing the number of possible concurrent logins.
 
-The \textsc{Catena-Butterfly(-Full)} and \textsc{Catena-Dragonfly(-Full)} are the most notable configurations of \textsc{Catena}. The former one is recommended when memory-hardness is important. The \textsc{-Full} versions utilize the complete set of rounds of the underlying hash function Blake2b.
+The \textsc{Catena-Butterfly(-Full)} and \textsc{Catena-Dragonfly(-Full)} are the most notable configurations of \textsc{Catena}. The former one is recommended when the memory-hard property is required. The \textsc{-Full} versions utilize the complete set of rounds of the underlying hash function Blake2b.
 
 \section{Main Features of Makwa}
 
-The core of Makwa is a "sequence of squarings of a composite (Blum) integer" \cite{pornin:2015:makwa}. A Blum integer is a natural integer \(n\) which can be represented as a \(pq\) where \(p\) and \(q\) are prime numbers with an additional property of
+The core of Makwa is a "sequence of squarings of a composite (Blum) integer" \cite{pornin:2015:makwa}. A Blum integer is a natural integer \(n\) which can be represented as a \(pq\) where \(p\) and \(q\) are prime numbers with an additional property of:
 
 \begin{IEEEeqnarray}{rCl}
     p &=& 3 \texttt{ mod } 4 \\
     q &=& 3 \texttt{ mod } 4
 \end{IEEEeqnarray}
 
-The squaring is primarily computation intensive and does not require a significant amount of memory. The \(p\) and \(q\) integers should be kept secret, if they are known then the computation can be accelerated considerably.
+The squaring is primarily computation intensive and does not require a significant amount of memory. The \(p\) and \(q\) integers should be kept secret, if they are known then the computation can be accelerated considerably and provide the \emph{escrow} feature.
 
-Makwa supports \emph{delegation} which is described as the ability to offload part of the computation to an untrusted third party. As well as that, \emph{client-independent updates} are also supported.
+Makwa supports \emph{delegation} which is described as the ability to offload part of the computation to an untrusted third party. As well as that, \emph{client-independent updates} can also be made available.
 
 \section{Main Features of yescrypt}
 
-\emph{yescrypt} \cite{peslyak:2015:yescrypt} improves upon its predecessor, \emph{scrypt} \cite{percival:2016:scrypt}. However, yescrypt author Alexander Peslyak makes it clear that the author of scrypt is a different person, namely Colin Percival. The yescrypt PHS clarifies some minor inconsistencies discovered with its predecessor and provides a compatibility mode. It also introduces a novel configuration with a read-only memory (ROM) table. In that configurations random lookups are performed so as to ensure that this table must remain in memory. Finally, the \texttt{YESCRYPT\_RW} flag enables these lookups as well as a number of optimized instructions.
+\emph{yescrypt} \cite{peslyak:2015:yescrypt} improves upon its predecessor, \emph{scrypt} \cite{percival:2016:scrypt}. However, yescrypt author Alexander Peslyak makes it clear that the author of scrypt is a different person, namely Colin Percival. The yescrypt PHS deals with some minor inconsistencies discovered in the specification of its predecessor. This is provided as a compatibility mode.
+
+The yescrypt PHS also introduces a novel configuration with a read-only memory (ROM) table. In that configuration random lookups are performed so as to ensure that this table must remain in memory. Finally, the \texttt{YESCRYPT\_RW} flag enables these lookups as well as a number of optimized instructions.
 
 \section{Main Features of Argon2}
 
