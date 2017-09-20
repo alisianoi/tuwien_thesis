@@ -10,11 +10,11 @@ Section \ref{sec:unit-terms-and-definitions} will introduce the basic practices 
 \section{Terms and Definitions}
 \label{sec:unit-terms-and-definitions}
 
-\emph{Unit testing} is the process of verifying that written code produces expected results when given specific inputs. \emph{Unit under test} is a common term that refers to the specific part of the code that is being tested by a specific \emph{test case}. Unit testing is often powered by a \emph{unit testing framework} which is a set of tools dedicated to simplify writing and running unit tests.
+\emph{Unit testing} is the process of verifying that the program produces expected results when given specific inputs. \emph{Unit under test} is a common term that refers to the specific part of the code that is being tested by a specific \emph{test case}. Unit testing is often powered by a \emph{unit testing framework} which is a set of tools dedicated to simplify both writing and running unit tests. \emph{Test Driven Development} is a software development practice which expects a piece of functionality to be produced together with the necessary tests.
 
 One notable property of a typical unit test is that it deals with the smallest logical piece of code possible: one particular function or a single method of a class. Consequently, distinct unit tests are ususally independent of each other and can be run in any order or in parallel. This is a desirable feature of a good unit testing framework.
 
-However, there are also cases when the complexity of a unit test is higher. For example, when a class heavily relies on data coming from a database, a unit test needs to \emph{mock} the database connection and the data. \emph{Mocking} is the process of simulating a real object with a simplified and predictable version of it.
+However, there are also cases when the complexity of a unit test is higher. For example, when a class heavily relies on data coming from a database, a unit test needs to \emph{mock} the database connection and the data. \emph{Mocking} is the process of simulating a real object with a simplified version of it.
 
 It is often the case that many unit tests share the same logic. When testing hash functions, this logic could be summarized with the following steps:
 
@@ -24,34 +24,46 @@ It is often the case that many unit tests share the same logic. When testing has
     \item Compute the hash value and compare it to the correct one.
    \end{enumerate}
 
-Clearly, manually writing a unit test for each combination of the hash function configuration and each set of input parameters is a daunting task. \emph{Parametrized unit testing} allows to generate a template for a large number of unit tests and is therefore a desirable feature of a testing frameworks \cite{tillmann:2010:parametrized-unit-tests-rock}.
+Writing a unit test for each combination of the hash function configuration and each set of input parameters is a daunting task. \emph{Parametrized unit testing} allows to generate a template for a large number of unit tests and avoid the extra labour \cite{tillmann:2010:parametrized-unit-tests-rock}. Therefore, unit testing frameworks that support this particular feature are of special interest in this work.
 
-\emph{Code coverage} is an indicator that provides better understanding of how well a program is being tested. If only a small portion of the program gets executed, then code coverage tends to be low. There are many ways to measure code coverage but probably the most common one is to count the number of source code lines that were executed by a test suite and return it as a percentage of the total number of lines.
+\emph{Code coverage} is an indicator that provides better understanding of how well a program is tested. It is low when only a small portion of the program is properly tested, and high otherwise. There are many ways to measure code coverage, some of which are described in \cite{elberzhager:2012:reducing-effort}. In practice, the most common code coverage metric is the number of lines of code (LOCs) covered by the test suite as a percentage of the total number of LOCs.
 
-Other types of coverage include: \emph{function} and \emph{statement} coverage (i.e. the portion of functions or statements that has been executed), \emph{branch} and \emph{condition} coverage (i.e. the portion of conditions/branches executed in relation to the total number of \emph{all possible} combinations) and many others. However, in practice \emph{line coverage} is the more common indicator.
+Other types of coverage include: \emph{function} and \emph{statement} coverage (i.e. the portion of functions or statements that has been executed), \emph{branch} and \emph{condition} coverage (i.e. the portion of conditions/branches executed in relation to the total number of \emph{all possible} combinations) and many others. For the sake of simplicity, the projects developed in this work will not be using these metrics.
 
-\emph{Continuous integration} is the practice of running unit tests (and measuring code coverage changes) with every codebase change. This approach helps identify problems early and fix them quicker. It often comes in the form of a dedicated machine that builds and runs the tests each time a change is pushed to the source code repository.
+\emph{Continuous integration} (CI) is the practice of running unit tests (and measuring code coverage changes) with every codebase change. This approach helps identify problems early and fix them quicker \cite{williams:2010:unit-tests-rock}. Continuous integration often occurs transparenly on a separate set of dedicated machines and its status is visible to the developers at all times. Its popularity and utility is undisputable, with such services like TravisCI \cite{travis:2017:homepage}, AppVeyor \cite{appveyor:2017:homepage} and CircleCI \cite{circleci:2017:homepage} available free of charge for open source projects.
 
 \section{Choice of the Unit Testing Framework}
 
 Although the reference Lyra2 project in \cite{github:2017:lyra} has automated tests, it does not use a dedicated unit testing framework. This is a reasonable choice which has its advantages. To start with, it allows to keep the complexity of the project low and not rely on external libraries. The build process is somewhat simplified as well.
 
-Secondly, when it comes to the \texttt{C/C++} ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness in \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will try to explain why. Section \ref{sec:unit-junit-testng} will provide motivation for my choice of the unit testing framework for the Java Lyra2 port and section \ref{sec:unit-pytest} will describe the test suite for the Python scripts harness.
+Secondly, when it comes to the \texttt{C/C++} ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness in \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will provide a plausible explanation. Section \ref{sec:unit-junit-testng} will provide motivation for my choice of the unit testing framework for the Java Lyra2 port and section \ref{sec:unit-pytest} will describe the test suite for the Python scripts harness.
+
+\begin{table}
+\begin{tabular}{llll}
+    Name & License & Parametrization & Parallelism \\ \hline
+\textsc{Boost.Test} & Boost Software License & yes & needs 3\textsuperscript{rd} party runner (\texttt{cmake}) \\
+\texttt{JUnit4} & Eclipse Public License & yes & needs 3\textsuperscript{rd} party runner (\texttt{mvn}) \\
+\texttt{py.test} & MIT & yes & needs 3\textsuperscript{rd} party plugin (\texttt{pytest.xdist})
+% Google Test & MIT & parameters? & yes
+\end{tabular}
+\caption{Main features of unit testing frameworks}
+\label{table:framework-features-cpp}
+\end{table}
 
 \subsection{Boost.Test}
 \label{sec:unit-boost-google}
 
 Admittedly, there is a wide choice of unit testing frameworks for the \texttt{C/C++} ecosystem. An extensive list can be found in \cite{wiki:2017:frameworks-c, wiki:2017:frameworks-cpp}. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, it is far more simple to write a separate test file that would run a few sanity checks.
 
-Consider the case of Argon2. As one can see in \cite{github:2017:argon2}, the in-house \texttt{src/test.c} test harness for Argon2 was introduced on 25\textsuperscript{th} of January 2016. The commit hash starts with \texttt{7450df88} and it is number 317 out of (current) almost 600 in the version control history. It is safe to say that this testing was introduced at the later stages of the project when the need for it was apparent \footnote{https://github.com/P-H-C/phc-winner-argon2/issues/85}.
+Consider the case of Argon2. As one can see in \cite{github:2017:argon2}, the in-house \texttt{src/test.c} test program for Argon2 was introduced on 25\textsuperscript{th} of January 2016. The commit hash starts with \texttt{7450df88} and it is number 317 out of (current) almost 600 in the version control history. So it is safe to say that this testing was introduced at the later stages of the project when the need for it was apparent \footnote{https://github.com/P-H-C/phc-winner-argon2/issues/85}.
 
-A similar story could be observed for the reference Lyra2 project \cite{github:2017:lyra}. The rest of this section will attempt to answer the question why a rather popular unit-testing library \textsc{Boost.Test} is not the best fit for the password hashing projects. The main features of the library are summarized in table \ref{table:framework-features-cpp}.
+A similar story could be observed for the reference Lyra2 project \cite{github:2017:lyra}. The rest of this section will explain why a rather popular unit testing library \textsc{Boost.Test} was not used in either of the projects. This particular library was tried because of my existing developer experience. A different developer could attempt the same steps with another library, like \texttt{CTest} or \texttt{Google Test}.
 
 \textsc{Boost} itself is a large collection of different libraries for \texttt{C++}. It was originally founded by Beman Dawes and David Abrahams but today the number of contributors is in the hundreds. The scope of the libraries spans from concurrent programming to regular expressions to linear algebra. There is a formal submission process \footnote{http://www.boost.org/development/submissions.html} for any library that would like to be included into the collection as well as rigorous review in the mailing lists \footnote{http://www.boost.org/community/groups.html\#main}. Many of the ideas that originate in \textsc{Boost} are later adopted by the \texttt{C++} language standard.
 
 The \textsc{Boost.Test} is a unit-testing framework that is part of \textsc{Boost}. It is licensed under the Boost Software License which is a free software license, OSI-approved and compatible with GPL. The library documnetation is located in \cite{boost:2017:test-docs}.
 
-\textsc{Boost.Test} provides all the common features of a unit-testing library: a developer can decouple the tests from the implementation, subdivide the tests into suits and automatically register them with the test runner. The registration can be accomplished a single \mintinline{cpp}{#include<...>} and a call to the \mintinline{cpp}{BOOST_AUTO_TEST_CASE} macro, as shown in \ref{figure:boost-auto-test-case}.
+The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in Section \ref{sec:unit-terms-and-definitions}. Apart from test parametrization, \textsc{Boost.Test} provides all the common features of a unit testing library. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \mintinline{cpp}{#include<...>} and a call to the \mintinline{cpp}{BOOST_AUTO_TEST_CASE} macro, as shown in \ref{figure:boost-auto-test-case}.
 
 \begin{figure}
 \centering
@@ -71,16 +83,6 @@ BOOST_AUTO_TEST_CASE(name_of_test_function)
 Apart from that \textsc{Boost.Test} has a few convenience features. First of all, it is supposed to be used as a header-only library, so the project compilation process has to be modified just slightly. Secondly, \textsc{Boost.Test} supports parametrized tests which are called "Data-Driven Test Cases" and declared with the \mintinline{cpp}{BOOST_DATA_TEST_CASE}. More details about the usage of this (and similar) macros can be found in \cite{boost:2017:test-docs-data-macro}. The data also has to be wrapped into a dataset, the procedure is described in detail in \cite{boost:2017:test-docs-dataset}.
 
 This section should have given the reader a hint that setting up \texttt{Boost.Test} for real-world usage is not easy. Even though the documentation provides a decent and accurate description of the process, developers often choose an in-house testing set up. At least this is the case with Lyra2 and Argon2, which code their own simplified version of parametrized unit-tests.
-
-\begin{table}
-\begin{tabular}{llll}
-    Name & License & Parametrization & Parallelism \\ \hline
-\textsc{Boost.Test} & Boost Software License & yes & needs 3\textsuperscript{rd} party runner
-% Google Test & MIT & parameters? & yes
-\end{tabular}
-\caption{Main features of \textsc{Boost.Test}, adapted from \cite{wiki:2017:frameworks-cpp}}
-\label{table:framework-features-cpp}
-\end{table}
 
 \subsection{JUnit and TestNG}
 \label{sec:unit-junit-testng}
