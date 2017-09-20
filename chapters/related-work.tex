@@ -28,7 +28,7 @@ In order to create new designs which would address this problem, the Password Ha
 
 \section{Main Features of \textsc{Catena}}
 
-\textsc{Catena} is a password-scrambling framework based on Bit Reversal Graphs. It packs such features as \emph{client-independent updates} which allows a hash value to be updated using larger time or memory cost parameters without the need to wait for a user to login. \textsc{Catena} also offers a \emph{server-relief} feature which allows to offload most of the hash computation to the client machine rather than the server, hence increasing the number of possible concurrent logins.
+\textsc{Catena} is a password-scrambling framework based on Bit Reversal Graphs \cite{forler:2013:catena}. It packs such features as \emph{client-independent updates} which allows a hash value to be updated using larger time or memory cost parameters without the need to wait for a user to login. \textsc{Catena} also offers a \emph{server-relief} feature which allows to offload most of the hash computation to the client machine rather than the server, hence increasing the number of possible concurrent logins.
 
 The \textsc{Catena-Butterfly(-Full)} and \textsc{Catena-Dragonfly(-Full)} are the most notable configurations of \textsc{Catena}. The former one is recommended when the memory-hard property is required. The \textsc{-Full} versions utilize the complete set of rounds of the underlying hash function Blake2b.
 
@@ -57,7 +57,7 @@ The yescrypt PHS also introduces a novel configuration with a read-only memory (
 
 \section{Main Features of Argon2}
 
-\emph{Argon2} has two distinct configurations: \emph{Argon2i} and \emph{Argon2d}. The former revists the blocks of the in-memory matrix in the data-\emph{independent} fashion while the latter does so in a data-\emph{dependent} manner. This means that Argon2i is better suited for scenarios when \emph{side-channel attacks} are a viable concern, such as during password hashing or key derivation. At the same time Argon2d is more resistant to \emph{time-memory tradeoffs} which makes it more suitable for digital cryptocurrencies or other cases where proof of work is important.
+\emph{Argon2} has two distinct configurations: \emph{Argon2i} and \emph{Argon2d} \cite{biryukov:2015:argon2}. The former revists the blocks of the in-memory matrix in the data-\emph{independent} fashion while the latter does so in a data-\emph{dependent} manner. This means that Argon2i is better suited for scenarios when \emph{side-channel attacks} are a viable concern, such as during password hashing or key derivation. At the same time Argon2d is more resistant to \emph{time-memory tradeoffs} which makes it more suitable for digital cryptocurrencies or other cases where proof of work is important.
 
 Argon2 accepts the following set of parameters: password, salt, degree of paralelism, length of the produced hash (called a \emph{tag} in \cite{biryukov:2015:argon2}), memory cost, time cost, version number (for compatibility reasons, currently at \texttt{0x13}), secret value, associated data and type of configuration to use (Argon2i or Argon2d).
 
