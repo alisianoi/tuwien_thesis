@@ -26,11 +26,15 @@ Arguably the first password hashing scheme to implement this idea this was scryp
 
 In order to create new designs which would address this problem, the Password Hashing Competition was announced in 2013 and concluded in 2015 \cite{wetzels:2016:phc}. Below follows a quick summary of its winner (Argon2) and all of the finalists except Lyra2. The latter is the main focus of this work and will be described in more detail later in \ref{chapter:lyra2}.
 
-\section{Main Features of Catena}
+\section{Main Features of \textsc{Catena}}
 
-\textsc{Catena} is a password-scrambling framework based on bit-reversal graphs. It packs such features as \emph{client-independent updates} which allows a hash value to be updated using larger time or memory cost parameters without the need to wait for a user to login. \textsc{Catena} also offers a \emph{server-relief} feature which allows to offload most of the hash computation to the client machine rather than the server, hence increasing the number of possible concurrent logins.
+\textsc{Catena} is a password-scrambling framework based on Bit Reversal Graphs. It packs such features as \emph{client-independent updates} which allows a hash value to be updated using larger time or memory cost parameters without the need to wait for a user to login. \textsc{Catena} also offers a \emph{server-relief} feature which allows to offload most of the hash computation to the client machine rather than the server, hence increasing the number of possible concurrent logins.
 
 The \textsc{Catena-Butterfly(-Full)} and \textsc{Catena-Dragonfly(-Full)} are the most notable configurations of \textsc{Catena}. The former one is recommended when the memory-hard property is required. The \textsc{-Full} versions utilize the complete set of rounds of the underlying hash function Blake2b.
+
+An interesting related project is \textsc{Catena-Axungia} which can be found in \cite{github:2017:catena-axungia}. It allows its user to specify the desired time and memory requirements in conventional (for a human) seconds and kilobytes. After that the program returns recommended values which will on average make \textsc{Catena-Butterfly} or \textsc{Catena-Dragonfly} run for the set amount of time and consume the set amount of memory.
+
+Finally, the \textsc{Catena-Variants} \cite{github:2017:catena-variants} project is a modular \texttt{C++} implementation of \textsc{Catena}. It is reported to be slower and consume more memory while at the same time providing more flexibility. There is an API that allows the developer to mix and match internal parts of the algorithm.
 
 \section{Main Features of Makwa}
 
