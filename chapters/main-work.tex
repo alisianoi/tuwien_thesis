@@ -374,7 +374,6 @@ The original Lyra2 reference implementation requires just one direction for rota
 
 The same trick cannot be performed on line \(16\) though. The rotation there is \(63\) bits to the right, which is not divisible by 8 bits (the size of one byte). Since \mintinline{java}{mem.flip} performs a byte-level rotation, it does not mix with the rotation and has to be performed explicitly. This rotation trick has accelerated the ported implementation by about 20\%. The BlaMka family of sponges are based on Blake2b and benefit from the same trick as well.
 
-
 \begin{figure}
 \small
 \begin{minted}[linenos]{java}
@@ -400,4 +399,43 @@ The same trick cannot be performed on line \(16\) though. The rotation there is 
 \normalsize
 \caption{Blake2b as instance of the Sponge class, illustrating optimized rotations}
 \label{fig:sponge-blake2b}
+\end{figure}
+
+
+\begin{figure}
+\small
+\begin{minted}[linenos]{java}
+public class SpongeBlamka extends Sponge {
+    private long fBlaMka(final long x, final long y) {
+        long lessX = 0x00000000FFFFFFFFL & x;
+        long lessY = 0x00000000FFFFFFFFL & y;
+
+        lessX *= lessY;
+
+        lessX <<= 1;
+
+        return lessX + x + y;
+    }
+
+    @Override
+    public void G(final int a, final int b, final int c, final int d) {
+        state[a] = mem.flip(fBlaMka(mem.flip(state[a]), mem.flip(state[b])));
+        state[d] = rotl64(state[d] ^ state[a], 32);
+
+        state[c] = mem.flip(fBlaMka(mem.flip(state[c]), mem.flip(state[d])));
+        state[b] = rotl64(state[b] ^ state[c], 24);
+
+        state[a] = mem.flip(fBlaMka(mem.flip(state[a]), mem.flip(state[b])));
+        state[d] = rotl64(state[d] ^ state[a], 16);
+
+        state[c] = mem.flip(fBlaMka(mem.flip(state[c]), mem.flip(state[d])));
+        // Cannot use the left rotation trick here: 63 % 8 != 0, so
+        // individual bytes do not stay the same, they change too.
+        state[b] = mem.flip(rotr64(mem.flip(state[b] ^ state[c]), 63));
+    }
+}
+\end{minted}
+\normalsize
+\caption{BlaMka as instance of the Sponge class, the same rotation trick in action.}
+\label{fig:sponge-blamka}
 \end{figure}
