@@ -1,4 +1,4 @@
-\chapter{Unit Testing Framework}
+\chapter{Unit Testing Frameworks}
 \label{chapter:unit-testing-framework}
 
 For the Java port of the Lyra2 Password Hashing Scheme testing is important. It makes sure that the new implementation produces the same results as the reference implementation. However, formal specification and verification methods are rather complex \cite{lamsweerde:2000:formal-specification, mueller:1994:formal-specification}.
@@ -41,7 +41,7 @@ Secondly, when it comes to the \texttt{C/C++} ecosystem, the choice of the frame
 \begin{table}
 \begin{tabular}{llll}
     Name & License & Parametrization & Parallelism \\ \hline
-\textsc{Boost.Test} & Boost Software License & yes & needs 3\textsuperscript{rd} party runner (\texttt{cmake}) \\
+\texttt{Boost.Test} & Boost Software License & yes & needs 3\textsuperscript{rd} party runner (\texttt{cmake}) \\
 \texttt{JUnit4} & Eclipse Public License & yes & needs 3\textsuperscript{rd} party runner (\texttt{mvn}) \\
 \texttt{py.test} & MIT & yes & needs 3\textsuperscript{rd} party plugin (\texttt{pytest.xdist})
 % Google Test & MIT & parameters? & yes
@@ -50,58 +50,142 @@ Secondly, when it comes to the \texttt{C/C++} ecosystem, the choice of the frame
 \label{table:framework-features-cpp}
 \end{table}
 
-\subsection{Boost.Test}
+\subsection{\texttt{Boost.Test}}
 \label{sec:unit-boost-google}
 
 Admittedly, there is a wide choice of unit testing frameworks for the \texttt{C/C++} ecosystem. An extensive list can be found in \cite{wiki:2017:frameworks-c, wiki:2017:frameworks-cpp}. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, it is far more simple to write a separate test file that would run a few sanity checks.
 
 Consider the case of Argon2. As one can see in \cite{github:2017:argon2}, the in-house \texttt{src/test.c} test program for Argon2 was introduced on 25\textsuperscript{th} of January 2016. The commit hash starts with \texttt{7450df88} and it is number 317 out of (current) almost 600 in the version control history. So it is safe to say that this testing was introduced at the later stages of the project when the need for it was apparent \footnote{https://github.com/P-H-C/phc-winner-argon2/issues/85}.
 
-A similar story could be observed for the reference Lyra2 project \cite{github:2017:lyra}. The rest of this section will explain why a rather popular unit testing library \textsc{Boost.Test} was not used in either of the projects. This particular library was tried because of my existing developer experience. A different developer could attempt the same steps with another library, like \texttt{CTest} or \texttt{Google Test}.
+A similar story could be observed for the reference Lyra2 project \cite{github:2017:lyra}. The rest of this section will explain why a rather popular unit testing library \texttt{Boost.Test} was not used in either of the projects. This particular library was tried because of my personal developer preference. A different developer could attempt the same steps with another library, like \texttt{CTest} or \texttt{Google Test}.
 
-\textsc{Boost} itself is a large collection of different libraries for \texttt{C++}. It was originally founded by Beman Dawes and David Abrahams but today the number of contributors is in the hundreds. The scope of the libraries spans from concurrent programming to regular expressions to linear algebra. There is a formal submission process \footnote{http://www.boost.org/development/submissions.html} for any library that would like to be included into the collection as well as rigorous review in the mailing lists \footnote{http://www.boost.org/community/groups.html\#main}. Many of the ideas that originate in \textsc{Boost} are later adopted by the \texttt{C++} language standard.
+\texttt{Boost} itself is a large collection of different libraries for \texttt{C++}. It was originally founded by Beman Dawes and David Abrahams but today the number of contributors is in the hundreds. The scope of the libraries spans from concurrent programming to regular expressions to linear algebra. There is a formal submission process \footnote{http://www.boost.org/development/submissions.html} for any library that would like to be included into the collection as well as rigorous review in the mailing lists \footnote{http://www.boost.org/community/groups.html\#main}. Many of the ideas that originate in \texttt{Boost} are later adopted by the \texttt{C++} language standard.
 
-The \textsc{Boost.Test} is a unit-testing framework that is part of \textsc{Boost}. It is licensed under the Boost Software License which is a free software license, OSI-approved and compatible with GPL. The library documnetation is located in \cite{boost:2017:test-docs}.
+The \texttt{Boost.Test} is a unit testing framework that is part of \texttt{Boost}. It is licensed under the Boost Software License which is a free software license, OSI-approved and compatible with GPL. The library documnetation is located in \cite{boost:2017:test-docs}.
 
-The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in Section \ref{sec:unit-terms-and-definitions}. Apart from test parametrization, \textsc{Boost.Test} provides all the common features of a unit testing library. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \mintinline{cpp}{#include<...>} and a call to the \mintinline{cpp}{BOOST_AUTO_TEST_CASE} macro, as shown in \ref{figure:boost-auto-test-case}.
+The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in Section \ref{sec:unit-terms-and-definitions}. \texttt{Boost.Test} provides all the common features a unit testing library is expected to have. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \mintinline{cpp}{#include<...>} and a call to the \mintinline{cpp}{BOOST_AUTO_TEST_CASE} macro, as shown in \ref{figure:boost-auto-test-case}.
 
 \begin{figure}
 \centering
 \begin{minted}{cpp}
-#define BOOST_TEST_MODULE example
+#define BOOST_TEST_MODULE example_module_name
 #include <boost/test/included/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(name_of_test_function)
-{
-  BOOST_TEST( true /* test assertion */ );
+BOOST_AUTO_TEST_CASE(name_of_test_function) {
+    BOOST_TEST(true);
 }
   \end{minted}
-  \caption{Automatic unit test registration with the \textsc{Boost.Test} framework}
+  \caption{Automatic unit test registration with the \texttt{Boost.Test} framework}
   \label{figure:boost-auto-test-case}
   \end{figure}
 
-Apart from that \textsc{Boost.Test} has a few convenience features. First of all, it is supposed to be used as a header-only library, so the project compilation process has to be modified just slightly. Secondly, \textsc{Boost.Test} supports parametrized tests which are called "Data-Driven Test Cases" and declared with the \mintinline{cpp}{BOOST_DATA_TEST_CASE}. More details about the usage of this (and similar) macros can be found in \cite{boost:2017:test-docs-data-macro}. The data also has to be wrapped into a dataset, the procedure is described in detail in \cite{boost:2017:test-docs-dataset}.
+Apart from that \texttt{Boost.Test} has a few convenience features. First of all, it was designed to be used as a header-only library. This allows to modify the build process of a project just slightly but some extra work still needs to be done. Secondly, \texttt{Boost.Test} supports parametrized tests which are called "Data-Driven Test Cases" and declared with the special \mintinline{cpp}{BOOST_DATA_TEST_CASE} macro. More details about its usage can be found in \cite{boost:2017:test-docs-data-macro}. The data also has to be wrapped into a dataset, the procedure is described in detail in \cite{boost:2017:test-docs-dataset}.
 
-This section should have given the reader a hint that setting up \texttt{Boost.Test} for real-world usage is not easy. Even though the documentation provides a decent and accurate description of the process, developers often choose an in-house testing set up. At least this is the case with Lyra2 and Argon2, which code their own simplified version of parametrized unit-tests.
+This section should have given the reader a hint that setting up \texttt{Boost.Test} for the real-world usage is not completely painless. Even though the documentation provides a decent and accurate description of the process, developers often choose an in-house route. This is the case with Lyra2 and Argon2, which code their own testing solutions and do not take advantage of test parametrization.
 
-\subsection{JUnit and TestNG}
+\subsection{\texttt{JUnit} and \texttt{TestNG}}
 \label{sec:unit-junit-testng}
 
-The Java ecosystem offers JUnit, which is a unit-testing framework inspired by xUnit. The latter is just a collective name for an architecture that such unit-testing frameworks follow. This architecture includes: a \emph{test case}, which is essentially a class that contains testing logic. Such a class might have special methods called \emph{fixtures} which are responsible for setting up and tearing down the context in which a test is executed. For example, this might include repeatedly creating a set of objects or opening a database connection. Several test cases can be collected into a single \emph{test suite}. Finally, a program called a \emph{test runner} is responsible for discovering the test cases, running them and reporting the results back to the user.
+\begin{figure}
+\small
+\begin{minted}[linenos]{java}
+@RunWith(Parameterized.class)
+public class Lyra2Test {
+    @Parameterized.Parameters
+    public static Collection<Object[]> setupClass() {
+        // Simplified initialization of a YAML data loader
+        Yaml yaml = new Yaml();
 
-As well as JUnit, the Java ecosystem has a unit testing framework called TestNG \cite{testng:2017:home}. There are several in-depth comparisons available online in \cite{mkyong:2017:testng-vs-junit, wiki:2017:testng-vs-junit} but arguably the most important differences are described shortly.
+        // A list of YAML file names with test vectors and resulting hashes
+        String[] fnames = new String[] {"test-data-file_0.yml"};
+        List<Object[]> entries = new ArrayList<>();
 
-Firstly, both frameworks allow to implement parametrization tests but the implementation details are significantly different. Junit4 requires the developer to mark the class with the \mintinline{java}{@RunWith} decorator as well as provide a class method marked with \mintinline{java}{@Parameters} and return a single \mintinline{java}{Collections<Object[]>} of data. On the other hand, TestNG has two distinct mechanisms, one of which uses \texttt{testng.xml} and the other is a \mintinline{java}{@DataProvider} method which returns either a single \mintinline{java}{Object[][]} or an \mintinline{java}{Iterator<Object[]>}. With the first mechanism, the test data is stored separately in \texttt{testng.xml} while the second approach allows to have a function that generates the data \footnote{http://testng.org/doc/documentation-main.html\#parameters}.
+        for (String fname: fnames) {
+            // Simplified loading of the YAML data from the file
+            for (Object data : yaml.loadAll(reader)) {
+                entries.add(new Object[]{data});
+            }
+        }
 
-Formally, the way TestNG implements parametrized tests in a more flexible manner. However, in practice the \texttt{testng.xml} is not that widely used and the \mintinline{java}{Collections<Object[]>} Junit4 API is arguably cleaner than the generic-free way of TestNG. Finally, Junit4 is usually readily provided by Java IDEs and does not require additional setup. The feature parity with TestNG and general availability were the deciding factors in using this testing framework for the Java port of Lyra2.
+        return entries; // data provider has finished, returning result
+    }
+
+    private DataEntry entry;
+
+    // Injection of test parameters
+    public Lyra2Test(DataEntry entry) {
+        this.entry = entry;
+    }
+
+    @Test
+    public void simpleTest() {
+
+        LyraParams params = new LyraParams(/* use entry to initialize */);
+
+        byte[] hash = new byte[entry.klen];
+        byte[] pass = entry.pass.getBytes();
+        byte[] salt = entry.salt.getBytes();
+
+        // Run the computation
+        Lyra2.phs(hash, pass, salt, params);
+        // Fetch the correct hash value
+        byte[] correct_hash = pack.bytes(entry.hash);
+        // Compare the computation result to the correct hash
+        assertArrayEquals(correct_hash, hash);
+    }
+}
+\end{minted}
+\normalsize
+\caption{A simplified example of lyra2-java parametrized testing with \texttt{JUnit4}.}
+\label{fig:junit4-parametrization}
+\end{figure}
+
+The Java ecosystem offers \texttt{JUnit}, which is a unit-testing framework inspired by \texttt{xUnit}. The latter is a collective name for a specific architecture introduced by \texttt{NUnit}. This architecture includes: a \emph{test case}, which is usually a class that contains testing logic.
+
+Such a class might have special methods called \emph{fixtures} which are responsible for setting up and tearing down the context in which a test is executed. For example, this might include repeatedly creating a set of objects or opening a database connection. The methods marked with the \mintinline{java}{@Before} (respectively, \mintinline{java}{@After}) annotation are executed before (respectively, after) each individual test. The \mintinline{java}{@BeforeClass} (respectively, \mintinline{java}{@AfterClass}) annotation ensures that a method is run exactly once before (respectively, after) the test class is instantiated.
+
+Several test cases can be collected into a single \emph{test suite}. Finally, a program called a \emph{test runner} is responsible for discovering the test cases, running them and reporting the results back to the user. The test runner can be instructed to run (or skip) specific test suits.
+
+As well as \texttt{JUnit}, the Java ecosystem has a unit testing framework called \texttt{TestNG} \cite{testng:2017:home}. There are several in-depth comparisons available online in \cite{mkyong:2017:testng-vs-junit, wiki:2017:testng-vs-junit}. Arguably the most important differences follow.
+
+Firstly, both frameworks allow to implement parametrization tests but the implementation details are significantly different.  \texttt{JUnit4} requires the developer to mark the class with the \mintinline{java}{@RunWith} decorator as well as provide a class method marked with \mintinline{java}{@Parameters} and return a single \mintinline{java}{Collections<Object[]>} of data. On the other hand, \texttt{TestNG} has two distinct mechanisms, one of which uses \texttt{testng.xml} and the other is a \mintinline{java}{@DataProvider} method which returns either a single \mintinline{java}{Object[][]} or an \mintinline{java}{Iterator<Object[]>}. With the first mechanism, the test data is stored separately in \texttt{testng.xml} while the second approach allows to have a function that generates the data \footnote{http://testng.org/doc/documentation-main.html\#parameters}.
+
+Formally, the way \texttt{TestNG} implements parametrized tests in a more flexible manner. However, in practice the \texttt{testng.xml} is not that widely used and the \mintinline{java}{Collections<Object[]>} \texttt{JUnit4} API is arguably cleaner than the generic-free way of \texttt{TestNG}. Finally, \texttt{JUnit4} is usually readily provided by Java IDEs and does not require additional setup. The feature parity with \texttt{TestNG} and general availability were the deciding factors in using this testing framework for the Java port of Lyra2.
+
+Figure \ref{fig:junit4-parametrization} provides a simplified example of the way unit tests are organized in the Java port of Lyra2. The testing logic is in the \mintinline{java}{simpleTest} method: configuration parameters are constructed using the values from the \mintinline{java}{entry} instance variable, then a call to \mintinline{java}{Lyra2.phs} is made and the resulting hash is compared to the correct answer by the \mintinline{java}{assertArrayEquals} call.
+
+The \mintinline{java}{setupClass} method is is marked with the \mintinline{java}{@Parametrized.Parameters} which makes this method the provider of data. The precomputed data comes from several \texttt{YAML} data files whose names are stored in the \mintinline{java}{fnames} variable. The \mintinline{java}{for} loop on line \(12\) sequentially opens the \texttt{YAML} data files, loads their contents and collects them in the \mintinline{java}{entries} variable. Once the \mintinline{java}{setupClass} method returns that variable, it is used by JUnit to initialize several instances of the class, providing each constructor with one element from the \mintinline{java}{entries} array.
+
+This is the application of the parametrized tests approach which allows to run several hundreds of tests for different configurations and input values while writing the test code only once.
 
 \subsection{Unit Testing with py.test}
 \label{sec:unit-pytest}
 
-Python is a very popular high-level general purpose scripting language created by Guido van Rossum. It is widely used in web development (i.e. the Django web framework \cite{django:2017:homepage}), in machine learning (the scikit-learn package), in network security (the Scapy project), etc. The Python ecosystem also produced the Jupyter project (formerly known as IPython Notebook) which advances the ideas of literate programming and reproducible research.
-
-Python has a built-in unit testing framework called \texttt{unittest} which comes together with the interpreter. It keeps a fairly compatible interface with the xUnit architecture described in \ref{sec:unit-junit-testng}. Other two notable unit testing frameworks in Python are \texttt{Node} and \texttt{py.test}. They both support an xUnit compatible layer and come as an external dependency. The features offered by these two external frameworks are somewhat superior to those provided by the built-in \texttt{unittest}.
+Python is a very popular high-level general purpose scripting language created by Guido van Rossum. It has a built-in unit testing framework called \texttt{unittest} which comes together with the interpreter. It keeps a fairly compatible interface with the \texttt{xUnit} architecture described in \ref{sec:unit-junit-testng}. Other two notable unit testing frameworks in Python are \texttt{Node} and \texttt{py.test}. They both support an \texttt{xUnit} compatible layer and come as an external dependency. The features offered by these two external frameworks are somewhat superior to those provided by the built-in \texttt{unittest}.
 
 \emph{Parametrized testing} is tricky when it comes to a scripting language like Python. Even the built-in \texttt{unittest} framework could dynamically generate test classes, as demonstrated on stackoverflow \footnote{https://stackoverflow.com/a/20870875/1269892}. However, there is no \emph{designed} way to do so. The \textsc{Nose} library allows for parametrized testing through an elegant mechanism of Python generators (the \mintinline{python}{yield} keyword) that return functions to be run as test cases. The \texttt{py.test} framework goes the more xUnit-inspired route of using the \mintinline{python}{@mark.parametrized} decorator.
 
 Unfortunately, the \textsc{Nose} unit testing framework has been in maintenance mode. This framework is no longer in active development and therefore is not recommended for new projects. This is why the Python build harness for the reference Lyra2 implementation uses \texttt{py.test}.
+
+\begin{figure}
+\begin{minted}[linenos]{python}
+bindir = Path(__file__).parent.parent.joinpath('bin42')
+@pytest.mark.parametrize('path', list(bindir.glob("lyra2-*")))
+@pytest.mark.parametrize('pwd', ['password', 'qwerty'])
+@pytest.mark.parametrize('salt', ['salt', 'pepper'])
+@pytest.mark.parametrize('k', [1, 2])
+@pytest.mark.parametrize('t', [1, 2])
+@pytest.mark.parametrize('m', [3, 4, 5, 6, 7, 8, 9, 10])
+def test_sanity_0(path, pwd, salt, k, t, m):
+
+    result = subprocess.run([path, pwd, salt, str(k), str(t), str(m)])
+
+    assert result.returncode == 0
+\end{minted}
+\caption{A simplified example of Lyra2 parametrized testing with \texttt{py.test}.}
+\label{fig:pytest-parametrization}
+\end{figure}
+
+Figure \ref{fig:pytest-parametrization} shows why parametrization testing is important when building different configurations of the reference Lyra2 implementation. Before running those configurations with a long list of parameters it is worth to make sure that the compiled executables actually work. However, writing a test for each individual possible configuration is not feasible. Instead, the first decorator \mintinline{python}{@pytest.mark.parametrize('path')} fetches all filenames that start with \texttt{lyra2-} (convention for Lyra2 executable names) from a specific directory. These names are later passed into a specific unit test in the \texttt{path} parameter.
+
+This parametrized testing approach allows to write the testing logic once and reuse it for any possible Lyra2 configuration produced by the \texttt{Makefile} of the reference project.
