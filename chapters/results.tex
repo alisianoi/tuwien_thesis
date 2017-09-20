@@ -205,13 +205,25 @@ The screenshots demonstrate that \mintinline{shell}{lyra2-java} can be configure
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-main-clean}
-  \caption{Main screen}
+  \caption{Main screen (Blake2b sponge, default)}
   \label{fig:lyra2-mobile-main}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-result-clean}
-  \caption{Resulting hash}
+  \caption{Resulting hash (Blake2b sponge, default)}
+  \label{fig:lyra2-mobile-result}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-main-blamka-clean}
+  \caption{Main screen (BlaMka sponge)}
+  \label{fig:lyra2-mobile-main}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-result-blamka-clean}
+  \caption{Resulting hash (BlaMka sponge)}
   \label{fig:lyra2-mobile-result}
 \end{subfigure}
 \caption{Android application running Lyra2}
