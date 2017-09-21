@@ -1,22 +1,22 @@
 \chapter{Unit Testing Frameworks}
 \label{chapter:unit-testing-framework}
 
-For the Java port of the Lyra2 Password Hashing Scheme testing is important. It makes sure that the new implementation produces the same results as the reference implementation. However, formal specification and verification methods are rather complex \cite{lamsweerde:2000:formal-specification, mueller:1994:formal-specification}.
+For the lyra2-java project testing is important. It makes sure that the new implementation produces the same results as the reference implementation. Formal specification and verification methods (for example, as described in \cite{lamsweerde:2000:formal-specification, mueller:1994:formal-specification}) would have been too complex in this situation.
 
-A more practical approach is to provide reasonable unit test coverage for the new projects \cite{williams:2010:unit-tests-rock}. However, this approach also provides its own classical questions: which tools to use \cite{daka:2014:unit-testing-tools} and when to stop writing tests \cite{elberzhager:2012:reducing-effort}.
+A more practical verification approach is to provide reasonable unit test coverage for the new project, as suggested in \cite{williams:2010:unit-tests-rock}. However, this approach also provides its own classical questions: which tools to use \cite{daka:2014:unit-testing-tools} and when to stop writing tests \cite{elberzhager:2012:reducing-effort}.
 
 Section \ref{sec:unit-terms-and-definitions} will introduce the basic practices and definitions. Section \ref{sec:unit-boost-google} will discuss how the two similar projects, the reference implementation of Lyra2 and of Argon2, address testing. Sections \ref{sec:unit-junit-testng} and \ref{sec:unit-pytest} motivate the choice of tools and techniques for the Java and Python projects.
 
 \section{Terms and Definitions}
 \label{sec:unit-terms-and-definitions}
 
-\emph{Unit testing} is the process of verifying that the program produces expected results when given specific inputs. \emph{Unit under test} is a common term that refers to the specific part of the code that is being tested by a specific \emph{test case}. Unit testing is often powered by a \emph{unit testing framework} which is a set of tools dedicated to simplify both writing and running unit tests. \emph{Test Driven Development} is a software development practice which expects a piece of functionality to be produced together with the necessary tests.
+\emph{Unit testing} is the process of verifying that the program produces expected results when given specific inputs. \emph{Unit under test} is a common term that refers to the specific part of the code that is being tested by a specific \emph{test case}. Unit testing is often powered by a \emph{unit testing framework} which is a set of tools dedicated to simplify both writing and running unit tests. \emph{Test Driven Development} is a software development practice which expects a piece of functionality to be produced together with the accompanying tests.
 
-One notable property of a typical unit test is that it deals with the smallest logical piece of code possible: one particular function or a single method of a class. Consequently, distinct unit tests are ususally independent of each other and can be run in any order or in parallel. This is a desirable feature of a good unit testing framework.
+One notable property of a typical unit test is that it deals with the smallest logical piece of code possible: one particular function or a single method of a class. Consequently, distinct unit tests are ususally independent of each other and can be run in any order or in parallel. Parallelized unit test execution is therefore a desirable feature of a unit testing framework.
 
 However, there are also cases when the complexity of a unit test is higher. For example, when a class heavily relies on data coming from a database, a unit test needs to \emph{mock} the database connection and the data. \emph{Mocking} is the process of simulating a real object with a simplified version of it.
 
-It is often the case that many unit tests share the same logic. When testing hash functions, this logic could be summarized with the following steps:
+It is often the case that many unit tests share the same logic. Specifically, when testing hash functions, this logic could be summarized with the following steps:
 
 \begin{enumerate}
     \item Select a configuration of the hash function.
@@ -26,17 +26,17 @@ It is often the case that many unit tests share the same logic. When testing has
 
 Writing a unit test for each combination of the hash function configuration and each set of input parameters is a daunting task. \emph{Parametrized unit testing} allows to generate a template for a large number of unit tests and avoid the extra labour \cite{tillmann:2010:parametrized-unit-tests-rock}. Therefore, unit testing frameworks that support this particular feature are of special interest in this work.
 
-\emph{Code coverage} is an indicator that provides better understanding of how well a program is tested. It is low when only a small portion of the program is properly tested, and high otherwise. There are many ways to measure code coverage, some of which are described in \cite{elberzhager:2012:reducing-effort}. In practice, the most common code coverage metric is the number of lines of code (LOCs) covered by the test suite as a percentage of the total number of LOCs.
+\emph{Code coverage} indicates how well a program is tested. It is low when only a small portion of the program is tested, and high otherwise. There are many ways to measure code coverage, some of which are described in \cite{elberzhager:2012:reducing-effort}. In practice, the most common code coverage metric is the number of lines of code (LOCs) covered by the test suite as a percentage of the total number of LOCs.
 
 Other types of coverage include: \emph{function} and \emph{statement} coverage (i.e. the portion of functions or statements that has been executed), \emph{branch} and \emph{condition} coverage (i.e. the portion of conditions/branches executed in relation to the total number of \emph{all possible} combinations) and many others. For the sake of simplicity, the projects developed in this work will not be using these metrics.
 
-\emph{Continuous integration} (CI) is the practice of running unit tests (and measuring code coverage changes) with every codebase change. This approach helps identify problems early and fix them quicker \cite{williams:2010:unit-tests-rock}. Continuous integration often occurs transparenly on a separate set of dedicated machines and its status is visible to the developers at all times. Its popularity and utility is undisputable, with such services like TravisCI \cite{travis:2017:homepage}, AppVeyor \cite{appveyor:2017:homepage} and CircleCI \cite{circleci:2017:homepage} available free of charge for open source projects.
+\emph{Continuous integration} (CI) is the practice of running unit tests (and measuring code coverage changes) with every codebase change. This approach helps identify problems early and fix them quicker \cite{williams:2010:unit-tests-rock}. Continuous integration often occurs transparenly on a separate set of dedicated machines and its status is visible to the developers at all times. Its popularity and utility is undisputable, with such services like TravisCI \cite{travis:2017:homepage}, AppVeyor \cite{appveyor:2017:homepage} and CircleCI \cite{circleci:2017:homepage} providing both commercial and free (for open source projects) continuous integration as a service.
 
 \section{Choice of the Unit Testing Framework}
 
-Although the reference Lyra2 project in \cite{github:2017:lyra} has automated tests, it does not use a dedicated unit testing framework. This is a reasonable choice which has its advantages. To start with, it allows to keep the complexity of the project low and not rely on external libraries. The build process is somewhat simplified as well.
+Although the reference Lyra2 project in \cite{github:2017:lyra} has automated tests, it does not use a dedicated unit testing framework. This is a reasonable choice which has its advantages. In particular, it allows to keep the complexity of the project lower and not rely on external libraries. The build process is somewhat simplified as well.
 
-Secondly, when it comes to the \texttt{C/C++} ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness in \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will provide a plausible explanation. Section \ref{sec:unit-junit-testng} will provide motivation for my choice of the unit testing framework for the Java Lyra2 port and section \ref{sec:unit-pytest} will describe the test suite for the Python scripts harness.
+Furthermore, when it comes to the \texttt{C/C++} ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness in \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will provide a plausible explanation. Section \ref{sec:unit-junit-testng} will provide motivation for my choice of the unit testing framework for the lyra2-java port and section \ref{sec:unit-pytest} will describe the test suite for the Python script harness.
 
 \begin{table}
 \begin{tabular}{llll}
@@ -46,14 +46,14 @@ Secondly, when it comes to the \texttt{C/C++} ecosystem, the choice of the frame
 \texttt{py.test} & MIT & yes & needs 3\textsuperscript{rd} party plugin (\texttt{pytest.xdist})
 % Google Test & MIT & parameters? & yes
 \end{tabular}
-\caption{Main features of unit testing frameworks}
+\caption{Important features of several unit testing frameworks.}
 \label{table:framework-features-cpp}
 \end{table}
 
 \subsection{\texttt{Boost.Test}}
 \label{sec:unit-boost-google}
 
-Admittedly, there is a wide choice of unit testing frameworks for the \texttt{C/C++} ecosystem. An extensive list can be found in \cite{wiki:2017:frameworks-c, wiki:2017:frameworks-cpp}. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, it is far more simple to write a separate test file that would run a few sanity checks.
+There is a large choice of unit testing frameworks for the \texttt{C/C++} ecosystem. An extensive list can be found in \cite{wiki:2017:frameworks-c, wiki:2017:frameworks-cpp}. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, it is sometimes more practical to write a separate test file that would run a few sanity checks.
 
 Consider the case of Argon2. As one can see in \cite{github:2017:argon2}, the in-house \texttt{src/test.c} test program for Argon2 was introduced on 25\textsuperscript{th} of January 2016. The commit hash starts with \texttt{7450df88} and it is number 317 out of (current) almost 600 in the version control history. So it is safe to say that this testing was introduced at the later stages of the project when the need for it was apparent \footnote{https://github.com/P-H-C/phc-winner-argon2/issues/85}.
 
