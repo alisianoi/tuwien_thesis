@@ -65,3 +65,36 @@ Finally, compilation flags are also part of the configuration and their defaults
       \caption{The compilation flags used by the reference implementation.}
       \label{fig:compile-flags}
   \end{figure}
+
+\chapter{Android Studio Preview}
+\label{chapter:problem?}
+
+At the moment using Lyra2 in an Android application requires a beta (i.e. preview) version of Android Studio. The instructions on the official webpage \footnote{https://developer.android.com/studio/preview/index.html} warn the developer about the need to update plugins. However, this is not the only problem which you may face when running the preview version.
+
+If you require an emulator to test the application, you may be treated with the following  error traceback presented in \ref{fig:traceback}. Different kinds of advice is supposed to help with the problem: preloading the \texttt{libstdc++.so.6} library ahead of time, adding the user who runs Android Studio to the \texttt{video} group, etc. On my machine (a ThinkPad E570 notebook with a dedicated GTX 950M graphics card running ArchLinux), the solution that worked was to instruct Android Studio to rely on system libraries. This can be achieved by setting an environment variable:
+
+\begin{minted}{shell}
+ANDROID_EMULATOR_USE_SYSTEM_LIBS=1 ./studio.sh
+  \end{minted}
+
+\begin{figure}
+\begin{minted}[fontsize=\tiny]{shell}
+    Emulator: libGL error: unable to load driver: i965_dri.so
+    Emulator: libGL error: driver pointer missing
+    Emulator: libGL error: failed to load driver: i965
+    Emulator: libGL error: unable to load driver: i965_dri.so
+    Emulator: libGL error: driver pointer missing
+    Emulator: libGL error: failed to load driver: i965
+    Emulator: libGL error: unable to load driver: swrast_dri.so
+    Emulator: libGL error: failed to load driver: swrast
+    Emulator: X Error of failed request:  BadValue (integer parameter out of range for operation)
+    Emulator: Major opcode of failed request:  155 (GLX)
+    Emulator: Minor opcode of failed request:  24 (X_GLXCreateNewContext)
+    Emulator: Value in failed request:  0x0
+    Emulator: Serial number of failed request:  42
+    Emulator: Current serial number in output stream:  43
+    Emulator: Process finished with exit code 1
+\end{minted}
+\caption{An obscure error traceback connected to \texttt{libGL}.}
+\label{fig:traceback}
+\end{figure}
