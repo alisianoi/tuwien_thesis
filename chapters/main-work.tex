@@ -397,7 +397,7 @@ The same trick cannot be performed on line \(16\) though. The rotation there is 
     }
 \end{minted}
 \normalsize
-\caption{Blake2b as instance of the Sponge class, illustrating optimized rotations}
+\caption{Blake2b as instance of the Sponge class, demonstrating optimized rotations on lines 5, 8 and 11. Line 16 performs the complete set of rotations (no optimization).}
 \label{fig:sponge-blake2b}
 \end{figure}
 
@@ -436,6 +436,6 @@ public class SpongeBlamka extends Sponge {
 }
 \end{minted}
 \normalsize
-\caption{BlaMka as instance of the Sponge class, the same rotation trick in action.}
+\caption{BlaMka as instance of the Sponge class, the same rotation trick in action on lines 16, 19 and 22. Line 27 performs the complete set of rotations (no optimization).}
 \label{fig:sponge-blamka}
 \end{figure}
