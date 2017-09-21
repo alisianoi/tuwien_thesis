@@ -36,8 +36,8 @@ Output length (bytes) & 10 \\
 
 Below is a log of manual tests. New line delimits different Lyra2 configurations. The first line of each group represents a particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
 
-\tiny
-\begin{verbatim}
+\begin{figure}[p]
+\begin{minted}[fontsize=\footnotesize]{shell}
 $ lyra2 --sponge blake2b --blocks 8 --columns 256 --outlen 10 --tcost 100 --mcost 100
 > "password" "salt"
 > 19 FD 3B 50 9A 03 0C DF 95 DA
@@ -85,8 +85,10 @@ $ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcos
 > 82 AF EB 03 5B E7 12 11 BE 63
 > "The quick brown fox jumped over the lazy dog" "0123456789"
 > F7 A8 56 D5 81 16 AA E5 C7 4D
-\end{verbatim}
-\normalsize
+\end{minted}
+\caption{Manual testing protocol, each configuration starts with \texttt{\$}, each password and salt pair is followed by the resulting hash value. The hash value is printed in hexadecimal.}
+\label{fig:manual-testing}
+\end{figure}
 
 \subsection{Automated Testing}
 \label{sec:automated-testing}
@@ -122,14 +124,14 @@ Finally, in section \ref{sec:no-fixed-costs} the grid of time and memory cost pa
 
 There are two figures that show how running time and consumed memory depend on memory cost when the time cost is fixed. Figure \ref{figure:mcost_256} shows a 256-column and figure \ref{figure:mcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the reference implementation works faster and consumes less memory than its Java counterpart. A nice property is that both the running time and memory consumption are changing roughly linearly as the memory cost parameter is changed. This is consistent with the fact that the memory cost parameter corresponds to the number of rows of the in-memory matrix.
 
-\begin{figure}[H]
+\begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/mcost_256}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 256 columns, fixed time cost of 10}
     \label{figure:mcost_256}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/mcost_2048}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 2048 columns, fixed time cost of 10}
@@ -141,14 +143,14 @@ There are two figures that show how running time and consumed memory depend on m
 
 There are two figures that show how running time and consumed memory depend on time cost when the memory cost is fixed. Figure \ref{figure:tcost_256} shows a 256-column and figure \ref{figure:tcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the original C implementation works faster and consumes less memory than its Java counterpart. The running time changes roughly linearly as the time cost parameter is changed which is consistent with the fact that time cost corresponds to the number of iterations done by Lyra2. Memory consumption stays roughly the same which is also consistent with the fact that the largest memory consumer is the in-memory matrix. This matrix has the same size for all of the configurations. Admittedly, there are some deviations in memory consumption of the Java implementation. The possible reasons for that include: the built-in garbage collector and the fact that the measurements run for several days, resulting in potentially different system loads.
 
-\begin{figure}[H]
+\begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_256}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 256 columns, fixed memory cost of 20}
     \label{figure:tcost_256}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_2048}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 2048 columns, fixed memory cost of 20}
@@ -160,28 +162,28 @@ There are two figures that show how running time and consumed memory depend on t
 
 There are four figures that show running time and memory consumption of Lyra2 when both time and memory costs change. Figures \ref{figure:tcost_mcost_blake2b_256} and \ref{figure:tcost_mcost_blake2b_2048} correspond to a 256- and 2048-column configurations of Lyra2 that both use the Blake2b sponge. Figures \ref{figure:tcost_mcost_blamka_256} and \ref{figure:tcost_mcost_blamka_2048} are the 256- and 2048-column configurations of Lyra2 with the BlaMka sponge. All of these four figures share the same properties. First of all, the reference implementation is faster and consumes less memory than its Java counterpart. Secondly, the running time as well as required space depend roughly linearly on the time and memory cost parameters. However, together they create a quadratic time growth during the \emph{Wandering phase}. This still allows for predictable and fine-tuned control of the time- and memory resources required by the algorithm.
 
-\begin{figure}[H]
+\begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blake2b_256}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: Blake2b sponge, 256 columns.}
     \label{figure:tcost_mcost_blake2b_256}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blake2b_2048}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: Blake2b sponge, 2048 columns.}
     \label{figure:tcost_mcost_blake2b_2048}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blamka_256}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: BlaMka sponge, 256 columns. }
     \label{figure:tcost_mcost_blamka_256}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blamka_2048}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: BlaMka sponge, 2048 columns.}
@@ -196,11 +198,19 @@ The Java implementation was outperformed by the reference C implementation. This
 \section{Android Application}
 \label{sec:mobile-application}
 
-Part of the porting effort was a small proof-of-concept mobile application. The ported Lyra2 library was indeed easy to add: Android Studio picked it up from the Maven Central repository without any issues. A notable caveat is that \mintinline{shell}{lyra2-java} was written using some features of Java 1.8 which limits the version of Android API to 24 and above. Admittedly, this mostly includes relatively modern devices and does not work on older smartphones.
+Part of the porting effort is a small proof of concept mobile application. This application demonstrates that using a native Java library in an Android project is convenient.
 
-The screenshots demonstrate that \mintinline{shell}{lyra2-java} can be configured. The default values match those from section \ref{sec:manual-testing} and the hash values are the same. The souce code for this application can be found in \cite{github:2017:lyra2-mobile}.
+One of the first steps is to determine the minimum versions of Android devices and API levels necessary. Since lyra2-java makes use of unsigned long number arithmetic, Java 1.8 support is required. This translates into a minimum Android versions of 7.0 and an API level of 24 \footnote{https://developer.android.com/guide/platform/j8-jack.html}.
 
-\begin{figure}
+The most common development environment for Android applications is the Android Studio. Support for Java 1.8 features has not yet landed into the release version of this IDE. So, in order to be able to develop a mobile application with Lyra2 a development version \texttt{3.0} needs to be installed.
+
+Once these preliminary steps are performed, the development of the application becomes straightforward. Android Studio is based on IntelliJ Studio and therefore picks up lyra2-java from the Maven Central repository in a matter of a couple clicks.
+
+As a result, a simple Android application was developed and is available on GitHub \cite{github:2017:lyra2-mobile}. It consists of a main screen and a results screen. The main screen allows the user to choose the particular configuration of Lyra2. By default, the Blake2b sponge with the time and memory cost of 100 will be used. The password and salt fields are set to the default values of "password" and "salt" respectively, the number of columns is 256 with each column being 12 blocks wide. The permutation inside the sponge makes a total 12 rounds of computations. All of the parameters above can be adjusted.
+
+Figure \ref{fig:lyra2-mobile-demo} demonstrates the hash value after running with default parameters as well as the hash value when using BlaMka instead of Blake2b. The hash values match those from the manual testing section \ref{sec:manual-testing}. In each case the computation lasted approximately 60 seconds which is consistent with the desktop version times. However, it should be noted that the application was tested in an emulator and not on an actual device.
+
+\begin{figure}[p]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -226,6 +236,6 @@ The screenshots demonstrate that \mintinline{shell}{lyra2-java} can be configure
   \caption{Resulting hash (BlaMka sponge)}
   \label{fig:lyra2-mobile-result}
 \end{subfigure}
-\caption{Android application running Lyra2}
+\caption{Android application running Lyra2. Each of the two configurations runs for \(\approx 60\) seconds. Parameter values on the left, resulting hash in hexadecimal on the right.}
 \label{fig:lyra2-mobile-demo}
 \end{figure}
