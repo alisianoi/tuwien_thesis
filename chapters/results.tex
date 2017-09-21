@@ -37,7 +37,7 @@ Output length (bytes) & 10 \\
 
 Figure \ref{fig:manual-testing} shows a log of manual tests. New line delimits different Lyra2 configurations. The first line of each group represents a particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
 
-\begin{figure}[p]
+\begin{figure}[H]
 \begin{minted}[fontsize=\footnotesize]{shell}
 $ lyra2 --sponge blake2b --blocks 8 --columns 256 --outlen 10 --tcost 100 --mcost 100
 > "password" "salt"
@@ -125,14 +125,14 @@ Finally, in section \ref{sec:no-fixed-costs} the grid of time and memory cost pa
 
 There are two figures that show how running time and consumed memory depend on memory cost when the time cost is fixed. Figure \ref{figure:mcost_256} shows a 256-column and figure \ref{figure:mcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the reference implementation works faster and consumes less memory than its Java counterpart. A nice property is that both the running time and memory consumption are changing roughly linearly as the memory cost parameter is changed. This is consistent with the fact that the memory cost parameter corresponds to the number of rows of the in-memory matrix.
 
-\begin{figure}[p]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/mcost_256}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 256 columns, fixed time cost of 10}
     \label{figure:mcost_256}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/mcost_2048}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 2048 columns, fixed time cost of 10}
@@ -144,14 +144,14 @@ There are two figures that show how running time and consumed memory depend on m
 
 There are two figures that show how running time and consumed memory depend on time cost when the memory cost is fixed. Figure \ref{figure:tcost_256} shows a 256-column and figure \ref{figure:tcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the original C implementation works faster and consumes less memory than its Java counterpart. The running time changes roughly linearly as the time cost parameter is changed which is consistent with the fact that time cost corresponds to the number of iterations done by Lyra2. Memory consumption stays roughly the same which is also consistent with the fact that the largest memory consumer is the in-memory matrix. This matrix has the same size for all of the configurations. Admittedly, there are some deviations in memory consumption of the Java implementation. The possible reasons for that include: the built-in garbage collector and the fact that the measurements run for several days, resulting in potentially different system loads.
 
-\begin{figure}[p]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_256}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 256 columns, fixed memory cost of 20}
     \label{figure:tcost_256}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_2048}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 2048 columns, fixed memory cost of 20}
@@ -163,28 +163,28 @@ There are two figures that show how running time and consumed memory depend on t
 
 There are four figures that show running time and memory consumption of Lyra2 when both time and memory costs change. Figures \ref{figure:tcost_mcost_blake2b_256} and \ref{figure:tcost_mcost_blake2b_2048} correspond to a 256- and 2048-column configurations of Lyra2 that both use the Blake2b sponge. Figures \ref{figure:tcost_mcost_blamka_256} and \ref{figure:tcost_mcost_blamka_2048} are the 256- and 2048-column configurations of Lyra2 with the BlaMka sponge. All of these four figures share the same properties. First of all, the reference implementation is faster and consumes less memory than its Java counterpart. Secondly, the running time as well as required space depend roughly linearly on the time and memory cost parameters. However, together they create a quadratic time growth during the \emph{Wandering phase}. This still allows for predictable and fine-tuned control of the time- and memory resources required by the algorithm.
 
-\begin{figure}[p]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blake2b_256}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: Blake2b sponge, 256 columns.}
     \label{figure:tcost_mcost_blake2b_256}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blake2b_2048}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: Blake2b sponge, 2048 columns.}
     \label{figure:tcost_mcost_blake2b_2048}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blamka_256}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: BlaMka sponge, 256 columns. }
     \label{figure:tcost_mcost_blamka_256}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blamka_2048}
     \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: BlaMka sponge, 2048 columns.}
@@ -211,7 +211,7 @@ As a result, a simple Android application was developed and is available on GitH
 
 Figure \ref{fig:lyra2-mobile-demo} demonstrates the hash value after running with default parameters as well as the hash value when using BlaMka instead of Blake2b. The hash values match those from the manual testing section \ref{sec:manual-testing}. In each case the computation lasted approximately 60 seconds which is consistent with the desktop version times. However, it should be noted that the application was tested in an emulator and not on an actual device.
 
-\begin{figure}[p]
+\begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
