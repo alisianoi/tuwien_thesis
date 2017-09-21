@@ -33,6 +33,7 @@ Other types of coverage include: \emph{function} and \emph{statement} coverage (
 \emph{Continuous integration} (CI) is the practice of running unit tests (and measuring code coverage changes) with every codebase change. This approach helps identify problems early and fix them quicker \cite{williams:2010:unit-tests-rock}. Continuous integration often occurs transparenly on a separate set of dedicated machines and its status is visible to the developers at all times. Its popularity and utility is undisputable, with such services like TravisCI \cite{travis:2017:homepage}, AppVeyor \cite{appveyor:2017:homepage} and CircleCI \cite{circleci:2017:homepage} providing both commercial and free (for open source projects) continuous integration as a service.
 
 \section{Choice of the Unit Testing Framework}
+\label{sec:unit-choice}
 
 Although the reference Lyra2 project in \cite{github:2017:lyra} has automated tests, it does not use a dedicated unit testing framework. This is a reasonable choice which has its advantages. In particular, it allows to keep the complexity of the project lower and not rely on external libraries. The build process is somewhat simplified as well.
 
