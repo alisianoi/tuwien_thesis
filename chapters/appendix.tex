@@ -1,9 +1,66 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{\appendixlabel}
+\chapter{Configuration and Test File Format}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\whichlanguage{
-Listings, data models, forms, \dots
-}{
-Quellcode, Datenmodell, Fragebögen, \dots
-}
+The data for parametrized tests is stored in YAML files. YAML stands for \emph{YAML Ain't Markup Language} and is a superset of JSON, another popular data format. YAML targets human readability and provides native support for custom datatypes: scalars, arrays, structures, etc. Most programming languages provide support for reading and writing of YAML files, inclusing both Java and Python.
+
+A single file in YAML can hold several documents. This is leveraged by the Python test harness: each test data file corresponds to the Lyra2 executable, so the compile time parameters are fixed. They are stored together with all the runtime parameters and the resulting hash. See figure \ref{fig:yaml-data} for reference. The \texttt{hash} field is stored as an array of strings which ensures that different YAML libraries deduce the content type of this array correctly. The \mintinline{shell}{---} is a delimiter between the two YAML documents. This feature allows to store several sets of data in one file.
+
+The YAML format is also used to store default configuration for the Python test harness. It can be found on the \texttt{harness} branch of the forked reference repository \cite{github:2017:lyra-copy} in the \mintinline{shell}{Lyra2/src/tests/harness.yml}. The primary parameters are \mintinline{shell}{build_path} and \mintinline{shell}{makefile_path}. The first one defines the location for the compiled Lyra2 executables and the second one points to the original \mintinline{shell}{Makefile}.
+
+The \mintinline{shell}{matrix} group of parameters defines the build matrix. The \mintinline{shell}{option} parameter configures the type of Lyra2 executable built by the \mintinline{shell}{Makefile}, which is a generic version for the \mintinline{shell}{x86_64} architecture by default. The \mintinline{shell}{threads} parameter determines the parallelism degree and is set to 1. The \mintinline{shell}{columns}, \mintinline{shell}{sponge}, \mintinline{shell}{rounds} and \mintinline{shell}{blocks} correspond directly to compile-time Lyra2 parameters. Finally, the \mintinline{shell}{bench} parameter determines if the test vectors should be included into the compiled executable. By default it is set to 0 which means those vectors are skipped.
+
+The \mintinline{shell}{data} group of parameters specifies the test vectors which will be used when generating hash values with \mintinline{shell}{./harness.py compute}. That group includes \mintinline{shell}{pass} --- an array of passwords, \mintinline{shell}{salt} --- an array of salts, \mintinline{shell}{klen} --- an array of output lenghts (i.e. the length of the hash), \mintinline{shell}{tcost} --- an array of time costs and finally \mintinline{shell}{mcost} --- an array of memory costs. The \mintinline{shell}{./harness.py} script generates a cartesian product of all of the array members and then runs every compiled executable using those values as test vectors. The results are stored in the \mintinline{shell}{data_path} directory which can be configured as well. The \mintinline{shell}{./harness.py} script does not overwrite old hash values, so you will have to remove them manually if regeneration is required.
+
+Finally, compilation flags are also part of the configuration and their defaults can be seen in \ref{fig:compile-flags}.
+
+\begin{figure}
+    \begin{minted}{yaml}
+        blocks: 8
+        columns: 16
+        hash: [0f, ee, bd, 1f, '00', 2a, 5b, '87', '71', ee]
+        klen: 10
+        mcost: 3
+        pass: password
+        rounds: 1
+        salt: s
+        sponge: blake2b
+        tcost: 1
+        threads: 1
+        ---
+        blocks: 8
+        columns: 16
+        hash: [0f, 7d, e3, 3c, e3, 9e, 0c, f9, 8e, '70']
+        klen: 10
+        mcost: 10
+        pass: password
+        rounds: 1
+        salt: s
+        sponge: blake2b
+        tcost: 1
+        threads: 1
+      \end{minted}
+    \caption{An example of a test data file.}
+    \label{fig:yaml-data}
+  \end{figure}
+
+
+\begin{figure}
+    \begin{minted}{yaml}
+    CFLAGS:
+      - -std=c99
+      - -Wall
+      - -pedantic
+      - -O3
+      - -msse2
+      - -ftree-vectorizer-verbose=1
+      - -fopenmp
+      - -funroll-loops
+      - -march=native
+      - -Ofast
+      - -mprefer-avx128
+      - -flto
+      \end{minted}
+      \caption{The compilation flags used by the reference implementation.}
+      \label{fig:compile-flags}
+  \end{figure}
