@@ -27,7 +27,7 @@ An overview of methods of secure authentication and types of attacks can be foun
 
 \subsection{Types of Authentication Attacks}
 \label{subsec:authentication-attacks}
-\emph{Brute Force} is the least sophisticated type of a password attack. The attacker chooses a specific password domain and begins the trial and error guessing process. For example, one could try all passwords that consist of lowercase latin latters (26 in total) and are up to 8 characters in length. This domain contains \(217180147158\) unique passwords. Assuming that the attacker can try \(1000\) passwords per second, it will take them \(\approx 6.8\) years to complete the search. This might sound like a lot of time but the \(1000\) passwords per second is a conservative speed estimate. Depending on the available hardware, the hash algorithm and other factors, this speed could be a \emph{a lot} faster. Real world speeds for some hashing algorithms can be found in table \ref{table:hashcat-speed}
+\emph{Brute Force} is the least sophisticated type of a password attack. The attacker chooses a specific password domain and begins the trial and error guessing process. For example, one could try all passwords that consist of lowercase latin latters (26 in total) and are up to 8 characters in length. This domain contains \(217180147158\) unique passwords. Assuming that the attacker can try \(1000\) passwords per second, it will take them \(\approx 6.8\) years to complete the search. This might sound like a lot of time but the \(1000\) passwords per second is a conservative speed estimate. Depending on the available hardware, the hash algorithm and other factors, this speed could be a \emph{a lot} higher. Real world speeds for some hashing algorithms can be found in table \ref{table:hashcat-speed}
 
 \begin{table}
     \begin{center}
@@ -44,7 +44,11 @@ An overview of methods of secure authentication and types of attacks can be foun
       \label{table:hashcat-speed}
   \end{table}
 
-\emph{Dictionary Attacks} are an improvement upon the brute force attacks. A dictionary
+\emph{Dictionary Attacks} are an improvement upon brute force. A dictionary is a collection of possible passwords, often ordered by popularity or likelihood of occurance. Such dictionaries are compiled from various sources: real dictionaries, texts on websites, previously leaked passwords and so on. Advanced dictionaries also include \emph{mutations} which are a combination of a plain dictionary entry and some modification rule. An example of such modification rule might be a substitution of the letter \(o\) with the digit \(0\) or an addition of \(42\) to the end of the password.
+
+\emph{Shoulder Surfing} is an entirely different kind of an attack. As the name suggests, its simplest form is a person standing next to the user who is performing authentication. However, this is by far not the only scenario. The user might be authenticating from a café, a bank, an airport or any other location with sufficiently advanced video surveillance system. If a high resolution recording of the user's authentication process is captured, then this video becomes a legitimate attack vector.
+
+\emph{Phishing Attacks} is yet another formidable type of an attack. A legitimate user is usually tricked into visiting a webpage which impersonates a typical webservice, like an e-mail provider or a social network. The user is then prompted to enter their authentication details. If the user does not recognize the attack in time their credentials will get compromised. Phishing attacks usually target a group of individuals. On the other hand, \emph{spear phishing attacks} is a term reserved for targeting specific individuals (journalists, politicians, high-profile executives, etc.) in a much more personal and detailed manner.
 
 
 \section{Password Hashing Fundamentals}
