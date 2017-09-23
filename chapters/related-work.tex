@@ -62,7 +62,16 @@ The rest of this work is dedicated to protecting the storage of conventional (sh
     \item \emph{Man-in-the-middle attacks} are not possible due to the challenge-response nature of the EKE handshake.
   \end{enumerate}
 
-The early version of this protocol is presented in figure \ref{fig:eke}.
+Below is an outline of the first version of this protocol:
+
+\begin{enumerate}
+    \item Alice and Bob share a (weak and short) conventional password \(P\).
+    \item Alice begins begins by generating a random public/private pair of keys \(E_A\) and \(D_A\). She uses \(P\) to encrypt to public key: \(M_0 = P(E_A)\). She sends \(M_0\) to Bob.
+    \item Bob uses \(P\) to decrypt the public key of Alice: \(P^{-1}(P(E_A)) = E_A\). He then generates a random secret key \(R\) and encrypts it first with the asymmetric and then with the symmetric cryptosystem: \(M_1 = P(E_A(R))\). Finally, Bob sends \(M_1\) to Alice.
+    \item Alice uses both \(P\) and \(D_A\) to recover \(R\): \(D_A(P^{-1}(P(E_A(R))) = R\).
+  \end{enumerate}
+
+Once this initial exchange is over, both Alice and Bob know \(R\) and \(E_A\), which are presumed to be stronger than the initial shared secret \(P\) because they are supposed to be generated randomly over a large possible keyspace. Let's assume that the attacker knows \(M_0 = P(E_A)\), \(M_1 = P(E_A(R))\) and \(R(\text{Known message})\). They then have to try a candidate password \(P'\), produce a candidate \(E_A^{'} = P^{'-1}(P(E_A))\) and then decide if there exists a key \(R'\) such that \(E'_A(R') = E_A(R)\) and \(R^{'-1}(R(\text{Known message}))\) produces the known message. This is expected to be far more expensive than a plain attack on \(P\).
 
 \emph{Password Authenticated Key Exchange by Juggling (J-PAKE)} is a more recent and advanced method from the PAKE family. The connection created by using this protocol has the following properties:
 
