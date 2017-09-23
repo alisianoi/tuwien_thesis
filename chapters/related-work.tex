@@ -15,7 +15,7 @@ Choosing cryptographic primitives through an open competitive process is an effe
 \label{subsec:secture-authentication-protocols}
 An overview of methods of secure authentication and types of attacks can be found in \cite{raza:2012:password-attacks-survey}. A brief summary is presented below:
 
-\emph{Conventional Passwords} are by far the most widespread method of user authentication. Usually the user needs to go through a registration process with a service, coming up with a username and a password. However, the resulting passwords are often weak and users have trouble remembering them.
+\emph{Conventional Passwords} are by far the most widespread method of user authentication. Usually the user needs to go through a registration process with a service, coming up with a username and a password. However, the resulting passwords are often weak and users have trouble remembering them. Frequent password reuse is also a well-known problem. If a person uses one password for several services, then their most protected account is as vulnerable as their least protected one. This also opens a window of opportunity for malicious service administators to gain access to their users' accounts on other services.
 
 \emph{Graphical Passwords} can generally be subdivided into two categories: recognition- and recall based \cite{suo:2005:graphical-passwords-survey}. The recognition schemes vary widely, the main idea being that the user has to recognize correct images and perform an action. For example, clicking on previously chosen pictures or clicking inside a convex hull created by them. The pictures can be of human faces (because they are arguably the easiest to remember) or following a specific theme (foods, landscapes, etc.). Such authentication schemes often require more time than the conventional approach. The recall-based schemes on the other hand expect the user to reproduce some type of work. This could be a simple picture consisting of a couple of strokes that touch a few points on a \(5\times 5\) grid or something more complex, like a signature or some other piece of hand-written text. In any case, graphical passwords raise their own set of issues, like being longer to input or susceptible to shoulder surfing. The latter will be described in \ref{subsec:authentication-attacks}.
 
@@ -27,6 +27,25 @@ An overview of methods of secure authentication and types of attacks can be foun
 
 \subsection{Types of Authentication Attacks}
 \label{subsec:authentication-attacks}
+\emph{Brute Force} is the least sophisticated type of a password attack. The attacker chooses a specific password domain and begins the trial and error guessing process. For example, one could try all passwords that consist of lowercase latin latters (26 in total) and are up to 8 characters in length. This domain contains \(217180147158\) unique passwords. Assuming that the attacker can try \(1000\) passwords per second, it will take them \(\approx 6.8\) years to complete the search. This might sound like a lot of time but the \(1000\) passwords per second is a conservative speed estimate. Depending on the available hardware, the hash algorithm and other factors, this speed could be a \emph{a lot} faster. Real world speeds for some hashing algorithms can be found in table \ref{table:hashcat-speed}
+
+\begin{table}
+    \begin{center}
+        \begin{tabular}{lr}
+            Hashtype & Millions of hashes per second \\
+            \hline
+            MD5 & 2912.4 \\
+            SHA1 & 1004.6 \\
+            SHA-512 & 117.6 \\
+            SHA-3 (Keccak) & 104.6
+          \end{tabular}
+      \end{center}
+      \caption{Hashcat on a ThinkPad E570 Notebook with an Nvidia GTX 950M graphics card.}
+      \label{table:hashcat-speed}
+  \end{table}
+
+\emph{Dictionary Attacks} are an improvement upon the brute force attacks. A dictionary
+
 
 \section{Password Hashing Fundamentals}
 \label{sec:fundamentals}
