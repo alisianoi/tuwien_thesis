@@ -14,7 +14,7 @@ Choosing cryptographic primitives through an open competitive process is an effe
 This section will present a brief overview of different methods for secure authentication as well as a short summary of some types of attacks. The presented taxonomy was in part borrowed from \cite{raza:2012:password-attacks-survey} and then expanded and filled with details from other sources.
 
 \subsection{Authentication Approaches}
-\label{subsec:secture-authentication-protocols}
+\label{subsec:authentication-approaches}
 
 Several authentication approaches have emerged over the years. Some of them are much more widespread and old while others are rather novel and aim to solve some known issues. Below is a list of rather common and interesting authentication schemes.
 
@@ -37,6 +37,28 @@ An immediate challenge is that in this scenario authentication becomes \emph{pro
 \emph{Biometric Authentication} is a collective term for a technique which focuses on physical traits unique to every user. These include fingerprints, facial recognition, voice recognition, iris scanning and similar. Other types of biometric data as well as certain challenges connected with false recognition as well as false non-recognition can be found in \cite{jain:2004:intro-to-biometric}. That paper also highlights the notion of \emph{negative recognition} which means that biometric authentication allows to establish if the person is who they \emph{deny} to be. This property distinguishes these class of methods from all the others described in this section.
 
 \emph{One-time Passwords} is another elegant solution for user authentication. It is usually used in a multi-factor fashion, specifically Two-Factor Authentication (2FA). This means that the user first provides the conventional username/password pair ("what the user knows") and then follows it up with a one time password. This second password can come from a dedicated smart card, a separate keyfile or a smartphone application ("what the user has"). Of major interest are two one time password generation algorithms: HMAC-based One-time Password Algorithm (HOTP \cite{rfc4226}) and Time-based One-time Password Algorithm (TOTP \cite{rfc6238}). They are both developed as part of the Initiative for Open Authentication (OATH). They are implemented by several mobile applications for various operating systems and are also supported in the backend by such companies as Google, Yandex, GitHub, GitLab and many others \cite{wiki:2017:hotp-totp-companies}.
+
+\subsection{Conventional Password Strength}
+\label{subsec:password-strength}
+
+Despite the numerous flaws a number of alternative authentication approaches outlined in \ref{subsec:authentication-approaches}, conventional passwords are the primary means of user authentication. This section provides a list of approaches to measure their strength.
+
+\emph{Information Entropy} is the usual way to specify password strength. It is a base-two logarithm of the number of guesses which are required to recover a password with complete certainty. Information entropy is measured in bits. For example, if the password is completely random and has \(x\) bits of information entropy, then an attacker must compute \(2^x\) password candidates to be guaranteed a successful recovery.
+
+Human generated passwords, however, are notorious for generating non-random passwords. Using information entropy to estimate the strength of these passwords produces overly optimistic results. Some alternative approaches are mentioned below.
+
+\emph{NIST Special Publication 800-63-2} \cite{burr2013electronic} tried to address this problem and suggested a refined approach to compute the information entropy of a password:
+
+\begin{itemize}
+    \item The entropy of the 1\textsuperscript{st} character is 4 bits.
+    \item The entropy of characters 2 to 7 is 2 bits per character.
+    \item The entropy of characters 9 to 21 is 1.5 bits per character.
+    \item The entropy of characters 21 and above is 1 bit per character.
+    \item If \emph{both} uppercase letters and non-alphabetic characters are used, the password gains 6 more bits of entropy.
+    \item If the password is 1 to 19 letters long and passes an extensive dictionary check, then an additional 6 bits of entropy should be added.
+  \end{itemize}
+
+The last bonus is not assigned to passwords of length 20 and above because it is assumed that those are \emph{pass phrases}, i.e. passwords which consist of several dictionary words. The whole approach was criticized for being inaccurate and has even been removed from the revised version of the publication \cite{grassi2017digital}.
 
 \subsection{Authentication Attacks}
 \label{subsec:authentication-attacks}
