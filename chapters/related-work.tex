@@ -1,13 +1,6 @@
 \chapter{Related Work}
 \label{chapter:related-work}
 
-\section{Cryptographic Competitions}
-\label{sec:cryptocomps}
-
-It is common practice to announce a competition in order to develop standard cryptographic primitives. For example, the symmetric block cipher Rijndael \cite{daemen:2002:DRA} was chosen to become the Advanced Encryption Standard (AES) \cite{aes-fips} in a competitive selection process that lasted from 1997 to 2000. The competition was organized by the National Institute of Standards and Technology (NIST) and included 15 different designs which were narrowed down to 5 during the final phase: Rijndael \cite{daemen:2002:DRA}, Serpent \cite{anderson:1988:serpent}, Twofish \cite{schneier:1998:twofish}, RC6 \cite{rivest:1998:rc6} and MARS \cite{burwick:1998:mars}. Such an open standartization process was highly praised by the cryptographic community. So, another competition was held by NIST between 2007 and 2012 in order to select the next hash function standard, SHA-3. The final round included 5 designs: Blake \cite{aumasson:2013:blake2}, Grøstl \cite{praveen:2011:groestl}, JH \cite{wu:2011:jh}, Skein \cite{ferguson:2009:skein} and Keccak \cite{cryptoeprint:2015:keccak}, the last of which ultimately became the winner of the competition.
-
-Choosing cryptographic primitives through an open competitive process is an effective approach. Therefore, when the need for an updated, memory-hard password hashing scheme became apparent, a Password Hashing Competition was held. This time, however, it was not organized by NIST but directly by the cryptographic community. In particular, the \url{password-hashing.net} website lists two well-known cryptographers Dmitry Khovratovich and Jean-Philippe Aumasson as direct contacts. The Password Hashing Competition concluded in 2015, with Argon2 \cite{biryukov:2015:argon2} selected as its winner and Catena \cite{forler:2013:catena}, Lyra2 \cite{andrade:2016:lyra2}, Makwa \cite{pornin:2015:makwa} and yescrypt \cite{peslyak:2015:yescrypt} receiving special recognition.
-
 \section{Secure Authentication}
 \label{sec:secure-authentication}
 
@@ -148,7 +141,19 @@ The straightforward implementation of EKE was shown to be insecure \cite{hao2010
 
 \emph{Password Authenticated Key Exchange by Juggling (J-PAKE)} is a more recent and advanced method from the PAKE family \cite{hao2010j}. It has a formal security proof \cite{abdalla2015security}. Its computation cost is similar when compared to EKE. Moreover, It is not patented and has been included into such cryptographic libraries as OpenSSL and Bouncy Castle.
 
-\section{Password Hashing Fundamentals}
+\section{Secure Password Storage}
+\label{sec:secure-password-storage}
+
+Sections \ref{sec:secure-authentication} and \ref{sec:secure-communication}
+
+\subsection{Cryptographic Competitions}
+\label{sec:cryptocomps}
+
+It is common practice to announce a competition in order to develop standard cryptographic primitives. For example, the symmetric block cipher Rijndael \cite{daemen:2002:DRA} was chosen to become the Advanced Encryption Standard (AES) \cite{aes-fips} in a competitive selection process that lasted from 1997 to 2000. The competition was organized by the National Institute of Standards and Technology (NIST) and included 15 different designs which were narrowed down to 5 during the final phase: Rijndael \cite{daemen:2002:DRA}, Serpent \cite{anderson:1988:serpent}, Twofish \cite{schneier:1998:twofish}, RC6 \cite{rivest:1998:rc6} and MARS \cite{burwick:1998:mars}. Such an open standartization process was highly praised by the cryptographic community. So, another competition was held by NIST between 2007 and 2012 in order to select the next hash function standard, SHA-3. The final round included 5 designs: Blake \cite{aumasson:2013:blake2}, Grøstl \cite{praveen:2011:groestl}, JH \cite{wu:2011:jh}, Skein \cite{ferguson:2009:skein} and Keccak \cite{cryptoeprint:2015:keccak}, the last of which ultimately became the winner of the competition.
+
+Choosing cryptographic primitives through an open competitive process is an effective approach. Therefore, when the need for an updated, memory-hard password hashing scheme became apparent, a Password Hashing Competition was held. This time, however, it was not organized by NIST but directly by the cryptographic community. In particular, the \url{password-hashing.net} website lists two well-known cryptographers Dmitry Khovratovich and Jean-Philippe Aumasson as direct contacts. The Password Hashing Competition concluded in 2015, with Argon2 \cite{biryukov:2015:argon2} selected as its winner and Catena \cite{forler:2013:catena}, Lyra2 \cite{andrade:2016:lyra2}, Makwa \cite{pornin:2015:makwa} and yescrypt \cite{peslyak:2015:yescrypt} receiving special recognition.
+
+\subsection{Password Hashing Fundamentals}
 \label{sec:fundamentals}
 
 \emph{Password hashing} is the process of transforming a password into a hash value. Given the resulting hash value it should be computationally infeasible to restore the original password.
@@ -167,7 +172,7 @@ Arguably the first password hashing scheme to implement this idea this was scryp
 
 In order to create new designs which would address this problem, the Password Hashing Competition was announced in 2013 and concluded in 2015 \cite{wetzels:2016:phc}. Below follows a quick summary of its winner (Argon2) and all of the finalists except Lyra2. The latter is the main focus of this work and will be described in more detail later in \ref{chapter:lyra2}.
 
-\section{Main Features of \textsc{Catena}}
+\subsection{Main Features of \textsc{Catena}}
 \label{sec:catena}
 
 \textsc{Catena} is a password-scrambling framework based on Bit Reversal Graphs \cite{forler:2013:catena}. It packs such features as \emph{client-independent updates} which allows a hash value to be updated using larger time or memory cost parameters without the need to wait for a user to login. \textsc{Catena} also offers a \emph{server-relief} feature which allows to offload most of the hash computation to the client machine rather than the server, hence increasing the number of possible concurrent logins.
@@ -178,7 +183,7 @@ An interesting related project is \textsc{Catena-Axungia} which can be found in 
 
 Finally, the \textsc{Catena-Variants} \cite{github:2017:catena-variants} project is a modular \texttt{C++} implementation of \textsc{Catena}. It is reported to be slower and consume more memory while at the same time providing more flexibility. There is an API that allows the developer to mix and match internal parts of the algorithm.
 
-\section{Main Features of Makwa}
+\subsection{Main Features of Makwa}
 \label{sec:makwa}
 
 The Makwa PHS at its core relies on Blum integers \cite{pornin:2015:makwa}. A Blum integer is a natural integer \(n\) which can be represented as a \(pq\) where \(p\) and \(q\) are prime numbers with an additional property:
@@ -192,14 +197,14 @@ The squaring is primarily computation intensive and does not require a significa
 
 One of the distinguising features of Makwa highlighted on its website is \emph{delegation} \cite{makwa:2017:homepage}. The author points out that the complexity of password hashing is essentially an arms race between defenders and attackers. Delegation allows to use untrusted systems to perform part of the computation of the hash value with the Makwa algorithm. The exact protocol can be found in Section 4 of the specification \cite{pornin:2015:makwa-spec}.
 
-\section{Main Features of yescrypt}
+\subsection{Main Features of yescrypt}
 \label{sec:yescrypt}
 
 The \emph{yescrypt} PHS \cite{peslyak:2015:yescrypt} improves upon its predecessor, \emph{scrypt} \cite{percival:2016:scrypt}. However, yescrypt author Alexander Peslyak makes it clear that the author of scrypt is a different person, Colin Percival. The yescrypt PHS deals with some minor inconsistencies discovered in the specification of its predecessor.
 
 The yescrypt PHS also introduces a novel configuration with a read-only memory (ROM) table. In that configuration random lookups are performed so as to ensure that this table remains in memory. Finally, the \texttt{YESCRYPT\_RW} flag enables these lookups as well as a number of optimized instructions.
 
-\section{Main Features of Argon2}
+\subsection{Main Features of Argon2}
 \label{sec:argon2}
 
 \emph{Argon2} has two distinct configurations: \emph{Argon2i} and \emph{Argon2d} \cite{biryukov:2015:argon2}. The former revists the blocks of the in-memory matrix in the data-\emph{independent} fashion while the latter does so in a data-\emph{dependent} manner. This means that Argon2i is better suited for scenarios when \emph{side-channel attacks} are a viable concern, such as during password hashing or key derivation. At the same time Argon2d is more resistant to \emph{time-memory tradeoffs} which makes it more suitable for digital cryptocurrencies or other cases where proof of work is important.
