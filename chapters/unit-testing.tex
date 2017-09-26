@@ -1,43 +1,11 @@
-\chapter{Unit Testing Frameworks}
-\label{chapter:unit-testing-framework}
+\chapter{Unit Testing Framework Choice}
+\label{sec:unit-testing-framework-choice}
 
-For the lyra2-java project testing is important. It makes sure that the new implementation produces the same results as the reference implementation. Formal specification and verification methods (for example, as described in \cite{lamsweerde:2000:formal-specification, mueller:1994:formal-specification}) would have been too complex in this situation.
+Section \ref{subsec:unit-testing-fundamentals} introduces basic practices and definitions. Section \ref{sec:unit-boost-google} will discuss how the two similar projects, the reference implementation of Lyra2 and of Argon2, address testing. Sections \ref{sec:unit-junit-testng} and \ref{sec:unit-pytest} motivate the choice of tools and techniques for the lyra2-java and the python build harness projects.
 
-A more practical verification approach is to provide reasonable unit test coverage for the new project, as suggested in \cite{williams:2010:unit-tests-rock}. However, this approach also provides its own classical questions: which tools to use \cite{daka:2014:unit-testing-tools} and when to stop writing tests \cite{elberzhager:2012:reducing-effort}.
+Although the reference implemnetation of Lyra2 has automated tests, it does not use a dedicated unit testing framework \cite{github:2017:lyra}. This is a justifiable choice which has its advantages. In particular, it allows to keep the complexity of the project lower and not rely on external libraries. The build process is somewhat simplified as well.
 
-Section \ref{sec:unit-terms-and-definitions} will introduce the basic practices and definitions. Section \ref{sec:unit-boost-google} will discuss how the two similar projects, the reference implementation of Lyra2 and of Argon2, address testing. Sections \ref{sec:unit-junit-testng} and \ref{sec:unit-pytest} motivate the choice of tools and techniques for the Java and Python projects.
-
-\section{Terms and Definitions}
-\label{sec:unit-terms-and-definitions}
-
-\emph{Unit testing} is the process of verifying that the program produces expected results when given specific inputs. \emph{Unit under test} is a common term that refers to the specific part of the code that is being tested by a specific \emph{test case}. Unit testing is often powered by a \emph{unit testing framework} which is a set of tools dedicated to simplify both writing and running unit tests. \emph{Test Driven Development} is a software development practice which expects a piece of functionality to be produced together with the accompanying tests.
-
-One notable property of a typical unit test is that it deals with the smallest logical piece of code possible: one particular function or a single method of a class. Consequently, distinct unit tests are ususally independent of each other and can be run in any order or in parallel. Parallelized unit test execution is therefore a desirable feature of a unit testing framework.
-
-However, there are also cases when the complexity of a unit test is higher. For example, when a class heavily relies on data coming from a database, a unit test needs to \emph{mock} the database connection and the data. \emph{Mocking} is the process of simulating a real object with a simplified version of it.
-
-It is often the case that many unit tests share the same logic. Specifically, when testing hash functions, this logic could be summarized with the following steps:
-
-\begin{enumerate}
-    \item Select a configuration of the hash function.
-    \item Provide input data: a password, a salt, etc.
-    \item Compute the hash value and compare it to the correct one.
-   \end{enumerate}
-
-Writing a unit test for each combination of the hash function configuration and each set of input parameters is a daunting task. \emph{Parametrized unit testing} allows to generate a template for a large number of unit tests and avoid the extra labour \cite{tillmann:2010:parametrized-unit-tests-rock}. Therefore, unit testing frameworks that support this particular feature are of special interest in this work.
-
-\emph{Code coverage} indicates how well a program is tested. It is low when only a small portion of the program is tested, and high otherwise. There are many ways to measure code coverage, some of which are described in \cite{elberzhager:2012:reducing-effort}. In practice, the most common code coverage metric is the number of lines of code (LOCs) covered by the test suite as a percentage of the total number of LOCs.
-
-Other types of coverage include: \emph{function} and \emph{statement} coverage (i.e. the portion of functions or statements that has been executed), \emph{branch} and \emph{condition} coverage (i.e. the portion of conditions/branches executed in relation to the total number of \emph{all possible} combinations) and many others. For the sake of simplicity, the projects developed in this work will not be using these metrics.
-
-\emph{Continuous integration} (CI) is the practice of running unit tests (and measuring code coverage changes) with every codebase change. This approach helps identify problems early and fix them quicker \cite{williams:2010:unit-tests-rock}. Continuous integration often occurs transparenly on a separate set of dedicated machines and its status is visible to the developers at all times. Its popularity and utility is undisputable, with such services like TravisCI \cite{travis:2017:homepage}, AppVeyor \cite{appveyor:2017:homepage} and CircleCI \cite{circleci:2017:homepage} providing both commercial and free (for open source projects) continuous integration as a service.
-
-\section{Choice of the Unit Testing Framework}
-\label{sec:unit-choice}
-
-Although the reference Lyra2 project in \cite{github:2017:lyra} has automated tests, it does not use a dedicated unit testing framework. This is a reasonable choice which has its advantages. In particular, it allows to keep the complexity of the project lower and not rely on external libraries. The build process is somewhat simplified as well.
-
-Furthermore, when it comes to the \texttt{C/C++} ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness in \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will provide a plausible explanation. Section \ref{sec:unit-junit-testng} will provide motivation for my choice of the unit testing framework for the lyra2-java port and section \ref{sec:unit-pytest} will describe the test suite for the Python script harness.
+Furthermore, when it comes to the \texttt{C/C++} ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness in \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will provide a plausible explanation. Section \ref{sec:unit-junit-testng} will provide motivation for my choice of the unit testing framework for the lyra2-java port and section \ref{sec:unit-pytest} will describe the test suite for the Python build harness.
 
 \begin{table}
 \begin{tabular}{llll}
@@ -51,12 +19,12 @@ Furthermore, when it comes to the \texttt{C/C++} ecosystem, the choice of the fr
 \label{table:framework-features-cpp}
 \end{table}
 
-\subsection{\texttt{Boost.Test}}
+\section{\texttt{Boost.Test}}
 \label{sec:unit-boost-google}
 
-There is a large choice of unit testing frameworks for the \texttt{C/C++} ecosystem. An extensive list can be found in \cite{wiki:2017:frameworks-c, wiki:2017:frameworks-cpp}. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, it is sometimes more practical to write a separate test file that would run a few sanity checks.
+There is a large choice of unit testing frameworks for the \texttt{C/C++} ecosystem. An extensive list can be found in \cite{wiki:2017:frameworks-c, wiki:2017:frameworks-cpp}. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, it is often more practical to write a separate test file that would run a few sanity checks.
 
-Consider the case of Argon2. As one can see in \cite{github:2017:argon2}, the in-house \texttt{src/test.c} test program for Argon2 was introduced on 25\textsuperscript{th} of January 2016. The commit hash starts with \texttt{7450df88} and it is number 317 out of (current) almost 600 in the version control history. So it is safe to say that this testing was introduced at the later stages of the project when the need for it was apparent \footnote{https://github.com/P-H-C/phc-winner-argon2/issues/85}.
+Consider the case of Argon2. The in-house \texttt{src/test.c} test program for Argon2 was introduced on 25\textsuperscript{th} of January 2016 \cite{github:2017:argon2}. The commit hash starts with \texttt{7450df88} and it is number 317 out of (current) almost 600 in the version control history. So it is safe to say that this testing was introduced at the later stages of the project when the need for it was apparent \footnote{https://github.com/P-H-C/phc-winner-argon2/issues/85}.
 
 A similar story could be observed for the reference Lyra2 project \cite{github:2017:lyra}. The rest of this section will explain why a rather popular unit testing library \texttt{Boost.Test} was not used in either of the projects. This particular library was tried because of my personal developer preference. A different developer could attempt the same steps with another library, like \texttt{CTest} or \texttt{Google Test}.
 
@@ -64,7 +32,7 @@ A similar story could be observed for the reference Lyra2 project \cite{github:2
 
 The \texttt{Boost.Test} is a unit testing framework that is part of \texttt{Boost}. It is licensed under the Boost Software License which is a free software license, OSI-approved and compatible with GPL. The library documnetation is located in \cite{boost:2017:test-docs}.
 
-The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in Section \ref{sec:unit-terms-and-definitions}. \texttt{Boost.Test} provides all the common features a unit testing library is expected to have. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \mintinline{cpp}{#include<...>} and a call to the \mintinline{cpp}{BOOST_AUTO_TEST_CASE} macro, as shown in \ref{figure:boost-auto-test-case}.
+The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in Section \ref{subsec:unit-testing-fundamentals}. \texttt{Boost.Test} provides all the common features a unit testing library is expected to have. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \mintinline{cpp}{#include<...>} and a call to the \mintinline{cpp}{BOOST_AUTO_TEST_CASE} macro, as shown in figure \ref{figure:boost-auto-test-case}.
 
 \begin{figure}
 \centering
@@ -80,11 +48,11 @@ BOOST_AUTO_TEST_CASE(name_of_test_function) {
   \label{figure:boost-auto-test-case}
   \end{figure}
 
-Apart from that \texttt{Boost.Test} has a few convenience features. First of all, it was designed to be used as a header-only library. This means that the build process of a project needs only slight modification. Secondly, \texttt{Boost.Test} supports parametrized tests which are called "Data-Driven Test Cases" and can be found in \cite{boost:2017:test-data-driven}. First step is to declare such tests with the special \mintinline{cpp}{BOOST_DATA_TEST_CASE} macro. More details about its usage can be found in \cite{boost:2017:test-docs-data-macro}. The data also has to be wrapped into a dataset, the procedure is described in detail in \cite{boost:2017:test-docs-dataset}.
+Apart from that \texttt{Boost.Test} has a few convenience features. First of all, it was designed to be used as a header-only library. This means that the build process of a project needs only slight modification. Secondly, \texttt{Boost.Test} supports parametrized tests which are called "Data-Driven Test Cases" and can be found in \cite{boost:2017:test-data-driven}. First step is to declare such tests with the special \mintinline{cpp}{BOOST_DATA_TEST_CASE} macro. More details about its usage can be found in \cite{boost:2017:test-docs-data-macro}. The data also has to be wrapped into a dataset. The exact procedure is described in detail in \cite{boost:2017:test-docs-dataset}.
 
 This section should have given the reader a hint that setting up \texttt{Boost.Test} for the real-world usage is not entirely painless. Even though the documentation provides an accurate description of the process, it still takes significant time to set everything up. Therefore it is understandable why Lyra2 and Argon2 projects chose to use their own testing solutions and not take advantage of test parametrization.
 
-\subsection{\texttt{JUnit} and \texttt{TestNG}}
+\section{\texttt{JUnit} and \texttt{TestNG}}
 \label{sec:unit-junit-testng}
 
 \begin{figure}
@@ -149,22 +117,22 @@ Several test cases can be collected into a single \emph{test suite}. Finally, a 
 
 As well as \texttt{JUnit}, the Java ecosystem has a unit testing framework called \texttt{TestNG} \cite{testng:2017:home}. There are several in-depth comparisons available online in \cite{mkyong:2017:testng-vs-junit, wiki:2017:testng-vs-junit}. Arguably the most important differences follow.
 
-Firstly, both frameworks allow to implement parametrization tests but the implementation details are significantly different.  \texttt{JUnit4} requires the developer to mark the class with the \mintinline{java}{@RunWith} decorator as well as provide a class method marked with \mintinline{java}{@Parameters} and return a single \mintinline{java}{Collections<Object[]>} of data. On the other hand, \texttt{TestNG} has two distinct mechanisms, one of which uses \texttt{testng.xml} and the other is a \mintinline{java}{@DataProvider} method which returns either a single \mintinline{java}{Object[][]} or an \mintinline{java}{Iterator<Object[]>}. With the first mechanism, the test data is stored separately in \texttt{testng.xml} while the second approach allows to have a function that generates the data \footnote{http://testng.org/doc/documentation-main.html\#parameters}.
+Firstly, both frameworks allow to implement parametrization tests but the implementation details are different.  \texttt{JUnit4} requires the developer to mark the class with the \mintinline{java}{@RunWith} decorator as well as provide a class method marked with \mintinline{java}{@Parameters} and return a single \mintinline{java}{Collections<Object[]>} of data. On the other hand, \texttt{TestNG} has two distinct mechanisms, one of which uses \texttt{testng.xml} and the other is a \mintinline{java}{@DataProvider} method which returns either a single \mintinline{java}{Object[][]} or an \mintinline{java}{Iterator<Object[]>}. With the first mechanism, the test data is stored separately in \texttt{testng.xml} while the second approach allows to have a function that generates the data \footnote{http://testng.org/doc/documentation-main.html\#parameters}.
 
 Formally, \texttt{TestNG} implements parametrized tests in a more flexible manner. However, in practice the \texttt{testng.xml} is not that widely used and the \mintinline{java}{Collections<Object[]>} \texttt{JUnit4} API is arguably cleaner than the generic-free way of \texttt{TestNG}. Finally, \texttt{JUnit4} is usually readily provided by Java IDEs and does not require additional setup. The feature parity with \texttt{TestNG} and general availability were the deciding factors in using this testing framework for lyra2-java.
 
 Figure \ref{fig:junit4-parametrization} provides a simplified example of the way unit tests are organized in lyra2-java. The testing logic is in the \mintinline{java}{simpleTest} method: configuration parameters are constructed using the values from the \mintinline{java}{entry} instance variable, then a call to \mintinline{java}{Lyra2.phs} is made and the resulting hash is compared to the correct answer by the \mintinline{java}{assertArrayEquals} call.
 
-The \mintinline{java}{setupClass} method is marked with the \mintinline{java}{@Parametrized.Parameters} which makes this method the provider of data. The precomputed data comes from several \texttt{YAML} data files whose names are stored in the \mintinline{java}{fnames} variable. More information about the file structure and \texttt{YAML} in general is in appendix \ref{chapter:yaml}. The \mintinline{java}{for} loop on line \(12\) sequentially opens the \texttt{YAML} data files, loads their contents and collects them in the \mintinline{java}{entries} variable. Once the \mintinline{java}{setupClass} method returns that variable, it is used by \texttt{JUnit} to initialize several instances of the class, providing each constructor with one element from the \mintinline{java}{entries} array.
+The \mintinline{java}{setupClass} method is marked with the \mintinline{java}{@Parametrized.Parameters} which makes this method the provider of data. The precomputed data comes from several \texttt{YAML} data files whose names are stored in the \mintinline{java}{fnames} variable. More information about the file structure and \texttt{YAML} in general is in section \ref{sec:configuration-and-test-file-format}. The \mintinline{java}{for} loop on line \(12\) sequentially opens the \texttt{YAML} data files, loads their contents and collects them in the \mintinline{java}{entries} variable. Once the \mintinline{java}{setupClass} method returns that variable, it is used by \texttt{JUnit} to initialize several instances of the class, providing each constructor with one element from the \mintinline{java}{entries} array.
 
 This is the application of the parametrized tests approach which allows to run several hundreds of tests for different configurations and input values while writing the test code only once.
 
-\subsection{Unit Testing with \texttt{py.test}}
+\section{Unit Testing with \texttt{py.test}}
 \label{sec:unit-pytest}
 
-Python is a very popular high-level general purpose scripting language created by Guido van Rossum. It has a built-in unit testing framework called \texttt{unittest} which comes together with the interpreter. It keeps a fairly compatible interface with the \texttt{xUnit} architecture described in \ref{sec:unit-junit-testng}. Other two notable unit testing frameworks in Python are \texttt{Node} and \texttt{py.test}. They both support an \texttt{xUnit} compatible layer and come as an external dependency. The features offered by these two external frameworks are superior to those provided by the built-in \texttt{unittest}.
+Python is a very popular high-level general purpose scripting language created by Guido van Rossum. It has a built-in unit testing framework called \texttt{unittest} which comes together with the interpreter. It keeps a fairly compatible interface with the \texttt{xUnit} architecture described in section \ref{sec:unit-junit-testng}. Other two notable unit testing frameworks in Python are \texttt{Node} and \texttt{py.test}. They both support an \texttt{xUnit} compatible layer and come as an external dependency. The features offered by these two external frameworks are superior to those provided by the built-in \texttt{unittest}.
 
-\emph{Parametrized testing} is tricky when it comes to a scripting language like Python. Even the built-in \texttt{unittest} framework could dynamically generate test classes, as demonstrated on stackoverflow \footnote{https://stackoverflow.com/a/20870875/1269892}. However, there is no \emph{designed} way to do so. The \texttt{Nose} library allows for parametrized testing through an elegant mechanism of Python generators (the \mintinline{python}{yield} keyword) that return functions to be run as test cases. The \texttt{py.test} framework goes the more \texttt{xUnit}-inspired route of using the \mintinline{python}{@mark.parametrized} decorator.
+\emph{Parametrized testing} is tricky when it comes to a scripting language like Python. Even the built-in \texttt{unittest} framework could dynamically generate test classes, as demonstrated on \mbox{Stackoverflow \footnote{https://stackoverflow.com/a/20870875/1269892}}. However, there is no \emph{designed} way to do so. The \texttt{Nose} library allows for parametrized testing through an elegant mechanism of Python generators (the \mintinline{python}{yield} keyword) that return functions to be run as test cases. The \texttt{py.test} framework goes the more \texttt{xUnit}-inspired route of using the \mintinline{python}{@mark.parametrized} decorator.
 
 Unfortunately, the \texttt{Nose} unit testing framework has been in maintenance mode. This framework is no longer in active development and therefore is not recommended for new projects. This is why the Python build harness for the reference Lyra2 implementation uses \texttt{py.test}.
 
@@ -195,3 +163,73 @@ def test_sanity_0(path, pwd, salt, k, t, m):
 Figure \ref{fig:pytest-parametrization} shows why parametrization testing is important when building different configurations of the reference Lyra2 implementation. Before running those configurations with a long list of parameters it is worth to make sure that the compiled executables actually work. However, writing a test for each individual possible configuration is not feasible. Instead, the first decorator \mintinline{python}{@pytest.mark.parametrize('path')} fetches all filenames that start with \texttt{lyra2-} (convention for Lyra2 executable names) from a specific directory. These names are later passed into a specific unit test in the \texttt{path} parameter.
 
 This parametrized testing approach allows to write the testing logic once and reuse it for any possible Lyra2 configuration produced by the \texttt{Makefile} of the reference project.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Configuration and Test File Format}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{sec:configuration-and-test-file-format}
+
+The data for parametrized tests is stored in YAML files. Those files are produced by the reference Lyra2 project through the Python build harness. Then they are consumed by the \texttt{JUnit4} testing framework of the lyra2-java project. This mechanism allows to make sure that both projects compute the same hash values.
+
+YAML stands for \emph{YAML Ain't Markup Language} and is a superset of JSON, another popular data format. YAML targets human readability and provides native support for custom datatypes: scalars, arrays, structures, etc. Most programming languages provide support for reading and writing of YAML files, inclusing both Java and Python.
+
+A single file in YAML can hold several documents. This is leveraged by the Python build harness: each file corresponds to a single Lyra2 executable. This guarantees that the compile time parameters are fixed. These parameters are stored together with all the runtime parameters and the resulting hash. See figure \ref{fig:yaml-data} for reference. The \texttt{hash} field is stored as an array of strings which ensures that different YAML libraries deduce the content type of this array correctly. The \mintinline{shell}{---} is a delimiter between the two YAML documents. This feature allows to store several sets of data in one file.
+
+The YAML format is also used to store default configuration for the Python build harness of the reference Lyra2 project. It can be found on the \texttt{harness} branch of the forked reference repository in the \mintinline{shell}{harness.yml} file \cite{github:2017:lyra-copy}. The primary parameters are \mintinline{shell}{build_path} and \mintinline{shell}{makefile_path}. The first one defines the location for the compiled Lyra2 executables and the second one points to the original \mintinline{shell}{Makefile}.
+
+The \mintinline{shell}{matrix} group of parameters defines the build matrix. The \mintinline{shell}{option} parameter configures the type of Lyra2 executable built by the \mintinline{shell}{Makefile}, which is a generic version for the \mintinline{shell}{x86_64} architecture by default. The \mintinline{shell}{threads} parameter determines the parallelism degree and is set to 1. The \mintinline{shell}{columns}, \mintinline{shell}{sponge}, \mintinline{shell}{rounds} and \mintinline{shell}{blocks} correspond directly to compile time Lyra2 parameters. Finally, the \mintinline{shell}{bench} parameter determines if the test vectors should be included into the compiled executable. By default it is set to 0 which means those vectors are skipped.
+
+The \mintinline{shell}{data} group of parameters specifies the test vectors which will be used when generating hash values with \mintinline{shell}{./harness.py compute}. That group includes \mintinline{shell}{pass}~---~an array of passwords, \mintinline{shell}{salt}~---~an array of salts, \mintinline{shell}{klen}~---~an array of output lenghts (i.e. the length of the hash), \mintinline{shell}{tcost}~---~an array of time costs and finally \mintinline{shell}{mcost}~---~an array of memory costs. The \mintinline{shell}{./harness.py} script generates a cartesian product of all of the array members and then runs every compiled executable using those values as test vectors. The results are stored in the \mintinline{shell}{data_path} directory which can be configured as well. The \mintinline{shell}{./harness.py} script does not overwrite old hash values, so you will have to remove them manually if regeneration is required.
+
+Finally, compilation flags are also part of the configuration and their defaults can be seen in \ref{fig:compile-flags}.
+
+\begin{figure}
+    \begin{minted}{yaml}
+    blocks: 8
+    columns: 16
+    hash: [0f, ee, bd, 1f, '00', 2a, 5b, '87', '71', ee]
+    klen: 10
+    mcost: 3
+    pass: password
+    rounds: 1
+    salt: s
+    sponge: blake2b
+    tcost: 1
+    threads: 1
+    ---
+    blocks: 8
+    columns: 16
+    hash: [0f, 7d, e3, 3c, e3, 9e, 0c, f9, 8e, '70']
+    klen: 10
+    mcost: 10
+    pass: password
+    rounds: 1
+    salt: s
+    sponge: blake2b
+    tcost: 1
+    threads: 1
+    \end{minted}
+    \caption{An example of a YAML test data file. Two distinct documents are separated with \mintinline{shell}{---}. The real test harness uses \emph{a lot} more YAML documents per one actual file.}
+    \label{fig:yaml-data}
+  \end{figure}
+
+
+\begin{figure}
+    \begin{minted}{yaml}
+    CFLAGS:
+      - -std=c99
+      - -Wall
+      - -pedantic
+      - -O3
+      - -msse2
+      - -ftree-vectorizer-verbose=1
+      - -fopenmp
+      - -funroll-loops
+      - -march=native
+      - -Ofast
+      - -mprefer-avx128
+      - -flto
+      \end{minted}
+      \caption{The compilation flags used by the reference Lyra2 implementation.}
+      \label{fig:compile-flags}
+  \end{figure}
