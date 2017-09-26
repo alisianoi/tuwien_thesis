@@ -96,7 +96,7 @@ $ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcos
 
 The automated testing is possible because of the additional code that was added to the reference implementation. As mentioned in section \ref{sec:reference-implementation}, there is a \verb|harness| branch which could be found in the forked GitHub project \cite{github:2017:lyra-copy} and the corresponding pull request \cite{github:2017:lyra-pr}. This branch introduces the \verb|Lyra2/tests/harness.py| script written in Python 3 which allows to compile several configurations of Lyra2 and then use those to compute and store hash values.
 
-Additionally, the \verb|Lyra2/tests/take.py| Python 3 script was used to choose a number of random hash values from those previously precomputed. These were then used in the Java project to unit-test the implementation. They were also included into the continuous integration service and their status can be verified by following \cite{travis:2017:lyra}. In conclusion, both manual and automated testing indicate that the ported implementation does not contain immediately visible problems.
+Additionally, the \verb|Lyra2/tests/take.py| Python 3 script was used to choose a number of random hash values from those previously precomputed. These were then used in the Java project to unit-test the implementation. They were also included into the continuous integration service and their status can be verified by visiting \cite{travis:2017:lyra}. In conclusion, both manual and automated testing indicate that the ported implementation does not contain immediately visible problems.
 
 \section{Performance Comparison}
 \label{sec:performance-comparison}
@@ -107,7 +107,7 @@ The single-threaded configuration of the reference C implementation was compared
 
 The comparison project \cite{github:2017:lyra2-compare} is a combination of two Jupyter Notebooks \cite{jupyter:2017:jupyter} and an SQlite database. The two created notebooks follow the producer-consumer strategy. The \mintinline{shell}{src/compare.ipynb} is the producer notebook which is responsible for compiling both C and Java implementations as well as dispatching computation tasks. The results are then collected into the \mintinline{shell}{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \mintinline{shell}{src/plot.ipynb} notebook which reads the data from the SQLite database and plots the figures shown below.
 
-Lyra2 provides two main adjustable parameters: time and memory cost. Changing both of the parameters at the same time cannot be easily shown on a single graph which is why the comparison contains three main parts. Sections \ref{sec:fixed-time-cost} and \ref{sec:fixed-memory-cost} show how several Lyra2 configurations behave when the time cost and the memory cost is fixed, respectively. Section \ref{sec:no-fixed-costs} shows a grid of values for both time and memory costs. In all the sections, the two projects are compared using four configurations:
+Lyra2 provides two main adjustable parameters: time and memory cost. Changing both of the parameters at the same time cannot be easily shown on a single graph which is why the comparison contains three main parts. Subsections \ref{sec:fixed-time-cost} and \ref{sec:fixed-memory-cost} show how several Lyra2 configurations behave when time cost and memory cost is fixed, respectively. Subsection \ref{sec:no-fixed-costs} shows a grid of values for both time and memory costs. In all the sections, the two projects are compared using four configurations:
 
 \begin{itemize}
     \item Blake2b sponge with 256 columns, figures \ref{figure:mcost_256}, \ref{figure:tcost_256} and \ref{figure:tcost_mcost_blake2b_256}
@@ -118,12 +118,12 @@ Lyra2 provides two main adjustable parameters: time and memory cost. Changing bo
 
 Configurations were run in parallel, creating one process per configuration. Running time was measured as the time between process creation and its termination. Memory consumption was recorded from the parent process and its peak value was stored. For more details, please consult the \texttt{src/compare.ipynb} and \texttt{src/plot.ipynb} notebooks from \cite{github:2017:lyra2-compare}.
 
-Finally, in section \ref{sec:no-fixed-costs} the grid of time and memory cost parameters is \(200 \times 200\) with a step of \(10\), which results in a total of \(8 \times 21 \times 21 = 3528\) measurements used to build all the graphics.
+Finally, in subsection \ref{sec:no-fixed-costs} the grid of time and memory cost parameters is \(200 \times 200\) with a step of \(10\), which results in a total of \(8 \times 21 \times 21 = 3528\) measurements used to build all the graphics.
 
 \subsection{Fixed Time Cost}
 \label{sec:fixed-time-cost}
 
-There are two figures that show how running time and consumed memory depend on memory cost when the time cost is fixed. Figure \ref{figure:mcost_256} shows a 256-column and figure \ref{figure:mcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the reference implementation works faster and consumes less memory than its Java counterpart. A nice property is that both the running time and memory consumption are changing roughly linearly as the memory cost parameter is changed. This is consistent with the fact that the memory cost parameter corresponds to the number of rows of the in-memory matrix. There are some outliers with respect to both running time and memory consumption which can be attributed to different system loads.
+There are two figures that show how running time and consumed memory depend on memory cost when time cost is fixed. Figure \ref{figure:mcost_256} shows a 256-column and figure \ref{figure:mcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the reference implementation works faster and consumes less memory than its Java counterpart. A nice property is that both the running time and memory consumption are changing roughly linearly as the memory cost parameter is changed. This is consistent with the fact that the memory cost parameter corresponds to the number of rows of the in-memory matrix. There are some outliers with respect to both running time and memory consumption which can be attributed to different system loads.
 
 \begin{figure}[H]
     \centering
@@ -142,7 +142,7 @@ There are two figures that show how running time and consumed memory depend on m
 \subsection{Fixed Memory Cost}
 \label{sec:fixed-memory-cost}
 
-There are two figures that show how running time and consumed memory depend on time cost when the memory cost is fixed. Figure \ref{figure:tcost_256} shows a 256-column and figure \ref{figure:tcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the original C implementation works faster and consumes less memory than its Java counterpart. The running time changes roughly linearly as the time cost parameter is changed which is consistent with the fact that time cost corresponds to the number of iterations done by Lyra2. Memory consumption stays roughly the same which is also consistent with the fact that the largest memory consumer is the in-memory matrix. This matrix has the same size for all of the configurations. Admittedly, there are some deviations in memory consumption of the Java implementation. The second set of graphs \ref{figure:tcost_2048} even has a slight downward trend. The possible reasons for that include: the built-in garbage collector and the fact that the measurements run for several days, resulting in potentially different system loads.
+There are two figures that show how running time and consumed memory depend on time cost when memory cost is fixed. Figure \ref{figure:tcost_256} shows a 256-column and figure \ref{figure:tcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the original C implementation works faster and consumes less memory than its Java counterpart. The running time changes roughly linearly as the time cost parameter is changed which is consistent with the fact that time cost corresponds to the number of iterations done by Lyra2. Memory consumption stays roughly the same which is also consistent with the fact that the largest memory consumer is the in-memory matrix. This matrix has the same size for all of the configurations. Admittedly, there are some deviations in memory consumption of the Java implementation. The second set of graphs \ref{figure:tcost_2048} even has a slight downward trend. The possible reasons for that include: the built-in garbage collector and the fact that the measurements run for several days, resulting in potentially different system loads.
 
 \begin{figure}[H]
     \centering
@@ -202,15 +202,41 @@ The Java implementation was outperformed by the reference C implementation. This
 
 Part of the porting effort is a small proof of concept mobile application. This application demonstrates that using a native Java library in an Android project is convenient.
 
-One of the first steps is to determine the minimum versions of Android devices and API levels necessary. Since lyra2-java makes use of unsigned long number arithmetic, Java 1.8 support is required. This translates into a minimum Android versions of 7.0 and an API level of 24 \footnote{https://developer.android.com/guide/platform/j8-jack.html}.
+One of the first steps is to determine the minimum versions of Android devices and API levels necessary. Since lyra2-java makes use of unsigned 64-bit number arithmetic, Java 1.8 support is required. This translates into the minimum Android versions of 7.0 and the API level of 24 \footnote{https://developer.android.com/guide/platform/j8-jack.html}.
 
-The most common development environment for Android applications is the Android Studio. Support for Java 1.8 features has not yet landed into the release version of this IDE. So, in order to be able to develop a mobile application with Lyra2 a development version \texttt{3.0} needs to be installed. If you face problems then you might find helpful advice in appendix \ref{chapter:problem?}.
+The most common development environment for Android applications is the Android Studio. Support for Java 1.8 features has not yet landed into the release version of this IDE. So, in order to be able to develop a mobile application with Lyra2, a development version \texttt{3.0} needs to be installed. If you encounter a (similar) traceback as shown in figure \ref{fig:traceback}, there are several possible workarounds available online. The most effective one is to instruct Android Studio to use system libraries:
+
+\begin{minted}{shell}
+ANDROID_EMULATOR_USE_SYSTEM_LIBS=1 ./studio.sh
+  \end{minted}
+
+\begin{figure}
+\begin{minted}{shell}
+    Emulator: libGL error: unable to load driver: i965_dri.so
+    Emulator: libGL error: driver pointer missing
+    Emulator: libGL error: failed to load driver: i965
+    Emulator: libGL error: unable to load driver: i965_dri.so
+    Emulator: libGL error: driver pointer missing
+    Emulator: libGL error: failed to load driver: i965
+    Emulator: libGL error: unable to load driver: swrast_dri.so
+    Emulator: libGL error: failed to load driver: swrast
+    Emulator: X Error of failed request:  BadValue (integer parameter out of range for operation)
+    Emulator: Major opcode of failed request:  155 (GLX)
+    Emulator: Minor opcode of failed request:  24 (X_GLXCreateNewContext)
+    Emulator: Value in failed request:  0x0
+    Emulator: Serial number of failed request:  42
+    Emulator: Current serial number in output stream:  43
+    Emulator: Process finished with exit code 1
+\end{minted}
+\caption{Android Studio emulator: an obscure error traceback connected to \texttt{libGL}.}
+\label{fig:traceback}
+\end{figure}
 
 Once these preliminary steps are performed, the development of the application becomes straightforward. Android Studio is based on IntelliJ Studio and therefore picks up lyra2-java from the Maven Central repository in a matter of a couple clicks.
 
 As a result, a simple Android application was developed and is available on GitHub \cite{github:2017:lyra2-mobile}. It consists of a main screen and a results screen. The main screen allows the user to choose the particular configuration of Lyra2. By default, the Blake2b sponge with the time and memory cost of 100 will be used. The password and salt fields are set to the default values of "password" and "salt" respectively, the number of columns is 256 with each column being 12 blocks wide. The permutation inside the sponge makes a total 12 rounds of computations. All of the parameters above can be adjusted.
 
-Figure \ref{fig:lyra2-mobile-demo} demonstrates the hash value after running with default parameters as well as the hash value when using BlaMka instead of Blake2b. The hash values match those from the manual testing section \ref{sec:manual-testing}. In each case the computation lasted approximately 60 seconds which is consistent with the desktop version times. However, it should be noted that the application was tested in an emulator and not on an actual device.
+Figure \ref{fig:lyra2-mobile-demo} demonstrates the hash value after running with default parameters as well as the hash value when using BlaMka instead of Blake2b. The hash values match those from the manual testing section \ref{sec:manual-testing}. In each case the computation lasted for approximately 60 seconds which is consistent with the desktop version times. However, it should be noted that the application was tested in an emulator and not on an actual device.
 
 \begin{figure}[H]
 \centering
