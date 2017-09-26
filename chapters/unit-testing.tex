@@ -32,7 +32,7 @@ A similar story could be observed for the reference Lyra2 project \cite{github:2
 
 The \texttt{Boost.Test} is a unit testing framework which is part of \texttt{Boost}. It is licensed under the Boost Software License which is a free software license, OSI-approved and compatible with GPL. The library documentation is located in \cite{boost:2017:test-docs}.
 
-The main features of the library are summarised in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrisation becomes important because of the common test scenario described in section \ref{subsec:unit-testing-fundamentals}. \texttt{Boost.Test} provides all the common features a unit testing library is expected to have. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \mintinline{cpp}{#include<...>} and a call to the \mintinline{cpp}{BOOST_AUTO_TEST_CASE} macro, as shown in figure \ref{figure:boost-auto-test-case}.
+The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in section \ref{subsec:unit-testing-fundamentals}. \texttt{Boost.Test} provides all the common features a unit testing library is expected to have. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \mintinline{cpp}{#include<...>} and a call to the \mintinline{cpp}{BOOST_AUTO_TEST_CASE} macro, as shown in figure \ref{figure:boost-auto-test-case}.
 
 \begin{figure}
 \centering
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(name_of_test_function) {
   \label{figure:boost-auto-test-case}
   \end{figure}
 
-Apart from that \texttt{Boost.Test} has a few convenience features. First of all, it was designed to be used as a header-only library. This means that the build process of a project needs only slight modification. Secondly, \texttt{Boost.Test} supports parametrised tests which are called "Data-Driven Test Cases" and can be found in \cite{boost:2017:test-data-driven}. First step is to declare such tests with the special \mintinline{cpp}{BOOST_DATA_TEST_CASE} macro. More details about its usage can be found in \cite{boost:2017:test-docs-data-macro}. The data also has to be wrapped into a dataset. The exact procedure is described in detail in \cite{boost:2017:test-docs-dataset}.
+Apart from that \texttt{Boost.Test} has a few convenience features. First of all, it was designed to be used as a header-only library. This means that the build process of a project needs only slight modification. Secondly, \texttt{Boost.Test} supports parametrized tests which are called "Data-Driven Test Cases" and can be found in \cite{boost:2017:test-data-driven}. First step is to declare such tests with the special \mintinline{cpp}{BOOST_DATA_TEST_CASE} macro. More details about its usage can be found in \cite{boost:2017:test-docs-data-macro}. The data also has to be wrapped into a dataset. The exact procedure is described in detail in \cite{boost:2017:test-docs-dataset}.
 
 This section should have given the reader a hint that setting up \texttt{Boost.Test} for the real-world usage is not entirely painless. Even though the documentation provides an accurate description of the process, it still takes significant time to set everything up. Therefore it is understandable why Lyra2 and Argon2 projects chose to use their own testing solutions and not take advantage of test parametrization.
 
@@ -105,7 +105,7 @@ public class Lyra2Test {
 }
 \end{minted}
 \normalsize
-\caption{A simplified example of lyra2-java parametrised testing with \texttt{JUnit4}.}
+\caption{A simplified example of lyra2-java parametrized testing with \texttt{JUnit4}.}
 \label{fig:junit4-parametrization}
 \end{figure}
 
@@ -119,20 +119,20 @@ As well as \texttt{JUnit}, the Java ecosystem has a unit testing framework calle
 
 Firstly, both frameworks allow to implement parametrization tests but the implementation details are different.  \texttt{JUnit4} requires the developer to mark the class with the \mintinline{java}{@RunWith} decorator as well as provide a class method marked with \mintinline{java}{@Parameters} and return a single \mintinline{java}{Collections<Object[]>} of data. On the other hand, \texttt{TestNG} has two distinct mechanisms, one of which uses \texttt{testng.xml} and the other is a \mintinline{java}{@DataProvider} method which returns either a single \mintinline{java}{Object[][]} or an \mintinline{java}{Iterator<Object[]>}. With the first mechanism, the test data is stored separately in \texttt{testng.xml} while the second approach allows to have a function that generates the data \footnote{http://testng.org/doc/documentation-main.html\#parameters}.
 
-Formally, \texttt{TestNG} implements parametrised tests in a more flexible manner. However, in practice the \texttt{testng.xml} is not that widely used and the \mintinline{java}{Collections<Object[]>} \texttt{JUnit4} API is arguably cleaner than the generic-free way of \texttt{TestNG}. Finally, \texttt{JUnit4} is usually readily provided by Java IDEs and does not require additional setup. The feature parity with \texttt{TestNG} and general availability were the deciding factors in using this testing framework for lyra2-java.
+Formally, \texttt{TestNG} implements parametrized tests in a more flexible manner. However, in practice the \texttt{testng.xml} is not that widely used and the \mintinline{java}{Collections<Object[]>} \texttt{JUnit4} API is arguably cleaner than the generic-free way of \texttt{TestNG}. Finally, \texttt{JUnit4} is usually readily provided by Java IDEs and does not require additional setup. The feature parity with \texttt{TestNG} and general availability were the deciding factors in using this testing framework for lyra2-java.
 
 Figure \ref{fig:junit4-parametrization} provides a simplified example of the way unit tests are organized in lyra2-java. The testing logic is in the \mintinline{java}{simpleTest} method: configuration parameters are constructed using the values from the \mintinline{java}{entry} instance variable, then a call to \mintinline{java}{Lyra2.phs} is made and the resulting hash is compared to the correct answer by the \mintinline{java}{assertArrayEquals} call.
 
 The \mintinline{java}{setupClass} method is marked with the \mintinline{java}{@Parametrized.Parameters} which makes this method the provider of data. The precomputed data comes from several \texttt{YAML} data files whose names are stored in the \mintinline{java}{fnames} variable. More information about the file structure and \texttt{YAML} in general is in section \ref{sec:configuration-and-test-file-format}. The \mintinline{java}{for} loop on line \(12\) sequentially opens the \texttt{YAML} data files, loads their contents and collects them in the \mintinline{java}{entries} variable. Once the \mintinline{java}{setupClass} method returns that variable, it is used by \texttt{JUnit} to initialize several instances of the class, providing each constructor with one element from the \mintinline{java}{entries} array.
 
-This is the application of the parametrised tests approach which allows to run several hundreds of tests for different configurations and input values while writing the test code only once.
+This is the application of the parametrized tests approach which allows to run several hundreds of tests for different configurations and input values while writing the test code only once.
 
 \section{Unit Testing with \texttt{py.test}}
 \label{sec:unit-pytest}
 
 Python is a very popular high-level general purpose scripting language created by Guido van Rossum. It has a built-in unit testing framework called \texttt{unittest} which comes together with the interpreter. It keeps a fairly compatible interface with the \texttt{xUnit} architecture described in section \ref{sec:unit-junit-testng}. Other two notable unit testing frameworks in Python are \texttt{Nose} and \texttt{py.test}. They both support an \texttt{xUnit} compatible layer and come as an external dependency. The features offered by these two external frameworks are superior to those provided by the built-in \texttt{unittest}.
 
-Parametrised testing is tricky when it comes to a scripting language like Python. Even the built-in \texttt{unittest} framework could dynamically generate test classes, as demonstrated on \mbox{Stackoverflow \footnote{https://stackoverflow.com/a/20870875/1269892}}. However, there is no \emph{designed} way to do so. The \texttt{Nose} library allows for parametrised testing through an elegant mechanism of Python generators (the \mintinline{python}{yield} keyword) that return functions to be run as test cases. The \texttt{py.test} framework goes the more \texttt{xUnit}-inspired route of using the \mintinline{python}{@mark.parametrized} decorator, see figure \ref{fig:pytest-parametrization}.
+Parametrised testing is tricky when it comes to a scripting language like Python. Even the built-in \texttt{unittest} framework could dynamically generate test classes, as demonstrated on \mbox{Stackoverflow \footnote{https://stackoverflow.com/a/20870875/1269892}}. However, there is no \emph{designed} way to do so. The \texttt{Nose} library allows for parametrized testing through an elegant mechanism of Python generators (the \mintinline{python}{yield} keyword) that return functions to be run as test cases. The \texttt{py.test} framework goes the more \texttt{xUnit}-inspired route of using the \mintinline{python}{@mark.parametrized} decorator, see figure \ref{fig:pytest-parametrization}.
 
 Unfortunately, the \texttt{Nose} unit testing framework is currently in maintenance mode. This framework is no longer in active development and therefore is not recommended for new projects. This is why the Python build harness for the reference Lyra2 implementation uses \texttt{py.test}.
 
@@ -156,22 +156,22 @@ def test_sanity_0(path, pwd, salt, k, t, m):
 
     assert result.returncode == 0
 \end{minted}
-\caption{A simplified example of Lyra2 parametrised testing with \texttt{py.test}.}
+\caption{A simplified example of Lyra2 parametrized testing with \texttt{py.test}.}
 \label{fig:pytest-parametrization}
 \end{figure}
 
-Figure \ref{fig:pytest-parametrization} shows why parametrisation testing is important when building different configurations of the reference Lyra2 implementation. Before running those configurations with a long list of parameters it is worth to make sure that the compiled executables actually work. However, writing a test for each individual possible configuration is not feasible. Instead, the first decorator \mintinline{python}{@pytest.mark.parametrize('path')} fetches all filenames that start with \texttt{lyra2-} (convention for Lyra2 executable names) from a specific directory. These names are later passed into a specific unit test by the \texttt{path} parameter.
+Figure \ref{fig:pytest-parametrization} shows why parametrization testing is important when building different configurations of the reference Lyra2 implementation. Before running those configurations with a long list of parameters it is worth to make sure that the compiled executables actually work. However, writing a test for each individual possible configuration is not feasible. Instead, the first decorator \mintinline{python}{@pytest.mark.parametrize('path')} fetches all filenames that start with \texttt{lyra2-} (convention for Lyra2 executable names) from a specific directory. These names are later passed into a specific unit test by the \texttt{path} parameter.
 
-This parametrised testing approach allows to write the testing logic once and reuse it for any possible Lyra2 configuration produced by the \texttt{Makefile} of the reference project.
+This parametrized testing approach allows to write the testing logic once and reuse it for any possible Lyra2 configuration produced by the \texttt{Makefile} of the reference project.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Configuration and Test File Format}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \label{sec:configuration-and-test-file-format}
 
-The data for parametrised tests is stored in YAML files. Those files are produced by the reference Lyra2 project through the Python build harness. Then they are consumed by the \texttt{JUnit4} testing framework of the lyra2-java project. This mechanism allows to make sure that both projects compute the same hash values.
+The data for parametrized tests is stored in YAML files. Those files are produced by the reference Lyra2 project through the Python build harness. Then they are consumed by the \texttt{JUnit4} testing framework of the lyra2-java project. This mechanism allows to make sure that both projects compute the same hash values.
 
-YAML stands for \emph{YAML Ain't Markup Language} and is a superset of JSON, another popular data format. YAML targets human readability and provides native support for custom datatypes: scalars, arrays, structures, etc. Most programming languages provide support for reading and writing of YAML files, inclusing both Java and Python.
+YAML stands for \emph{YAML Ain't Markup Language} and is a superset of JSON, another popular data format. YAML targets human readability and provides native support for custom datatypes: scalars, arrays, structures, etc. Most programming languages provide support for reading and writing of YAML files, including both Java and Python.
 
 A single file in YAML can hold several documents. This is leveraged by the Python build harness: each file corresponds to a single Lyra2 executable. This guarantees that the compile time parameters are fixed. These parameters are stored together with all the runtime parameters and the resulting hash. See figure \ref{fig:yaml-data} for reference. The \texttt{hash} field is stored as an array of strings which ensures that different YAML libraries deduce the content type of this array correctly. The \mintinline{shell}{---} is a delimiter between the two YAML documents. This feature allows to store several sets of data in one file.
 
@@ -179,7 +179,7 @@ The YAML format is also used to store default configuration for the Python build
 
 The \mintinline{shell}{matrix} group of parameters defines the build matrix. The \mintinline{shell}{option} parameter configures the type of Lyra2 executable built by the \mintinline{shell}{Makefile}, which is a generic version for the \mintinline{shell}{x86_64} architecture by default. The \mintinline{shell}{threads} parameter determines the parallelism degree and is set to 1. The \mintinline{shell}{columns}, \mintinline{shell}{sponge}, \mintinline{shell}{rounds} and \mintinline{shell}{blocks} correspond directly to compile time Lyra2 parameters. Finally, the \mintinline{shell}{bench} parameter determines if the test vectors should be included into the compiled executable. By default it is set to 0 which means those vectors are skipped.
 
-The \mintinline{shell}{data} group of parameters specifies the test vectors which will be used when generating hash values with \mintinline{shell}{./harness.py compute}. That group includes \mintinline{shell}{pass}~---~an array of passwords, \mintinline{shell}{salt}~---~an array of salts, \mintinline{shell}{klen}~---~an array of output lenghts (i.e. the length of the hash), \mintinline{shell}{tcost}~---~an array of time costs and finally \mintinline{shell}{mcost}~---~an array of memory costs. The \mintinline{shell}{./harness.py} script generates a cartesian product of all of the array members and then runs every compiled executable using those values as test vectors. The results are stored in the \mintinline{shell}{data_path} directory which can be configured as well. The \mintinline{shell}{./harness.py} script does not overwrite old hash values, so you will have to remove them manually if regeneration is required.
+The \mintinline{shell}{data} group of parameters specifies the test vectors which will be used when generating hash values with \mintinline{shell}{./harness.py compute}. That group includes \mintinline{shell}{pass}~---~an array of passwords, \mintinline{shell}{salt}~---~an array of salts, \mintinline{shell}{klen}~---~an array of output lengths (i.e. the length of the hash), \mintinline{shell}{tcost}~---~an array of time costs and finally \mintinline{shell}{mcost}~---~an array of memory costs. The \mintinline{shell}{./harness.py} script generates a Cartesian product of all of the array members and then runs every compiled executable using those values as test vectors. The results are stored in the \mintinline{shell}{data_path} directory which can be configured as well. The \mintinline{shell}{./harness.py} script does not overwrite old hash values, so you will have to remove them manually if regeneration is required.
 
 Finally, compilation flags are also part of the configuration and their defaults can be seen in \ref{fig:compile-flags}.
 
