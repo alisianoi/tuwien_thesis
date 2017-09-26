@@ -1,6 +1,0 @@
-\chapter{Android Studio Preview}
-\label{chapter:problem?}
-
-At the moment using Lyra2 in an Android application requires a beta (i.e. preview) version of Android Studio. The instructions on the official webpage \footnote{https://developer.android.com/studio/preview/index.html} warn the developer about the need to update plugins. However, this is not the only problem which you may face when running the preview version.
-
-If you require an emulator to test the application, you may be treated with the following  error traceback presented in \ref{fig:traceback}. Different kinds of advice is supposed to help with the problem: preloading the \texttt{libstdc++.so.6} library ahead of time, adding the user who runs Android Studio to the \texttt{video} group, etc. On my machine (a ThinkPad E570 notebook with a dedicated GTX 950M graphics card running ArchLinux), the solution that worked was to instruct Android Studio to rely on system libraries. This can be achieved by setting an environment variable:
