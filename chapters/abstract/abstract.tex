@@ -6,15 +6,23 @@
 
 This work describes the process of porting a password hashing scheme called Lyra2 from C99 to Java 1.8. A native Java implementation should ease integration with other Java projects and simplify its usage on other platforms, such as Android phones.
 
-This paper follows a straightforward approach. First, an introduction into authentication and communication with conventional passwords is presented. Then the need for memory-hard password hashing is described and a few notable algorithms are discussed. Description of the basic Lyra2 configuration follows, with an overview of the reference implementation. Next the lyra2-java ported project is discussed along with a number of notable porting challenges.
+The question of secure password storage is what motivated the Password Hashing Competition which took place between 2013 and 2015. The competition resulted in the development of several memory-hard password hashing algorithms. These algorithms are designed to consume a significant amount of memory as well as processing time. Requiring more memory is the novel feature which should discourage highly parallelized password recovery attacks that use GPUs (or more specialized hardware like FPGAs and ASICs). The cornerstone assumption is that such hardware has a lot less memory per processing unit than the CPUs of desktop computers and mobile phones.
 
-Section \ref{sec:results} presents the results. It opens with both manual and automated testing which shows that both projects are compatible and generate the same hash values when given the same inputs. A performance comparison follows in section \ref{sec:performance-comparison}, showing several thousands of measurements. Finally, section \ref{sec:mobile-application} demonstrates a small proof-of-concept mobile application that uses Lyra2.
+Lyra2 is one of the finalists of the Password Hashing Competition. It was originally implemented in C and this work describes its porting to Java. An implementation in a different language should provide an adoption boost and simplify the algorithm's integration into other projects.
 
-In summary, the ported Java project could be found on GitHub \cite{github:2017:lyra2-java} and on Maven Central \cite{maven:2017:lyra2}. The comparison project and the source code for the mobile application are hosted on GitHub as well, projects \cite{github:2017:lyra2-compare} and \cite{github:2017:lyra2-mobile} respectively. Generally, the ported implementation requires more processing time and memory. The main reasons for that could be found in comparison conclusion \ref{sec:comparison-conclusion}. However, it integrates easily into the Android ecosystem which may justify the performance drop.
+The porting effort poses several challenges. A number of discrepancies between C and Java are addressed: endianness, unsigned arithmetic for 64-bit integers and simulating pointer arithmetic for array access. Both implementations also produce the same hash values when provided with identical inputs. This presents a difficulty for verification and unit testing. A cross-project continuous integration and unit testing setup that overcomes this difficulty is presented and discussed.
+
+This work also provides a performance comparison. In short, the reference C implementation is faster and consumes exactly as much memory as instructed. Its Java counterpart is somewhat slower and more memory demanding. This is in part explained by the significant compatibility effort, as well as programming skill and ecosystem. One important scenario where the Java implementation might be preferred is the Android platform, where it could be integrated into any application like a simple external library.
+
+The ported Java project of Lyra2, the comparison project and the proof of concept mobile application are available under the MIT license on GitHub:
+
+\url{https://github.com/all3fox/lyra2-java} \\
+\url{https://github.com/all3fox/lyra2-compare} \\
+\url{https://github.com/all3fox/lyra2-mobile}
 
 \bigskip
 
 \section*{Keywords}
-Password Hashing Scheme, Lyra2, Memory Hard Functions, Java, Android
+Password Hashing Scheme, Lyra2, Memory Hard Functions, Reproducible Research, Java, Jupyter Notebook, Unit Testing, Android
 
 \end{otherlanguage}
