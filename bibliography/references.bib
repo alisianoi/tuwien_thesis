@@ -99,6 +99,34 @@
   , note = {\url{http://eprint.iacr.org/2013/322}},
 }
 
+@Inbook{Caddy2011,
+author="Caddy, Tom",
+editor="van Tilborg, Henk C. A.
+and Jajodia, Sushil",
+title="Side-Channel Attacks",
+bookTitle="Encyclopedia of Cryptography and Security",
+year="2011",
+publisher="Springer US",
+address="Boston, MA",
+pages="1204--1204",
+isbn="978-1-4419-5906-5",
+doi="10.1007/978-1-4419-5906-5_227",
+url="https://doi.org/10.1007/978-1-4419-5906-5_227"
+}
+
+@ARTICLE{223865,
+author={L. Gong and M. A. Lomas and R. M. Needham and J. H. Saltzer},
+journal={IEEE Journal on Selected Areas in Communications},
+title={Protecting poorly chosen secrets from guessing attacks},
+year={1993},
+volume={11},
+number={5},
+pages={648-656},
+keywords={cryptography;protocols;authentication;cryptographic protocols;guessing attacks;passwords;secrets protection;security system;Authentication;Computer science;Cryptographic protocols;Cryptography;Data security;Dictionaries;Information security;Laboratories;Operating systems;Protection},
+doi={10.1109/49.223865},
+ISSN={0733-8716},
+month={Jun},}
+
 @misc{praveen:2011:groestl
   , author={Praveen Gauravaram and Lars R. Knudsen and Krystian Matusiewicz and Florian Mendel and Christian Rechberger and Martin Schläffer and Søren S. Thomsen}
   , title={Grøstl --- a SHA-3 candidate}
@@ -173,10 +201,21 @@
 }
 
 @techreport{percival:2016:scrypt
-  , author={C. Percival and S. Josefsson}
-  , title={The scrypt Password-Based Key Derivation Function}
-  , year={2016}
-  , note={\url{https://tools.ietf.org/html/rfc7914}}
+, title={Stronger Key Derivation via Sequential Memory-hard Functions}
+, author={Colin Percival}
+, year={2009}
+, url={http://www.tarsnap.com/scrypt/scrypt.pdf}
+, urldate={2017-02-09}
+}
+
+@techreport{rfc7914
+, title={The scrypt Password-Based Key Derivation Function}
+, author={C. Percival and S. Josefsson}
+, number={7914}
+, year={2016}
+, month={08}
+, ISSN={2070-1721}
+, url={https://tools.ietf.org/html/rfc7914}
 }
 
 @techreport{rfc6238
@@ -191,6 +230,28 @@
   , publisher={RFC Editor}
   , institution={Internet Engineering Task Force (IETF)}
   , url={https://tools.ietf.org/html/rfc6238}
+}
+
+@techreport{rfc6101
+, author={A. Freier and P. Karlton and P. Kocher}
+, title={ The Secure Sockets Layer (SSL) Protocol Version 3.0}
+, number={6101}
+, year={2011}
+, month={08}
+, ISSN={2070-1721}
+, publisher={RFC Editor}
+, institution={Internet Engineering Task Force (IETF)}
+, url={https://tools.ietf.org/html/rfc6101}
+}
+
+@techreport{rfc5246
+, title={The Transport Layer Security (TLS) Protocol Version 1.2}
+, author={T. Dierks and E. Rescorla}
+, number={5246}
+, year={2008}
+, month={08}
+, institution={Network Working Group}
+, url={https://tools.ietf.org/html/rfc5246}
 }
 
 @techreport{rfc4226
@@ -222,10 +283,64 @@
   , address = {Washington, DC, USA}
 }
 
+@inproceedings{Adrian:2015:IFS:2810103.2813707,
+ author = {Adrian, David and Bhargavan, Karthikeyan and Durumeric, Zakir and Gaudry, Pierrick and Green, Matthew and Halderman, J. Alex and Heninger, Nadia and Springall, Drew and Thom{\'e}, Emmanuel and Valenta, Luke and VanderSloot, Benjamin and Wustrow, Eric and Zanella-B{\'e}guelin, Santiago and Zimmermann, Paul},
+ title = {Imperfect Forward Secrecy: How Diffie-Hellman Fails in Practice},
+ booktitle = {Proceedings of the 22Nd ACM SIGSAC Conference on Computer and Communications Security},
+ series = {CCS '15},
+ year = {2015},
+ isbn = {978-1-4503-3832-5},
+ location = {Denver, Colorado, USA},
+ pages = {5--17},
+ numpages = {13},
+ url = {http://doi.acm.org/10.1145/2810103.2813707},
+ doi = {10.1145/2810103.2813707},
+ acmid = {2813707},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Diffie-Hellman, internet measurement, logjam, number field sieve, vulnerabilities},
+}
+
+
 @online{comodo:2017:ca-incident
   , title={Comodo CA Incident Report}
   , url={https://www.comodo.com/Comodo-Fraud-Incident-2011-03-23.html}
   , urldate={2017-02-09}
+}
+
+@article{Avoine:2008:CIT:1380564.1380565
+, author = {Avoine, Gildas and Junod, Pascal and Oechslin, Philippe}
+, title = {Characterization and Improvement of Time-Memory Trade-Off Based on Perfect Tables}
+, journal = {ACM Trans. Inf. Syst. Secur.}
+, issue_date = {July 2008}
+, volume = {11}
+, number = {4}
+, month = jul
+, year = {2008}
+, issn = {1094-9224}
+, pages = {17:1--17:22}
+, articleno = {17}
+, numpages = {22}
+, url = {http://doi.acm.org/10.1145/1380564.1380565}
+, doi = {10.1145/1380564.1380565}
+, acmid = {1380565}
+, publisher = {ACM}
+, address = {New York, NY, USA}
+, keywords = {Cryptography, Hellman's time-memory trade-off, password cracking, rainbow tables}
+}
+
+@inproceedings{5665047,
+author={T. Murakami and R. Kasahara and T. Saito},
+booktitle={2010 10th International Symposium on Communications and Information Technologies},
+title={An implementation and its evaluation of password cracking tool parallelized on GPGPU},
+year={2010},
+volume={},
+number={},
+pages={534-538},
+keywords={computer graphics;cryptography;CUDA;GPGPU;John the Ripper;cryptographical hash processing;general-purpose computing on graphics processing unit;password cracking tool;Central Processing Unit;Dictionaries;Graphics processing unit;Instruction sets;Linux;Random access memory;Registers},
+doi={10.1109/ISCIT.2010.5665047},
+ISSN={},
+month={Oct},
 }
 
 @online{diginotar:2017:ca-incident
