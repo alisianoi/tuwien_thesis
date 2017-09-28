@@ -181,7 +181,7 @@ The \mintinline{shell}{matrix} group of parameters defines the build matrix. The
 
 The \mintinline{shell}{data} group of parameters specifies the test vectors which will be used when generating hash values with \mintinline{shell}{./harness.py compute}. That group includes \mintinline{shell}{pass}~---~an array of passwords, \mintinline{shell}{salt}~---~an array of salts, \mintinline{shell}{klen}~---~an array of output lengths (i.e. the length of the hash), \mintinline{shell}{tcost}~---~an array of time costs and finally \mintinline{shell}{mcost}~---~an array of memory costs. The \mintinline{shell}{./harness.py} script generates a Cartesian product of all of the array members and then runs every compiled executable using those values as test vectors. The results are stored in the \mintinline{shell}{data_path} directory which can be configured as well. The \mintinline{shell}{./harness.py} script does not overwrite old hash values, so you will have to remove them manually if regeneration is required.
 
-Finally, compilation flags are also part of the configuration and their defaults can be seen in \ref{fig:compile-flags}.
+Finally, compilation flags are also part of the configuration and their defaults can be seen in figure \ref{fig:compile-flags}.
 
 \begin{figure}
     \begin{minted}{yaml}
