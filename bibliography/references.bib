@@ -32,7 +32,6 @@
   , volume={65}
   , number={10}
   , pages={3096-3108}
-  , doi={10.1109/TC.2016.2516011}
   , ISSN={0018-9340}
 }
 
@@ -72,7 +71,8 @@
   , title={yescrypt --- a Password Hashing Competition submission}
   , author={Alexander Peslyak}
   , year={2015}
-  , note={\url{https://password-hashing.net/submissions/specs/yescrypt-v2.pdf}}
+  , url={https://password-hashing.net/submissions/specs/yescrypt-v2.pdf}
+  , urldate={2017-02-09}
 }
 
 @misc{bertoni:2011:duplexing
@@ -99,19 +99,16 @@
   , note = {\url{http://eprint.iacr.org/2013/322}},
 }
 
-@Inbook{Caddy2011,
-author="Caddy, Tom",
-editor="van Tilborg, Henk C. A.
-and Jajodia, Sushil",
-title="Side-Channel Attacks",
-bookTitle="Encyclopedia of Cryptography and Security",
-year="2011",
-publisher="Springer US",
-address="Boston, MA",
-pages="1204--1204",
-isbn="978-1-4419-5906-5",
-doi="10.1007/978-1-4419-5906-5_227",
-url="https://doi.org/10.1007/978-1-4419-5906-5_227"
+@Inbook{Caddy2011
+, author="Caddy, Tom"
+, editor="van Tilborg, Henk C. A. and Jajodia, Sushil"
+, title="Side-Channel Attacks"
+, bookTitle="Encyclopedia of Cryptography and Security"
+, year="2011"
+, publisher="Springer US"
+, address="Boston, MA"
+, pages={1204--1204}
+, isbn="978-1-4419-5906-5"
 }
 
 @ARTICLE{223865,
@@ -123,7 +120,6 @@ volume={11},
 number={5},
 pages={648-656},
 keywords={cryptography;protocols;authentication;cryptographic protocols;guessing attacks;passwords;secrets protection;security system;Authentication;Computer science;Cryptographic protocols;Cryptography;Data security;Dictionaries;Information security;Laboratories;Operating systems;Protection},
-doi={10.1109/49.223865},
 ISSN={0733-8716},
 month={Jun},}
 
@@ -138,10 +134,10 @@ month={Jun},}
 @misc{wu:2011:jh
   , author={Hongjun Wu}
   , title={The Hash Function JH}
-  , url={http://www3.ntu.edu.sg/home/wuhj/research/jh/jh_round3.pdf}
   , howpublished = {Submission to NIST (round 3)}
-  , urldate={2017-02-09}
   , year={2011}
+  , url={http://www3.ntu.edu.sg/home/wuhj/research/jh/jh_round3.pdf}
+  , urldate={2017-02-09}
 }
 
 @techreport{ferguson:2009:skein
@@ -194,10 +190,18 @@ month={Jun},}
 }
 
 @techreport{moriarty:2017:pkcs
-  , author={K. Moriarty, Ed. and B. Kaliski and A. Rusch}
-  , title={PKCS \#5: Password-Based Cryptography Specification, Version 2.1}
-  , year={2017}
-  , note={\url{https://tools.ietf.org/html/rfc8018}}
+, author={K. Moriarty, Ed. and B. Kaliski and A. Rusch}
+, title={PKCS \#5: Password-Based Cryptography Specification, Version 2.1}
+, howpublished={Internet Requests for Comments}
+, type={RFC}
+, number=8018
+, year={2017}
+, month={Jan}
+, ISSN = {2070-1721}
+, publisher={RFC Editor}
+, institution={Internet Engineering Task Force (IETF)}
+, url={https://tools.ietf.org/html/rfc8018}
+, urldate={2017-02-09}
 }
 
 @techreport{percival:2016:scrypt
@@ -216,20 +220,22 @@ month={Jun},}
 , month={08}
 , ISSN={2070-1721}
 , url={https://tools.ietf.org/html/rfc7914}
+, urldate={2017-02-09}
 }
 
 @techreport{rfc6238
-  , author={S. Machani and M. Pei and J. Rydell}
-  , title={TOTP: Time-Based One-Time Password Algorithm}
-  , howpublished={Internet Requests for Comments}
-  , type={RFC}
-  , number=6238
-  , year={2011}
-  , month={May}
-  , ISSN = {2070-1721}
-  , publisher={RFC Editor}
-  , institution={Internet Engineering Task Force (IETF)}
-  , url={https://tools.ietf.org/html/rfc6238}
+, author={S. Machani and M. Pei and J. Rydell}
+, title={TOTP: Time-Based One-Time Password Algorithm}
+, howpublished={Internet Requests for Comments}
+, type={RFC}
+, number=6238
+, year={2011}
+, month={May}
+, ISSN = {2070-1721}
+, publisher={RFC Editor}
+, institution={Internet Engineering Task Force (IETF)}
+, url={https://tools.ietf.org/html/rfc6238}
+, urldate={2017-02-09}
 }
 
 @techreport{rfc6101
@@ -242,6 +248,7 @@ month={Jun},}
 , publisher={RFC Editor}
 , institution={Internet Engineering Task Force (IETF)}
 , url={https://tools.ietf.org/html/rfc6101}
+, urldate={2017-02-09}
 }
 
 @techreport{rfc5246
@@ -252,6 +259,7 @@ month={Jun},}
 , month={08}
 , institution={Network Working Group}
 , url={https://tools.ietf.org/html/rfc5246}
+, urldate={2017-02-09}
 }
 
 @techreport{rfc4226
@@ -265,6 +273,7 @@ month={Jun},}
   , publisher={RFC Editor}
   , institution={Network Working Group}
   , url={https://tools.ietf.org/html/rfc4226}
+  , urldate={2017-02-09}
 }
 
 @inproceedings{suo:2005:graphical-passwords-survey
@@ -276,8 +285,6 @@ month={Jun},}
   , isbn = {0-7695-2461-3}
   , pages = {463--472}
   , numpages = {10}
-  , url = {https://doi.org/10.1109/CSAC.2005.27}
-  , doi = {10.1109/CSAC.2005.27}
   , acmid = {1106849}
   , publisher = {IEEE Computer Society}
   , address = {Washington, DC, USA}
@@ -293,8 +300,6 @@ month={Jun},}
  location = {Denver, Colorado, USA},
  pages = {5--17},
  numpages = {13},
- url = {http://doi.acm.org/10.1145/2810103.2813707},
- doi = {10.1145/2810103.2813707},
  acmid = {2813707},
  publisher = {ACM},
  address = {New York, NY, USA},
@@ -319,13 +324,12 @@ month={Jun},}
  publisher = {Prentice Hall Professional Technical Reference},
 }
 
-@inproceedings{bertoni2007sponge,
-  title={Sponge functions},
-  author={Bertoni, Guido and Daemen, Joan and Peeters, Micha{\"e}l and Van Assche, Gilles},
-  booktitle={ECRYPT hash workshop},
-  volume={2007},
-  number={9},
-  year={2007}
+@techreport{bertoni2007sponge
+, title={Cryptographic Sponge Functions}
+, author={Guido Bertoni and Joan Daemen and Michaël Peeters and Gilles Van Assche}
+, year={2007}
+, url={https://keccak.team/files/CSF-0.1.pdf}
+, urldate={2017-02-09}
 }
 
 @online{comodo:2017:ca-incident
@@ -347,8 +351,6 @@ month={Jun},}
 , pages = {17:1--17:22}
 , articleno = {17}
 , numpages = {22}
-, url = {http://doi.acm.org/10.1145/1380564.1380565}
-, doi = {10.1145/1380564.1380565}
 , acmid = {1380565}
 , publisher = {ACM}
 , address = {New York, NY, USA}
@@ -363,9 +365,6 @@ year={2010},
 volume={},
 number={},
 pages={534-538},
-keywords={computer graphics;cryptography;CUDA;GPGPU;John the Ripper;cryptographical hash processing;general-purpose computing on graphics processing unit;password cracking tool;Central Processing Unit;Dictionaries;Graphics processing unit;Instruction sets;Linux;Random access memory;Registers},
-doi={10.1109/ISCIT.2010.5665047},
-ISSN={},
 month={Oct},
 }
 
@@ -422,7 +421,6 @@ month={Oct},
   , author={Wikipedia}
   , url={https://en.wikipedia.org/wiki/Sponge_function}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{wiki:2017:hotp-totp-companies
@@ -430,7 +428,6 @@ month={Oct},
   , author={Wikipedia}
   , url={https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm#Server_implementations}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:lyra
@@ -438,7 +435,6 @@ month={Oct},
   , author={Leonardo C. Almeida and Marcos A. Simplicio Jr. and Ewerton R. Andrade and Paulo C. F. dos Santos and Paulo S. L. M. Barreto}
   , url={https://github.com/leocalm/Lyra}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{web:2017:picocli
@@ -446,7 +442,6 @@ month={Oct},
   , author={Remko Popma}
   , url={http://picocli.info/}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:lyra-copy
@@ -454,7 +449,6 @@ month={Oct},
   , author={Lisianoi Aleksandr}
   , url={https://github.com/all3fox/Lyra}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:lyra-pr
@@ -462,7 +456,6 @@ month={Oct},
   , author={Lisianoi Aleksandr}
   , url={https://github.com/leocalm/Lyra/pull/7}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:lyra2-java
@@ -470,7 +463,6 @@ month={Oct},
   , author={Lisianoi Aleksandr}
   , url={https://github.com/all3fox/lyra2-java}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:lyra2-mobile
@@ -478,7 +470,6 @@ month={Oct},
   , author={Lisianoi Aleksandr}
   , url={https://github.com/all3fox/lyra2-mobile}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:lyra2-compare
@@ -486,7 +477,6 @@ month={Oct},
   , author={Lisianoi Aleksandr}
   , url={https://github.com/all3fox/lyra2-compare}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{jupyter:2017:jupyter
@@ -494,7 +484,6 @@ month={Oct},
   , author={The Jupyter Community and Steering Council}
   , url={http://jupyter.org/}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{travis:2017:lyra
@@ -502,7 +491,6 @@ month={Oct},
   , author={Lisianoi Aleksandr}
   , url={https://travis-ci.org/all3fox/lyra2-java}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{travis:2017:homepage
@@ -528,7 +516,6 @@ month={Oct},
   , author={Lisianoi Aleksandr}
   , url={http://search.maven.org/#artifactdetails%7Ccom.github.all3fox%7Clyra2%7C1.3%7Clyra2}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:argon2
@@ -536,7 +523,6 @@ month={Oct},
   , author={Dmitry Khovratovich and Jean-Philippe Aumasson and contributors}
   , url={https://github.com/P-H-C/phc-winner-argon2/}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:argon2-test.c
@@ -544,7 +530,6 @@ month={Oct},
   , author={Daniel Dinu and Dmitry Khovratovich and Jean-Philippe Aumasson and Samuel Neves}
   , url={https://github.com/P-H-C/phc-winner-argon2/blob/68dd41f75c4c9df95f403154c0e19252fcf0f513/src/test.c}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{wiki:2017:frameworks-cpp
@@ -552,7 +537,6 @@ month={Oct},
   , author={Wikipedia}
   , url={https://en.wikipedia.org/wiki/List_of_unit_testing_frameworks#C.2B.2B}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{wiki:2017:frameworks-c
@@ -560,7 +544,6 @@ month={Oct},
   , author={Wikipedia}
   , url={https://en.wikipedia.org/wiki/List_of_unit_testing_frameworks#C}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{boost:2017:test-docs
@@ -568,7 +551,6 @@ month={Oct},
   , author={Gennadiy Rozental and Raffi Enficiaud and \textsc{Boost} contributors}
   , url={http://www.boost.org/doc/libs/1_65_1/libs/test/doc/html/index.html}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{boost:2017:test-data-driven
@@ -576,21 +558,18 @@ month={Oct},
   , author={Gennadiy Rozental and Raffi Enficiaud and \textsc{Boost} contributors}
   , url={http://www.boost.org/doc/libs/1_65_1/libs/test/doc/html/boost_test/tests_organization/test_cases/test_case_generation.html}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{boost:2017:test-docs-data-macro
   , title={Boost Data-Driven Unit Tests}
   , url={http://www.boost.org/doc/libs/1_65_1/libs/test/doc/html/boost_test/tests_organization/test_cases/test_case_generation/datasets_auto_registration.html}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{boost:2017:test-docs-dataset
   , title={Boost Datasets for Data-Driven Unit Tests}
   , url={http://www.boost.org/doc/libs/1_65_1/libs/test/doc/html/boost_test/tests_organization/test_cases/test_case_generation/datasets.html}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{testng:2017:home
@@ -598,14 +577,12 @@ month={Oct},
   , author={Cédric Beust and contributors}
   , url={http://testng.org/doc/index.html}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{mkyong:2017:testng-vs-junit
   , title={TestNG vs JUnit4 comparison}
   , url={https://www.mkyong.com/unittest/junit-4-vs-testng-comparison/}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{wiki:2017:testng-vs-junit
@@ -613,7 +590,6 @@ month={Oct},
   , author={Wikipedia}
   , url={https://en.wikipedia.org/wiki/TestNG#Comparison_with_JUnit}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{wiki:2017:unit-testing
@@ -621,49 +597,42 @@ month={Oct},
   , author={Wikipedia}
   , url={https://en.wikipedia.org/wiki/Unit_testing}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{django:2017:homepage
   , title={Django Homepage}
   , url={https://www.djangoproject.com/}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{django:2017:argon2
   , title={Argon2 in Django Web Framework}
   , url={https://docs.djangoproject.com/en/1.11/topics/auth/passwords/#using-argon2-with-django}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:argonische
   , title={Argonishche (Argon2 in Yandex)}
   , url={https://github.com/yandex/argon2}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:catena
   , title={Catena GitHub Repository}
   , url={https://github.com/medsec/catena}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:catena-axungia
   , title={\textsc{Catene-Axungia} GitHub Repository}
   , url={https://github.com/medsec/catena-axungia}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{github:2017:catena-variants
   , title={\textsc{Catena-Variants} GitHub Repository}
   , url={https://github.com/medsec/catena-variants}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @online{makwa:2017:homepage
@@ -671,7 +640,6 @@ month={Oct},
   , author={Thomas Pornin}
   , url={http://www.bolet.org/makwa/}
   , urldate={2017-02-09}
-  , year={2017}
 }
 
 @inproceedings{anderson:1988:serpent
@@ -683,19 +651,17 @@ month={Oct},
   , isbn = {3-540-64265-X}
   , pages = {222--238}
   , numpages = {17}
-  , url = {http://dl.acm.org/citation.cfm?id=647933.740889}
   , acmid = {740889}
   , publisher = {Springer-Verlag}
   , address = {London, UK, UK},
 }
 
-@inproceedings{schneier:1998:twofish
-  , author={Bruce Schneier and John Kelsey and Doug Whiting and David Wagner and Chris Hall and Niels Ferguson}
-  , title = {Twofish: A 128-Bit Block Cipher}
-  , booktitle = {First Advanced Encryption Standard (AES) Conference}
-  , url={https://www.schneier.com/academic/twofish/}
-  , urldate={2017-02-09}
-  , year = {1998}
+@article{schneier:1998:twofish,
+  title={Twofish: A 128-bit block cipher},
+  author={Schneier, Bruce and Kelsey, John and Whiting, Doug and Wagner, David and Hall, Chris and Ferguson, Niels},
+  journal={NIST AES Proposal},
+  volume={15},
+  year={1998}
 }
 
 @techreport{rivest:1998:rc6
@@ -724,8 +690,6 @@ month={Oct},
   , location = {Limerick, Ireland}
   , pages = {147--159}
   , numpages = {13}
-  , url = {http://doi.acm.org/10.1145/336512.336546}
-  , doi = {10.1145/336512.336546}
   , acmid = {336546}
   , publisher = {ACM}
   , address = {New York, NY, USA}
@@ -738,7 +702,6 @@ month={Oct},
   , year = {1997}
   , month = {01}
   , pages = {602-611}
-  , doi={10.1007/978-3-642-60831-5_80}
 }
 
 @inproceedings{williams:2010:unit-tests-rock
@@ -757,7 +720,6 @@ month={Oct},
   , year={2010}
   , volume={2}
   , pages={483-484}
-  , doi={10.1145/1810295.1810441}
   , ISSN={0270-5257}
   , month={May}
 }
@@ -769,7 +731,6 @@ month={Oct},
   , organization={IEEE}
   , year={2014}
   , pages={201-211}
-  , doi={10.1109/ISSRE.2014.11}
   , ISSN={1071-9458}
   , month={Nov}
 }
@@ -795,15 +756,17 @@ month={Oct},
   , month={01}
 }
 
-@inproceesings{ivannikova:2017:anomaly-detection-keystroke-dynamics
-  , author={E. Ivannikova and G. David and T. Hämäläinen}
-  , booktitle={2017 IEEE Symposium on Computers and Communications (ISCC)}
-  , title={Anomaly detection approach to keystroke dynamics based user authentication}
-  , year={2017}
-  , pages={885-889}
-  , doi={10.1109/ISCC.2017.8024638}
-  , month={July}
-}
+@INPROCEEDINGS{ivannikova:2017:anomaly-detection-keystroke-dynamics,
+author={E. Ivannikova and G. David and T. Hämäläinen},
+booktitle={2017 IEEE Symposium on Computers and Communications (ISCC)},
+title={Anomaly detection approach to keystroke dynamics based user authentication},
+year={2017},
+volume={},
+number={},
+pages={885-889},
+keywords={authorisation;learning (artificial intelligence);pattern clustering;CMU dataset;CMU keystroke dynamics benchmark dataset;anomaly detection;dependence clustering;learning process;unsupervised learning;user authentication mechanisms;Anomaly detection;Authentication;Biometrics (access control);Detectors;Feature extraction;Timing;Training},
+ISSN={},
+month={July},}
 
 @article{teh:2013:survey-keystroke-biometrics
   , author  = {Teh, Pin Shen and Teoh, Andrew Beng Jin and Yue, Shigang}
@@ -811,8 +774,6 @@ month={Oct},
   , journal = "The Scientific World Journal"
   , volume  = 2013
   , year    = 2013
-  , doi     = {10.1155/2013/408280}
-  , url     = {http://dx.doi.org/10.1155/2013/408280}
   , note    = "{Hindawi Publishing Corporation}, 24 pages"
 }
 
@@ -822,8 +783,6 @@ month={Oct},
   , journal = "ISRN Signal Processing"
   , volume  = 2013
   , year    = 2013
-  , doi     = {10.1155/2013/565183}
-  , url     = {http://dx.doi.org/10.1155/2013/565183}
   , note    = "{Hindawi Publishing Corporation}, 7 pages"
 }
 
@@ -835,8 +794,6 @@ month={Oct},
   , month="Aug"
   , day="24"
   , issn="1573-7497"
-  , doi="10.1007/s10489-017-1020-2"
-  , url="https://doi.org/10.1007/s10489-017-1020-2"
 }
 
 @article{jain:2004:intro-to-biometric
@@ -851,8 +808,6 @@ month={Oct},
   , issn = {1051-8215}
   , pages = {4--20}
   , numpages = {17}
-  , url = {http://dx.doi.org/10.1109/TCSVT.2003.818349}
-  , doi = {10.1109/TCSVT.2003.818349}
   , acmid = {2323546}
   , publisher = {IEEE Press}
   , address = {Piscataway, NJ, USA},
@@ -861,7 +816,7 @@ month={Oct},
 @article{ives:2004:domino
   , author = {Ives, Blake and Walsh, Kenneth R. and Schneider, Helmut}
   , title = {The Domino Effect of Password Reuse}
-  , journal = {Commun. ACM}
+  , journal = {Communications of the ACM}
   , issue_date = {April 2004}
   , volume = {47}
   , number = {4}
@@ -870,8 +825,6 @@ month={Oct},
   , issn = {0001-0782}
   , pages = {75--78}
   , numpages = {4}
-  , url = {http://doi.acm.org/10.1145/975817.975820}
-  , doi = {10.1145/975817.975820}
   , acmid = {975820}
   , publisher = {ACM}
   , address = {New York, NY, USA},
@@ -886,7 +839,6 @@ month={Oct},
   , volume={}
   , number={}
   , pages={1--9}
-  , doi={10.1109/INFCOM.2010.5461951}
   , ISSN={0743-166X}
   , month={March}
 }
@@ -901,8 +853,6 @@ month={Oct},
   , location = {Pittsburgh, Pennsylvania, USA}
   , pages = {44--55}
   , numpages = {12}
-  , url = {http://doi.acm.org/10.1145/1143120.1143127}
-  , doi = {10.1145/1143120.1143127}
   , acmid = {1143127}
   , publisher = {ACM}
   , address = {New York, NY, USA}
@@ -920,8 +870,6 @@ month={Oct},
   , pages = {2:1--2:20}
   , articleno = {2}
   , numpages = {20}
-  , url = {http://doi.acm.org/10.1145/1837110.1837113}
-  , doi = {10.1145/1837110.1837113}
   , acmid = {1837113}
   , publisher = {ACM}
   , address = {New York, NY, USA}
@@ -929,15 +877,14 @@ month={Oct},
 }
 
 @article{bours2012continuous
-  , title = "Continuous keystroke dynamics: A different perspective towards biometric evaluation"
-  , author = "Patrick Bours"
-  , journal = "Information Security Technical Report"
-  , volume = "17"
-  , number = "1"
-  , pages = "36 - 43"
-  , year = "2012"
-  , issn = "1363-4127"
-  , doi = "https://doi.org/10.1016/j.istr.2012.02.001"
+, title={Continuous keystroke dynamics: A different perspective towards biometric evaluation}
+, author={Patrick Bours}
+, journal={Information Security Technical Report}
+, volume={17}
+, number={1}
+, pages={36--43}
+, year={2012}
+, issn={1363--4127}
 }
 
 @article{serwadda2013scan,
@@ -956,7 +903,6 @@ month={Oct},
   , title={NIST Special Publication 800-63-2 Electronic Authentication Guideline}
   , year={2013}
   , month={08}
-  , doi={10.6028/NIST.SP.800-63-2}
 }
 
 @misc{grassi2017digital
@@ -964,7 +910,6 @@ month={Oct},
   , title={NIST Special Publication 800-63-3 Digital Identity Guidelines}
   , year={2017}
   , month={06}
-  , doi={10.6028/NIST.SP.800-63-3}
 }
 
 @inproceedings{kelley2012guess
@@ -975,7 +920,6 @@ month={Oct},
   , volume={}
   , number={}
   , pages={523-537}
-  , doi={10.1109/SP.2012.38}
   , ISSN={1081-6011}
   , year={2012}
   , month={May}
@@ -991,8 +935,6 @@ month={Oct},
   , location = {Chicago, Illinois, USA}
   , pages = {162--175}
   , numpages = {14}
-  , url = {http://doi.acm.org/10.1145/1866307.1866327}
-  , doi = {10.1145/1866307.1866327}
   , acmid = {1866327}
   , publisher = {ACM}
   , address = {New York, NY, USA}
@@ -1009,8 +951,6 @@ month={Oct},
  location = {Chicago, Illinois, USA},
  pages = {176--186},
  numpages = {11},
- url = {http://doi.acm.org/10.1145/1866307.1866328},
- doi = {10.1145/1866307.1866328},
  acmid = {1866328},
  publisher = {ACM},
  address = {New York, NY, USA},
@@ -1020,7 +960,7 @@ month={Oct},
 @article{hong2012state,
  author = {Hong, Jason},
  title = {The State of Phishing Attacks},
- journal = {Commun. ACM},
+ journal = {Communications of the ACM},
  issue_date = {January 2012},
  volume = {55},
  number = {1},
@@ -1029,8 +969,6 @@ month={Oct},
  issn = {0001-0782},
  pages = {74--81},
  numpages = {8},
- url = {http://doi.acm.org/10.1145/2063176.2063197},
- doi = {10.1145/2063176.2063197},
  acmid = {2063197},
  publisher = {ACM},
  address = {New York, NY, USA},
@@ -1046,8 +984,6 @@ month={Oct},
   , location = {Montréal, Québec, Canada}
   , pages = {601--610}
   , numpages = {10}
-  , url = {http://doi.acm.org/10.1145/1124772.1124863}
-  , doi = {10.1145/1124772.1124863}
   , acmid = {1124863}
   , publisher = {ACM}
   , address = {New York, NY, USA}
@@ -1062,7 +998,6 @@ month={Oct},
   , year = {1992}
   , isbn = {0-8186-2825-1}
   , pages = {72--84}
-  , url = {http://dl.acm.org/citation.cfm?id=882488.884178}
   , acmid = {884178}
   , publisher = {IEEE Computer Society}
   , address = {Washington, DC, USA}
@@ -1078,8 +1013,6 @@ month={Oct},
   , location = {Fairfax, Virginia, USA}
   , pages = {244--250}
   , numpages = {7}
-  , url = {http://doi.acm.org/10.1145/168588.168618}
-  , doi = {10.1145/168588.168618}
   , acmid = {168618}
   , publisher = {ACM}
   , address = {New York, NY, USA},
@@ -1093,7 +1026,6 @@ month={Oct},
   , year={2015}
   , month={May}
   , pages={571--587}
-  , doi={10.1109/SP.2015.41}
   , ISSN={1081-6011}
 }
 
@@ -1112,12 +1044,6 @@ month={Oct},
   journal={PDF online},
   pages={1--4},
   year={2014}
-}
-
-@techreport{barnes2015deprecating,
-  title={Deprecating secure sockets layer version 3.0},
-  author={Barnes, Richard and Thomson, Martin and Pironti, Alfredo and Langley, Adam},
-  year={2015}
 }
 
 @inproceedings{wang2005break,
@@ -1141,8 +1067,6 @@ month={Oct},
   , publisher={RFC Editor}
   , howpublished={Internet Requests for Comments}
   , institution={Internet Engineering Task Force (IETF)}
-  , url={https://tools.ietf.org/html/rfc6176.txt}
-  , doi={10.17487/RFC6176}
 }
 
 @techreport{rfc7568
@@ -1156,8 +1080,6 @@ month={Oct},
   , publisher={RFC Editor}
   , howpublished={Internet Requests for Comments}
   , institution={Internet Engineering Task Force (IETF)}
-  , url={https://tools.ietf.org/html/rfc7568}
-  , doi={10.17487/RFC7568}
 }
 
 @inproceedings{durumeric2014matter
@@ -1170,8 +1092,6 @@ month={Oct},
   , location = {Vancouver, BC, Canada}
   , pages = {475--488}
   , numpages = {14}
-  , url = {http://doi.acm.org/10.1145/2663716.2663755}
-  , doi = {10.1145/2663716.2663755}
   , acmid = {2663755}
   , publisher = {ACM}
   , address = {New York, NY, USA}
