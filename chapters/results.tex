@@ -204,7 +204,7 @@ The Java implementation was outperformed by the reference C implementation. This
 
 Part of the porting effort is a small proof of concept mobile application. This application demonstrates that using a native Java library in an Android project is convenient.
 
-One of the first steps is to determine the minimum versions of Android devices and API levels necessary. Since lyra2-java makes use of unsigned 64-bit number arithmetic, Java 1.8 support is required. This translates into the minimum Android versions of 7.0 and the API level of 24 \footnote{https://developer.android.com/guide/platform/j8-jack.html (visited on 23/10/2017)}.
+One of the first steps is to determine the minimum versions of Android devices and API levels necessary. Since lyra2-java makes use of unsigned 64-bit number arithmetic, Java 1.8 support is required. This translates into the minimum Android versions of 7.0 and the API level of 24 \footnote{https://developer.android.com/guide/platform/j8-jack.html (visited on 10/23/2017)}.
 
 The most common development environment for Android applications is the Android Studio. Support for Java 1.8 features has not yet landed into the release version of this IDE. So, in order to be able to develop a mobile application with Lyra2, a development version \texttt{3.0} needs to be installed. If you encounter a (similar) traceback as shown in figure \ref{fig:traceback}, there are several possible workarounds available online. The most effective one is to instruct Android Studio to use system libraries:
 
