@@ -238,7 +238,7 @@ Once these preliminary steps are performed, the development of the application b
 
 As a result, a simple Android application was developed and is available on GitHub \cite{github:2017:lyra2-mobile}. It consists of a main screen and a results screen. The main screen allows the user to choose the particular configuration of Lyra2. By default, the Blake2b sponge with the time and memory cost of 100 will be used. The password and salt fields are set to the default values of "password" and "salt" respectively, the number of columns is 256 with each column being 12 blocks wide. The permutation inside the sponge makes a total 12 rounds of computations. All of the parameters above can be adjusted.
 
-Figure \ref{fig:lyra2-mobile-demo} demonstrates the hash value after running with default parameters as well as the hash value when using BlaMka instead of Blake2b. The hash values match those from the manual testing section \ref{sec:manual-testing}. In each case the computation lasted for approximately 60 seconds which is consistent with the desktop version times. However, it should be noted that the application was tested in an emulator and not on an actual device.
+Figure \ref{fig:lyra2-mobile-demo} demonstrates the hash value after running with default parameters as well as the hash value when using BlaMka instead of Blake2b. The hash values match those from the manual testing section \ref{sec:manual-testing}. In each case the computation lasted for approximately 60 seconds which is consistent with the desktop version times. However, it should be noted that the application was tested in an emulator and not on an actual mobile device.
 
 \begin{figure}[H]
 \centering
