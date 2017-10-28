@@ -245,7 +245,7 @@ It is often the case that many unit tests share the same logic. Specifically in 
     \item Compute the hash value and compare it to the correct one.
    \end{enumerate}
 
-Writing a unit test for each combination of the hash function configuration and each set of input parameters is a daunting task. \emph{Parametrised unit testing} allows to generate a template for a large number of unit tests and avoid the extra labor, as shown by Tillmann, de Halleux and Xie \cite{tillmann:2010:parametrised-unit-tests-rock}. Therefore, unit testing frameworks that support this particular feature are of special interest in this work.
+Writing a unit test for each combination of the hash function configuration and each set of input parameters is a daunting task. \emph{Parametrized unit testing} allows to generate a template for a large number of unit tests and avoid the extra labor, as shown by Tillmann, de Halleux and Xie \cite{tillmann:2010:parametrized-unit-tests-rock}. Therefore, unit testing frameworks that support this particular feature are of special interest in this work.
 
 \emph{Code coverage} indicates how well a program is tested. It is low when only a small portion of the program is tested, and high otherwise. There are many ways to measure code coverage, some of which are described in \cite{elberzhager:2012:reducing-effort}. In practice the most common code coverage metric is the number of lines of code (LOCs) covered by the test suite as a percentage of the total number of LOCs.
 
