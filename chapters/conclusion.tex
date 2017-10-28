@@ -3,7 +3,7 @@
 \label{sec:conclusion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The reference implementation of Lyra2 was successfully ported from C99 to Java 1.8. The resulting implementations produce identical hash values. In order to achieve that, several compatibility issues had to be addressed. In particular, adjusting for the mismatching endianness has to be constantly applied throughout all the stages of the algorithm.
+The reference implementation of Lyra2 was successfully ported from C99 to Java 1.8. The resulting implementations produce identical hash values. In order to achieve that, several compatibility issues had to be addressed. In particular, the mismatching endianness has to be constantly accounted for throughout all stages of the algorithm.
 
 The extra byte rotations require additional processing time. They cannot be avoided by design but can sometimes be performed simultaneously during other operations. In particular, the Blake2b and BlaMka sponge classes were adjusted to use both left and right rotations. This allowed to cut three quarters of the extra operations. Other compatibility issues included the need for pointer arithmetic simulation as well as 64-bit unsigned division.
 
