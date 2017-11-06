@@ -3,30 +3,41 @@
   , title = "The design of {Rijndael}: {AES} --- the {Advanced Encryption Standard}"
   , pages = "238"
   , year = "2002"
-  , isbn = "3-540-42580-2"
-  , publisher = "Spring{\-}er-Ver{\-}lag"
+  , publisher = "Spring{\-}er"
 }
+  , isbn = "3-540-42580-2"
 
 @book{Astels:2003:TDD:864016
   , author = {Astels, D.}
   , title = {Test Driven Development: A Practical Guide}
   , pages = {562}
   , year = {2003}
-  , isbn = {0-131-01649-0}
   , publisher = {Prentice Hall Professional Technical Reference}
 }
+  , isbn = {0-131-01649-0}
 
-@inbook{Caddy2011
+@incollection{Caddy2011
   , author="Caddy, T."
-  , editor="van Tilborg, H. C. A. and Jajodia, S."
   , title="Side-Channel Attacks"
-  , pages={1204--1204}
-  , publisher="Springer US"
+  , booktitle="Encyclopedia of Cryptography and Security"
   , year="2011"
-  , bookTitle="Encyclopedia of Cryptography and Security"
-  , address="Boston, MA"
-  , isbn="978-1-4419-5906-5"
+  , pages={684}
+  , publisher="Spring{\-}er"
 }
+  , isbn="978-1-4419-5906-5"
+  , editor="van Tilborg, H. C. A. and Jajodia, S."
+  , address="Boston, MA"
+}
+
+@incollection{hao2010j
+  , author={Hao, F. and Ryan, P.}
+  , title={J-PAKE: authenticated key exchange without PKI}
+  , booktitle={Transactions on computational science XI}
+  , year={2010}
+  , pages={192--206}
+  , publisher={Spring{\-}er}
+}
+
 
 @misc{aes-fips
   , author="{National Institute of Standards and Technology}"
@@ -157,15 +168,15 @@
   , author={W. E. Burr and D. F. Dodson and E. M. Newton and R. A. Perlner and W. T. Polk and S. Gupta and E. A. Nabbus}
   , title={NIST Special Publication 800-63-2 Electronic Authentication Guideline}
   , year={2013}
-  , month={08}
 }
+  , month={08}
 
 @misc{grassi2017digital
   , author={P. A. Grassi and M. E. Garcia and J. L. Fenton}
   , title={NIST Special Publication 800-63-3 Digital Identity Guidelines}
   , year={2017}
-  , month={06}
 }
+  , month={06}
 
 @techreport{biryukov:2015:argon2
   , author={Biryukov, A. and Dinu, D. and Khovratovich, D.}
@@ -214,13 +225,13 @@
   , type={RFC}
   , number={8018}
   , year={2017}
-  , month={01}
-  , ISSN = {2070-1721}
   , publisher={RFC Editor}
   , institution={Internet Engineering Task Force (IETF)}
   , url={https://tools.ietf.org/html/rfc8018}
   , urldate={2017-10-23}
 }
+, month={01}
+, ISSN = {2070-1721}
 
 @techreport{rfc7914
   , author={C. Percival and S. Josefsson}
@@ -229,13 +240,14 @@
   , type={RFC}
   , number={7914}
   , year={2016}
-  , month={08}
-  , ISSN={2070-1721}
   , publisher={RFC Editor}
   , institution={Internet Engineering Task Force (IETF)}
   , url={https://tools.ietf.org/html/rfc7914}
   , urldate={2017-10-23}
 }
+, month={08}
+, ISSN={2070-1721}
+
 
 @techreport{rfc6238
   , author={D. M'Raihi and S. Machani and M. Pei and J. Rydell}
@@ -244,13 +256,14 @@
   , type={RFC}
   , number={6238}
   , year={2011}
-  , month={05}
-  , ISSN = {2070-1721}
   , publisher={RFC Editor}
   , institution={Internet Engineering Task Force (IETF)}
   , url={https://tools.ietf.org/html/rfc6238}
   , urldate={2017-10-23}
 }
+, month={05}
+, ISSN = {2070-1721}
+
 
 @techreport{rfc6101
   , author={A. O. Freier and P. Karlton and P. C. Kocher}
@@ -259,13 +272,14 @@
   , type={RFC}
   , number={6101}
   , year={2011}
-  , month={08}
-  , ISSN={2070-1721}
   , publisher={RFC Editor}
   , institution={Internet Engineering Task Force (IETF)}
   , url={https://tools.ietf.org/html/rfc6101}
   , urldate={2017-10-23}
 }
+, month={08}
+, ISSN={2070-1721}
+
 
 @techreport{rfc5246
   , author={T. Dierks and E. Rescorla}
@@ -274,11 +288,11 @@
   , type={RFC}
   , number={5246}
   , year={2008}
-  , month={08}
   , institution={Network Working Group}
   , url={https://tools.ietf.org/html/rfc5246}
   , urldate={2017-10-23}
 }
+  , month={08}
 
 @techreport{rfc4226
   , author={D. M'Raihi and M. Bellare and F. Hoornaert and D. Naccache and O. Ranen}
@@ -287,12 +301,12 @@
   , type={RFC}
   , number={4226}
   , year={2005}
-  , month={12}
   , publisher={RFC Editor}
   , institution={Network Working Group}
   , url={https://tools.ietf.org/html/rfc4226}
   , urldate={2017-10-23}
 }
+  , month={12}
 
 @techreport{rfc6176
   , author={T. Polk and S. Turner}
@@ -301,13 +315,13 @@
   , type={RFC}
   , number={6176}
   , year={2011}
-  , month={03}
   , publisher={RFC Editor}
-  , ISSN = {2070-1721}
   , institution={Internet Engineering Task Force (IETF)}
   , url={https://tools.ietf.org/html/rfc6176}
   , urldate={2017-11-06}
 }
+, month={03}
+, ISSN = {2070-1721}
 
 @techreport{rfc7568
   , author={R. Barnes and M. Thomson and A. Pironti and A. Langley}
@@ -316,13 +330,13 @@
   , type={RFC}
   , number={7568}
   , year={2015}
-  , month={06}
   , publisher={RFC Editor}
-  , ISSN = {2070-1721}
   , institution={Internet Engineering Task Force (IETF)}
   , url={https://tools.ietf.org/html/rfc7568}
   , urldate={2017-11-06}
 }
+, month={06}
+, ISSN = {2070-1721}
 
 @techreport{bertoni2007sponge
   , author={G. Bertoni and J. Daemen and M. Peeters and G. Van Assche}
@@ -337,12 +351,31 @@
   , title={Protecting poorly chosen secrets from guessing attacks}
   , journal={IEEE Journal on Selected Areas in Communications}
   , year={1993}
-}
+  , pages={648--656}
   , volume={11}
   , number={5}
-  , pages={648-656}
+}
   , ISSN={0733-8716}
   , month={Jun}
+}
+
+@article{jain:2004:intro-to-biometric
+  , author={Jain, A. K. and Ross, A. and Prabhakar, S.}
+  , title={An Introduction to Biometric Recognition}
+  , journal={IEEE Transactions on Circuits and Systems for Video Technology}
+  , year={2004}
+  , pages={4--20}
+  , volume={14}
+  , number={1}
+}
+  , publisher={IEEE}
+  , issue_date = {January 2004}
+  , month = jan
+  , issn = {1051-8215}
+  , numpages = {17}
+  , acmid = {2323546}
+  , publisher = {IEEE Press}
+  , address = {Piscataway, NJ, USA},
 }
 
 @article{andrade:2016:lyra2
@@ -350,42 +383,26 @@
   , title={Lyra2: Efficient Password Hashing with High Security against Time-Memory Trade-Offs}
   , journal={IEEE Transactions on Computers}
   , year={2016}
-}
-  , organization={IEEE}
   , volume={65}
   , number={10}
-  , pages={3096-3108}
+  , pages={3096--3108}
+  , publisher={IEEE}
+}
+  , publisher={IEEE}
+  , organization={IEEE}
   , ISSN={0018-9340}
-}
-
-@article{jain:2004:intro-to-biometric
-  , author = {Jain, A. K. and Ross, A. and Prabhakar, S.}
-  , title = {An Introduction to Biometric Recognition}
-  , journal = {IEEE Transactions on Circuits and Systems for Video Technology}
-  , year = {2004}
-}
-  , issue_date = {January 2004}
-  , volume = {14}
-  , number = {1}
-  , month = jan
-  , issn = {1051-8215}
-  , pages = {4--20}
-  , numpages = {17}
-  , acmid = {2323546}
-  , publisher = {IEEE Press}
-  , address = {Piscataway, NJ, USA},
 }
 
 @article{serwadda2013scan
   , title={Scan-based evaluation of continuous keystroke authentication systems}
   , author={Serwadda, A. and Wang, Z. and Koch, P. and Govindarajan, S. and Pokala, R. and Goodkind, A. and Brizan, D. G. and Rosenberg, A. and Phoha, V. V. and Balagani, K.}
-  , journal={IEEE IT Professional Journal}
+  , journal={IT Professional}
   , year={2013}
+  , pages={20--23}
+  , volume={15}
+  , number={4}
+  , publisher={IEEE}
 }
-  volume={15},
-  number={4},
-  pages={20--23},
-  publisher={IEEE}
 }
 
 @article{Avoine:2008:CIT:1380564.1380565
@@ -393,133 +410,135 @@
   , title={Characterization and Improvement of Time-Memory Trade-Off Based on Perfect Tables}
   , journal={ACM Transactions on Information and System Security}
   , year={2008}
+  , pages={1--22}
+  , articleno={17}
+  , volume={11}
+  , number={4}
+  , publisher={ACM}
 }
 , issue_date = {July 2008}
-, volume = {11}
-, number = {4}
 , month = jul
 , issn = {1094-9224}
-, pages = {17:1--17:22}
-, articleno = {17}
 , numpages = {22}
 , acmid = {1380565}
 , publisher = {ACM}
 , address = {New York, NY, USA}
-, keywords = {Cryptography, Hellman's time-memory trade-off, password cracking, rainbow tables}
 }
 
 @article{elberzhager:2012:reducing-effort
-  , title = "Reducing test effort: A systematic mapping study on existing approaches"
-  , author = "F. Elberzhager and A. Rosbach and J. Münch and R. Eschbach"
-  , journal = "Information and Software Technology"
-  , volume = "54"
-  , number = "10"
-  , pages = "1092 - 1106"
-  , year = "2012"
+  , title={Reducing test effort: A systematic mapping study on existing approaches}
+  , author={F. Elberzhager and A. Rosbach and J. Münch and R. Eschbach}
+  , journal={Information and Software Technology}
+  , year={2012}
+  , pages={1092--1106}
+  , volume={54}
+  , number={10}
 }
 
 @article{raza:2012:password-attacks-survey
   , title={A survey of password attacks and comparative analysis on methods for secure authentication}
   , author={Raza, M. and Iqbal, M. and Sharif, M. and Haider, W.}
   , journal={World Applied Sciences Journal}
+  , year={2012}
+  , pages={439--444}
   , volume={19}
   , number={4}
-  , pages={439--444}
-  , year={2012}
+}
   , month={01}
 }
 
 @article{teh:2013:survey-keystroke-biometrics
-  , author  = {Teh, P. S. and Teoh, A. B. J. and Yue, S.}
-  , title   = {A Survey of Keystroke Dynamics Biometrics}
-  , journal = "The Scientific World Journal"
-  , volume  = 2013
-  , year    = 2013
+  , author={Teh, P. S. and Teoh, A. B. J. and Yue, S.}
+  , title={A Survey of Keystroke Dynamics Biometrics}
+  , journal={The Scientific World Journal}
+  , year={2013}
+  , pages={1--24}
+  , volume={2013}
+}
   , note    = "{Hindawi Publishing Corporation}, 24 pages"
 }
 
 @article{yunbin:2013:gmm-keystroke
-  , author  = {Deng, Y. and Zhong, Y.}
-  , title   = {Keystroke Dynamics User Authentication Based on Gaussian Mixture Model and Deep Belief Nets}
-  , journal = "ISRN Signal Processing"
-  , volume  = 2013
-  , year    = 2013
-  , note    = "{Hindawi Publishing Corporation}, 7 pages"
+  , author={Deng, Y. and Zhong, Y.}
+  , title={Keystroke Dynamics User Authentication Based on Gaussian Mixture Model and Deep Belief Nets}
+  , journal={ISRN Signal Processing}
+  , year={2013}
+  , pages={1--7}
+  , volume={2013}
+  , number={1}
 }
+  , issn={2090-5041}
+  , note    = "{Hindawi Publishing Corporation}, 7 pages"
 
 @article{ho:2017:onenb
-  , author="Ho, J. and Kang, D. K."
-  , title="One-class na{\"i}ve Bayes with duration feature ranking for accurate user authentication using keystroke dynamics"
-  , journal="Applied Intelligence"
-  , year="2017"
-  , month="Aug"
-  , day="24"
-  , issn="1573-7497"
+  , author={Ho, J. and Kang, D. K.}
+  , title={One-class na{\"i}ve Bayes with duration feature ranking for accurate user authentication using keystroke dynamics}
+  , journal={Applied Intelligence}
+  , year={2017}
+  , pages={1--18}
+  , volume={47}
+  , number={2}
 }
+, note={Springer}
+, month="Aug-"
+, day="24"
+, issn="1573-7497"
 
 @article{ives:2004:domino
-  , author = {Ives, B. and Walsh, K. R. and Schneider, H.}
-  , title = {The Domino Effect of Password Reuse}
-  , journal = {Communications of the ACM}
-  , issue_date = {April 2004}
-  , volume = {47}
-  , number = {4}
-  , month = apr
-  , year = {2004}
-  , issn = {0001-0782}
-  , pages = {75--78}
-  , numpages = {4}
-  , acmid = {975820}
-  , publisher = {ACM}
-  , address = {New York, NY, USA},
+  , author={Ives, B. and Walsh, K. R. and Schneider, H.}
+  , title={The Domino Effect of Password Reuse}
+  , journal={Communications of the ACM}
+  , year={2004}
+  , pages={75--78}
+  , volume={47}
+  , number={4}
+  , publisher={ACM}
 }
+, month = apr
+, issn = {0001-0782}
+, issue_date = {April 2004}
+, numpages = {4}
+, acmid = {975820}
+, address = {New York, NY, USA},
+
+@article{hong2012state
+  , author={Hong, J.}
+  , title={The State of Phishing Attacks}
+  , journal={Communications of the ACM}
+  , year = {2012}
+  , pages = {74--81}
+  , volume = {55}
+  , number = {1}
+  , publisher={ACM}
+}
+issn = {0001-0782},
+month = jan,
+issue_date = {January 2012},
+numpages = {8},
+acmid = {2063197},
+address = {New York, NY, USA}
 
 @article{bours2012continuous
-, title={Continuous keystroke dynamics: A different perspective towards biometric evaluation}
-, author={P. Bours}
-, journal={Information Security Technical Report}
-, volume={17}
-, number={1}
-, pages={36--43}
-, year={2012}
+  , title={Continuous keystroke dynamics: A different perspective towards biometric evaluation}
+  , author={P. Bours}
+  , journal={Information Security Technical Report}
+  , volume={17}
+  , number={1}
+  , pages={36--43}
+  , year={2012}
+}
 , issn={1363--4127}
-}
-
-@article{hong2012state,
- author = {Hong, J.},
- title = {The State of Phishing Attacks},
- journal = {Communications of the ACM},
- issue_date = {January 2012},
- volume = {55},
- number = {1},
- month = jan,
- year = {2012},
- issn = {0001-0782},
- pages = {74--81},
- numpages = {8},
- acmid = {2063197},
- publisher = {ACM},
- address = {New York, NY, USA},
-}
-
-@article{hao2010j,
-  title={J-PAKE: authenticated key exchange without PKI},
-  author={Hao, F. and Ryan, P.},
-  journal={Transactions on computational science XI},
-  pages={192--206},
-  year={2010},
-  publisher={Springer}
-}
 
 @inproceedings{suo:2005:graphical-passwords-survey
-  , author = {Suo, X. and Zhu, Y. and Owen, G. S.}
-  , title = {Graphical Passwords: A Survey}
-  , booktitle = {Proceedings of the 21st Annual Computer Security Applications Conference}
-  , year = {2005}
+  , author={Suo, X. and Zhu, Y. and Owen, G. S.}
+  , title={Graphical Passwords: A Survey}
+  , booktitle={Annual Computer Security Applications Conference}
+  , year={2005}
+  , pages={463--472}
+  , publisher={IEEE}
 }
   , series = {ACSAC '05}
   , isbn = {0-7695-2461-3}
-  , pages = {463--472}
   , numpages = {10}
   , acmid = {1106849}
   , publisher = {IEEE Computer Society}
@@ -529,11 +548,12 @@
 @inproceedings{tillmann:2010:parametrized-unit-tests-rock
   , author={N. Tillmann and J. de Halleux and T. Xie}
   , title={Parameterized unit testing: theory and practice}
-  , booktitle={IEEE International Conference on Software Engineering}
+  , booktitle={International Conference on Software Engineering}
   , year={2010}
+  , pages={483--484}
+  , publisher={IEEE}
 }
   , volume={2}
-  , pages={483-484}
   , ISSN={0270-5257}
   , month={May}
 }
@@ -541,11 +561,11 @@
 @inproceedings{daka:2014:unit-testing-tools
   , author={E. Daka and G. Fraser}
   , title={A Survey on Unit Testing Practices and Problems}
-  , booktitle={IEEE International Symposium on Software Reliability Engineering}
+  , booktitle={International Symposium on Software Reliability Engineering}
   , year={2014}
+  , pages={201--211}
+  , publisher={IEEE}
 }
-  , organization={IEEE}
-  , pages={201-211}
   , ISSN={1071-9458}
   , month={Nov}
 }
@@ -553,21 +573,22 @@
 @inproceedings{ivannikova:2017:anomaly-detection-keystroke-dynamics
   , author={E. Ivannikova and G. David and T. Hämäläinen}
   , title={Anomaly detection approach to keystroke dynamics based user authentication}
-  , booktitle={IEEE Symposium on Computers and Communications}
+  , booktitle={Symposium on Computers and Communications}
   , year={2017}
+  , pages={885--889}
+  , publisher={IEEE}
 }
-  , pages={885-889}
   , month={July}
 }
 
 @inproceedings{dell:2010:password
   , author={M. Dell'Amico and P. Michiardi and Y. Roudier}
   , title={Password Strength: An Empirical Analysis}
-  , booktitle={IEEE International Conference on Computer Communications}
+  , booktitle={International Conference on Computer Communications}
   , year={2010}
-}
-  , organization={IEEE}
   , pages={1--9}
+  , publisher={IEEE}
+}
   , ISSN={0743-166X}
   , month={March}
 }
@@ -575,69 +596,72 @@
 @inproceedings{kelley2012guess
   , author={P. G. Kelley and S. Komanduri and M. L. Mazurek and R. Shay and T. Vidas and L. Bauer and N. Christin and L. F. Cranor and J. Lopez}
   , title={Guess Again (and Again and Again): Measuring Password Strength by Simulating Password-Cracking Algorithms}
-  , booktitle={IEEE Symposium on Security and Privacy}
+  , booktitle={Symposium on Security and Privacy}
   , year={2012}
+  , pages={523--537}
+  , publisher={IEEE}
 }
 %  , organization={IEEE}
-%  , pages={523-537}
 %  , ISSN={1081-6011}
 %  , month={May}
 
 @inproceedings{bellovin1992encrypted
-  , author = {Bellovin, S. M. and Merritt, M.}
-  , title = {Encrypted Key Exchange: Password-Based Protocols SecureAgainst Dictionary Attacks}
-  , booktitle = {IEEE Symposium on Security and Privacy}
-  , year = {1992}
+  , author={Bellovin, S. M. and Merritt, M.}
+  , title={Encrypted Key Exchange: Password-Based Protocols Secure Against Dictionary Attacks}
+  , booktitle={Symposium on Security and Privacy}
+  , year={1992}
+  , pages={72--84}
+  , publisher={IEEE}
 }
+  , location = {Washington, DC, USA}
 %  , series = {SP '92}
 %  , isbn = {0-8186-2825-1}
-%  , pages = {72--84}
 %  , acmid = {884178}
-%  , publisher = {IEEE Computer Society}
-%  , address = {Washington, DC, USA}
+%
 
 @inproceedings{abdalla2015security
   , author={M. Abdalla and F. Benhamouda and P. MacKenzie}
   , title={Security of the J-PAKE Password-Authenticated Key Exchange Protocol}
-  , booktitle={IEEE Symposium on Security and Privacy}
+  , booktitle={Symposium on Security and Privacy}
   , year={2015}
-}
-  , organization={IEEE}
-  , month={May}
   , pages={571--587}
-  , ISSN={1081-6011}
+  , publisher={IEEE}
 }
+, location={San Jose, CA, USA}
+, ISSN={1081-6011}
+, month={05}
+, doi={DOI 10.1109/SP.2015.4}
 
 @inproceedings{Adrian:2015:IFS:2810103.2813707
   , author={Adrian, D. and Bhargavan, K. and Durumeric, Z. and Gaudry, P. and Green, M. and Halderman, J. A. and Heninger, N. and Springall, D. and Thom{\'e}, E. and Valenta, L. and VanderSloot, B. and Wustrow, E. and Zanella-B{\'e}guelin, S. and Zimmermann, P.}
-  , title = {Imperfect Forward Secrecy: How Diffie-Hellman Fails in Practice}
-  , booktitle = {ACM Conference on Computer and Communications Security}
-  , year = {2015}
+  , title={Imperfect Forward Secrecy: How Diffie-Hellman Fails in Practice}
+  , booktitle={Conference on Computer and Communications Security}
+  , year={2015}
+  , pages={5--17}
+  , publisher={ACM}
 }
+, location = {Denver, Colorado, USA}
  series = {CCS '15},
  isbn = {978-1-4503-3832-5},
- location = {Denver, Colorado, USA},
- pages = {5--17},
  numpages = {13},
  acmid = {2813707},
- publisher = {ACM},
  address = {New York, NY, USA},
  keywords = {Diffie-Hellman, internet measurement, logjam, number field sieve, vulnerabilities},
 }
 
 @inproceedings{weir2010testing
-  , author = {Weir, M. and Aggarwal, S. and Collins, M. and Stern, H.}
-  , title = {Testing Metrics for Password Creation Policies by Attacking Large Sets of Revealed Passwords}
-  , booktitle = {ACM Conference on Computer and Communications Security}
-  , year = {2010}
+  , author={Weir, M. and Aggarwal, S. and Collins, M. and Stern, H.}
+  , title={Testing Metrics for Password Creation Policies by Attacking Large Sets of Revealed Passwords}
+  , booktitle={Conference on Computer and Communications Security}
+  , year={2010}
+  , pages={162--175}
+  , publisher={ACM}
 }
+  , location = {Chicago, Illinois, USA}
   , series = {CCS '10}
   , isbn = {978-1-4503-0245-6}
-  , location = {Chicago, Illinois, USA}
-  , pages = {162--175}
   , numpages = {14}
   , acmid = {1866327}
-  , publisher = {ACM}
   , address = {New York, NY, USA}
   , keywords = {cybercrime, password cracking, password policies},
 }
@@ -645,12 +669,14 @@
 @inproceedings{cheon2002simple
   , author={Cheon, Y. and Leavens, G. T.}
   , title={A simple and practical approach to unit testing: The JML and JUnit way}
-  , booktitle={ECOOP European Conference on Object-Oriented Programming}
+  , booktitle={European Conference on Object-Oriented Programming}
   , year={2002}
+  , pages={231--255}
+  , publisher={Spring{\-}er}
 }
+  , location={Malaga, Spain}
   volume={2374},
-  pages={231--255},
-  organization={Springer}
+  organization={Spring{\-}er}
 }
 
 @inproceedings{5665047
@@ -658,11 +684,12 @@
   , title={An implementation and its evaluation of password cracking tool parallelized on GPGPU}
   , booktitle={International Symposium on Communications and Information Technologies}
   , year={2010}
+  , pages={534--538}
+  , publisher={IEEE}
 }
-
+, location={Tokyo, Japan}
 volume={},
 number={},
-pages={534-538},
 month={Oct},
 }
 
@@ -671,6 +698,7 @@ month={Oct},
   , title = {MARS --- a candidate cipher for AES}
   , booktitle={First Advanced Encryption Standard (AES) Conference}
   , year = {1998}
+  , publisher={NIST}
 }
   , url={http://www.nic.funet.fi/~bande/docs/crypt/system/mars.pdf}
   , urldate={2017-10-23}
@@ -681,6 +709,7 @@ month={Oct},
   , title={The RC6 Block Cipher}
   , booktitle={First Advanced Encryption Standard (AES) Conference}
   , year={1998}
+  , publisher={NIST}
 }
   , url={http://people.csail.mit.edu/rivest/pubs/RRSY98.pdf}
   , urldate={2017-10-23}
@@ -691,6 +720,7 @@ month={Oct},
   , title={AES Proposal: Rijndael}
   , booktitle={First Advanced Encryption Standard (AES) Conference}
   , year={1998}
+  , publisher={NIST}
 }
 
 @inproceedings{anderson:1988:serpent
@@ -698,6 +728,7 @@ month={Oct},
   , title={Serpent: A Proposal for the Advanced Encryption Standard}
   , booktitle={First Advanced Encryption Standard (AES) Conference}
   , year = {1998}
+  , publisher={NIST}
 }
 
 @inproceedings{schneier:1998:twofish
@@ -705,21 +736,22 @@ month={Oct},
   , author={Schneier, B. and Kelsey, J. and Whiting, D. and Wagner, D. and Hall, C. and Ferguson, N.}
   , booktitle={First Advanced Encryption Standard (AES) Conference}
   , year={1998}
+  , publisher={NIST}
 }
 
 @inproceedings{lamsweerde:2000:formal-specification
-  , author = {Lamsweerde, A. van}
-  , title = {Formal Specification: A Roadmap}
-  , booktitle = {Conference on The Future of Software Engineering}
-  , year = {2000}
+  , author={Lamsweerde, A. van}
+  , title={Formal Specification: A Roadmap}
+  , booktitle={Conference on The Future of Software Engineering}
+  , year={2000}
+  , pages={147--159}
+  , publisher={ACM}
 }
   , series = {ICSE '00}
   , isbn = {1-58113-253-0}
   , location = {Limerick, Ireland}
-  , pages = {147--159}
   , numpages = {13}
   , acmid = {336546}
-  , publisher = {ACM}
   , address = {New York, NY, USA}
 }
 
@@ -727,103 +759,106 @@ month={Oct},
   , author = {Müller, P. and Poetzsch-Heffter, A.}
   , title = {Formal Specification Techniques for Object-Oriented Programs}
   , booktitle={Informatik ’97 Informatik als Innovationsmotor}
-  , year = {1997}
+  , year={1997}
+  , pages={602--611}
+  , publisher={Spring{\-}er}
 }
   , month = {01}
-  , pages = {602-611}
 }
 
 @inproceedings{williams:2010:unit-tests-rock
-  , author = {L. Williams and G. Kudrjavets}
-  , title = {On the Effectiveness of Unit Test Automation at Microsoft}
-  , booktitle = {International Symposium on Software Reliability Engineering}
-  , year = {2010}
+  , author={L. Williams and G. Kudrjavets}
+  , title={On the Effectiveness of Unit Test Automation at Microsoft}
+  , booktitle={International Symposium on Software Reliability Engineering}
+  , year={2010}
+  , pages={81--89}
+  , publisher={IEEE}
 }
   , url={https://collaboration.csc.ncsu.edu/laurie/Papers/Unit_testing_cameraReady.pdf}
   , urldate={2017-10-23}
 }
 
 @inproceedings{gaw2006password
-  , author = {Gaw, S. and Felten, E. W.}
-  , title = {Password Management Strategies for Online Accounts}
-  , booktitle = {Symposium on Usable Privacy and Security}
-  , year = {2006}
+  , author={Gaw, S. and Felten, E. W.}
+  , title={Password Management Strategies for Online Accounts}
+  , booktitle={Symposium on Usable Privacy and Security}
+  , year={2006}
+  , pages={44--55}
+  , publisher={ACM}
 }
   , series = {SOUPS '06}
   , isbn = {1-59593-448-0}
   , location = {Pittsburgh, Pennsylvania, USA}
-  , pages = {44--55}
   , numpages = {12}
   , acmid = {1143127}
-  , publisher = {ACM}
   , address = {New York, NY, USA}
   , keywords = {password, password management, password reuse, security, survey, user behavior},
 }
 
 @inproceedings{shay2010encountering
-  , author = {Shay, R. and Komanduri, S. and Kelley, P. G. and Leon, P. G. and Mazurek, M. L. and Bauer, L. and Christin, N. and Cranor, L. F.}
-  , title = {Encountering Stronger Password Requirements: User Attitudes and Behaviors}
-  , booktitle = {Symposium on Usable Privacy and Security}
-  , year = {2010}
+  , author={Shay, R. and Komanduri, S. and Kelley, P. G. and Leon, P. G. and Mazurek, M. L. and Bauer, L. and Christin, N. and Cranor, L. F.}
+  , title={Encountering Stronger Password Requirements: User Attitudes and Behaviors}
+  , booktitle={Symposium on Usable Privacy and Security}
+  , year={2010}
+  , pages={1--20}
+  , articleno={2}
+  , publisher={ACM}
 }
   , series = {SOUPS '10}
   , isbn = {978-1-4503-0264-7}
   , location = {Redmond, Washington, USA}
-  , pages = {2:1--2:20}
-  , articleno = {2}
   , numpages = {20}
   , acmid = {1837113}
-  , publisher = {ACM}
   , address = {New York, NY, USA}
   , keywords = {passwords, policy, security, survey, usability},
 }
 
 @inproceedings{zhang2010security
-  , author = {Zhang, Y. and Monrose, F. and Reiter, M. K.}
-  , title = {The Security of Modern Password Expiration: An Algorithmic Framework and Empirical Analysis}
-  , booktitle = {ACM Conference on Computer and Communications Security}
-  , year = {2010}
+  , author={Zhang, Y. and Monrose, F. and Reiter, M. K.}
+  , title={The Security of Modern Password Expiration: An Algorithmic Framework and Empirical Analysis}
+  , booktitle={Conference on Computer and Communications Security}
+  , year={2010}
+  , pages={176--186}
+  , publisher={ACM}
 }
  series = {CCS '10},
  isbn = {978-1-4503-0245-6},
  location = {Chicago, Illinois, USA},
- pages = {176--186},
  numpages = {11},
  acmid = {1866328},
- publisher = {ACM},
  address = {New York, NY, USA},
  keywords = {password expiration, passwords, user authentication},
 }
 
 @inproceedings{Wu:2006:STA:1124772.1124863
-  , author = {Wu, M. and Miller, R. C. and Garfinkel, S. L.}
-  , title = {Do Security Toolbars Actually Prevent Phishing Attacks?}
-  , booktitle = {ACM Conference on Human Factors in Computing Systems}
-  , year = {2006}
+  , author={Wu, M. and Miller, R. C. and Garfinkel, S. L.}
+  , title={Do Security Toolbars Actually Prevent Phishing Attacks?}
+  , booktitle={Conference on Human Factors in Computing Systems}
+  , year={2006}
+  , pages={601--610}
+  , publisher={ACM}
 }
   , series = {CHI '06}
   , isbn = {1-59593-372-7}
   , location = {Montréal, Québec, Canada}
-  , pages = {601--610}
   , numpages = {10}
   , acmid = {1124863}
-  , publisher = {ACM}
   , address = {New York, NY, USA}
 }
 
 @inproceedings{bellovin1993augmented
   , author={Bellovin, S. M. and Merritt, M.}
   , title={Augmented Encrypted Key Exchange: A Password-based Protocol Secure Against Dictionary Attacks and Password File Compromise}
-  , booktitle={ACM Conference on Computer and Communications Security}
-  , year = {1993}
+  , booktitle={Conference on Computer and Communications Security}
+  , year={1993}
+  , pages={244--250}
+  , publisher={ACM}
 }
   , series = {CCS '93}
   , isbn = {0-89791-629-8}
   , location = {Fairfax, Virginia, USA}
-  , pages = {244--250}
   , numpages = {7}
   , acmid = {168618}
-  , publisher = {ACM}
   , address = {New York, NY, USA},
 }
 
@@ -832,25 +867,25 @@ month={Oct},
   , author={Wang, X. and Yu, H.}
   , booktitle={International Conference on the Theory and Applications of Cryptographic Techniques}
   , year={2005}
+  , pages={19--35}
+  , publisher={Spring{\-}er}
 }
   volume={3494},
-  pages={19--35},
-  organization={Springer}
 }
 
 @inproceedings{durumeric2014matter
-  , author = {Durumeric, Z. and Kasten, J. and Adrian, D. and Halderman, J. A. and Bailey, M. and Li, F. and Weaver, N. and Amann, J. and Beekman, J. and Payer, M. and Paxson, V.}
-  , title = {The Matter of Heartbleed}
-  , booktitle = {ACM Internet Measurement Conference}
-  , year = {2014}
+  , author={Durumeric, Z. and Kasten, J. and Adrian, D. and Halderman, J. A. and Bailey, M. and Li, F. and Weaver, N. and Amann, J. and Beekman, J. and Payer, M. and Paxson, V.}
+  , title={The Matter of Heartbleed}
+  , booktitle={Internet Measurement Conference}
+  , year={2014}
+  , pages={475--488}
+  , publisher={ACM}
 }
   , series = {IMC '14}
   , isbn = {978-1-4503-3213-2}
   , location = {Vancouver, BC, Canada}
-  , pages = {475--488}
   , numpages = {14}
   , acmid = {2663755}
-  , publisher = {ACM}
   , address = {New York, NY, USA}
   , keywords = {heartbleed, internet-wide scanning, openssl, security},
 }
