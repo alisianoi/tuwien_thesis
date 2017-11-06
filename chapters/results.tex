@@ -206,7 +206,7 @@ Part of the porting effort is a small proof of concept mobile application. This 
 
 One of the first steps is to determine the minimum versions of Android devices and API levels necessary. Since lyra2-java makes use of unsigned 64-bit number arithmetic, Java 1.8 support is required. This translates into the minimum Android version of 7.0 and the API level of 24 \footnote{https://developer.android.com/guide/platform/j8-jack.html (visited on 10/23/2017)}.
 
-The most common development environment for Android applications is the Android Studio. Support for Java 1.8 features has not yet landed into the release version of this IDE. So, in order to be able to develop a mobile application with Lyra2, a development version \texttt{3.0} needs to be installed. If you encounter a (similar) traceback as shown in figure \ref{fig:traceback}, there are several possible workarounds available online. The most effective one is to instruct Android Studio to use system libraries:
+One of the most common development environments for Android applications is the Android Studio. Support for Java 1.8 features has not yet landed into the release version of this IDE. So, in order to be able to develop a mobile application with Lyra2, a development version \texttt{3.0} needs to be installed. If you encounter a (similar) traceback as shown in figure \ref{fig:traceback}, one possible workaround is to instruct Android Studio to use system libraries:
 
 \begin{minted}{shell}
 ANDROID_EMULATOR_USE_SYSTEM_LIBS=1 ./studio.sh
@@ -236,9 +236,9 @@ ANDROID_EMULATOR_USE_SYSTEM_LIBS=1 ./studio.sh
 
 Once these preliminary steps are performed, the development of the application becomes straightforward. Android Studio is based on IntelliJ Studio and therefore picks up lyra2-java from the Maven Central repository in a matter of a couple clicks.
 
-As a result, a simple Android application was developed and is available on GitHub \cite{github:2017:lyra2-mobile}. It consists of a main screen and a results screen. The main screen allows the user to choose the particular configuration of Lyra2. By default, the Blake2b sponge with the time and memory cost of 100 will be used. The password and salt fields are set to the default values of "password" and "salt" respectively, the number of columns is 256 with each column being 12 blocks wide. The permutation inside the sponge makes a total 12 rounds of computations. All of the parameters above can be adjusted.
+As a result, a simple Android application was developed and is available on GitHub \cite{github:2017:lyra2-mobile}. It consists of a main screen and a results screen. The main screen allows the user to choose some particular configuration of Lyra2. By default, the Blake2b sponge with the time and memory cost of 100 will be used. The password and salt fields are set to the default values of "password" and "salt" respectively, the number of columns is 256 with each column being 12 blocks wide. The permutation inside the sponge makes a total 12 rounds of computations. All of the parameters above can be adjusted.
 
-Figure \ref{fig:lyra2-mobile-demo} demonstrates the hash value after running with default parameters as well as the hash value when using BlaMka instead of Blake2b. The hash values match those from the manual testing section \ref{sec:manual-testing}. In each case the computation lasted for approximately 60 seconds which is consistent with the desktop version times. However, it should be noted that the application was tested in an emulator and not on an actual mobile device.
+\autoref{fig:lyra2-mobile-demo} summarizes the result. In particular, \autoref{fig:lyra2-mobile-main-blake2b} and \autoref{fig:lyra2-mobile-result-blake2b} show the main screen and the results screen when running Lyra2 in the mobile emulator with the default parameters. At the same time \autoref{fig:lyra2-mobile-main-blamka} and \autoref{fig:lyra2-mobile-result-blamka} show the settings and the result for the BlaMka sponge. In both cases the hash values match those from the manual testing Section \ref{sec:manual-testing}. In each case the computation lasted for approximately 60 seconds which is consistent with the desktop version times. However, it should once again be noted that the application was run in an emulator and not on an actual mobile device.
 
 \begin{figure}[H]
 \centering
@@ -246,25 +246,25 @@ Figure \ref{fig:lyra2-mobile-demo} demonstrates the hash value after running wit
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-main-clean}
   \caption{Main screen (Blake2b sponge, default)}
-  \label{fig:lyra2-mobile-main}
+  \label{fig:lyra2-mobile-main-blake2b}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-result-clean}
   \caption{Resulting hash (Blake2b sponge, default)}
-  \label{fig:lyra2-mobile-result}
+  \label{fig:lyra2-mobile-result-blake2b}
 \end{subfigure}
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-main-blamka-clean}
   \caption{Main screen (BlaMka sponge)}
-  \label{fig:lyra2-mobile-main}
+  \label{fig:lyra2-mobile-main-blamka}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-result-blamka-clean}
   \caption{Resulting hash (BlaMka sponge)}
-  \label{fig:lyra2-mobile-result}
+  \label{fig:lyra2-mobile-result-blamka}
 \end{subfigure}
 \caption{Android application running Lyra2. Each of the two configurations runs for \(\approx 60\) seconds. Parameter values on the left, resulting hash in hexadecimal on the right.}
 \label{fig:lyra2-mobile-demo}
