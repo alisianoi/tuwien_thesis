@@ -22,7 +22,7 @@ Furthermore, when it comes to the \texttt{C/C++} ecosystem, the choice of the fr
 \section{\texttt{Boost.Test}}
 \label{sec:unit-boost-google}
 
-There is a large choice of unit testing frameworks for the \texttt{C/C++} ecosystem. An extensive list can be found in \cite{wiki:2017:frameworks-c, wiki:2017:frameworks-cpp}. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, it is often more practical to write a separate test file that would run a few sanity checks.
+There is a large choice of unit testing frameworks for the \texttt{C/C++} ecosystem. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, it is often more practical to write a separate test file that would run a few sanity checks.
 
 Consider the case of Argon2. The in-house \texttt{src/test.c} test program for Argon2 was introduced on 25\textsuperscript{th} of January 2016 \cite{github:2017:argon2}. The commit hash starts with \texttt{7450df88} and it is number 317 out of (current) almost 600 in the version control history. So it is safe to say that this testing was introduced at the later stages of the project when the need for it was apparent \footnote{https://github.com/P-H-C/phc-winner-argon2/issues/85 (visited on 10/23/2017)}.
 
