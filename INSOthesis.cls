@@ -828,4 +828,34 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatother
+
+
+\newacronym{cpu}{CPU}{central processing unit}
+\newacronym{cpus}{CPUs}{central processing units}
+
+\newacronym{gpu}{GPU}{graphics processing unit}
+\newacronym{gpus}{GPUs}{graphics processing units}
+
+\newacronym{mit}{MIT}{Massachusetts Institute of Technology}
+\newacronym{gpl}{GPL}{General Public License}
+\newacronym{uml}{UML}{Unified Modeling Language}
+
+\newacronym{asic}{ASIC}{application-specific integrated circuit}
+\newacronym{asics}{ASICs}{application-specific integrated circuit}
+
+\newacronym{fpga}{FPGA}{field-programmable gate array}
+\newacronym{fpgas}{FPGAs}{field-programmable gate arrays}
+
+\newacronym{phs}{PHS}{password hashing scheme}
+\newacronym{phss}{PHSs}{password hashing schemes}
+
+\newacronym{rsa}{RSA}{Rivest-Shamir-Adleman}
+
+\newacronym{sha1}{SHA-1}{Secure Hash Algorithm 1}
+\newacronym{sha2}{SHA-2}{Secure Hash Algorithm 2}
+\newacronym{sha3}{SHA-3}{Secure Hash Algorithm 3}
+
+\newacronym{aes}{AES}{Advanced Encryption Standard}
+
+\newacronym{rfc}{RFC}{Request For Comments}
 \endinput
