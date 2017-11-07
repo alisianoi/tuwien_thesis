@@ -343,7 +343,7 @@ The architecture of the Java project underwent iterative improvements and a reas
         \umlHVinherit{SpongeHalfBlamka}{Sponge}
       \end{umlpackage}
   \end{tikzpicture}
-  \caption{Approximate Class Diagram for \texttt{lyra2-java} Package}
+  \caption{Approximate Class Diagram for the \texttt{lyra2-java} project}
   \label{fig:uml}
   \end{figure}
 
@@ -380,17 +380,17 @@ In order to circumvent this, the \texttt{pack} class provides a number of overlo
 
         \draw [thick,out=180,in=180,->] (0) to node [right=1cm] {During a \texttt{memcpy} call or an array lookup} (A);
       \end{tikzpicture}
-    \caption{The byte swap on a little-endian platform (i.e. C99 on \texttt{x86\_64})}
+    \caption{Byte Swap in the Little-endian Case}
     \label{fig:little-endian}
   \end{figure}
 
 The \texttt{Lyra2} class contains the main logic of the single-threaded Lyra2 instance. The functionality related to the sponge construction is captured by the \texttt{Sponge} \emph{abstract} class. Its subclasses \texttt{SpongeBlake2b}, \texttt{SpongeBlamka} and \texttt{SpongeHalfBlamka} hold the specifics of the underlying fixed-width permutation \(f\).
 
-An interesting detail is that the Sponge class in the Java project makes use of both left- and right bit rotations, done by the \texttt{rotl64} and \texttt{rotr64} methods respectively. These methods accept a 64 bit \texttt{long} and rotate it by the specified number of bits \texttt{b}. Those rotations are \emph{not} arithmetic and do \emph{not} preserve the sign of their argument.
+An interesting detail is that the \texttt{Sponge} class in the Java project makes use of both left- and right bit rotations, done by the \texttt{rotl64} and \texttt{rotr64} methods respectively. These methods accept a 64 bit \texttt{long} and rotate it by the specified number of bits \texttt{b}. Those rotations are \emph{not} arithmetic and do \emph{not} preserve the sign of their argument.
 
-The original Lyra2 reference implementation requires just one direction for rotations. Both types of rotations are helpful in lyra2-java because they allow to avoid a number of byte rotations related to endianness. For an example of this,  refer to figure \ref{fig:sponge-blake2b}. It shows the \texttt{SpongeBlake2b} implementation, where lines \(5, 8\), and \(11\) use a left rotation. The original Blake2b specification prescribes a right rotation for those steps. However, instead of calling \texttt{mem.flip} that would rotate its argument once and then actually rotating it with \texttt{Sponge.rotr64}, a single rotation in the other direction with \texttt{Sponge.rotl64} is performed.
+The \texttt{lyra2-c} project requires just one type of rotations. On the other hand, both types of rotations are helpful in the \texttt{lyra2-java} project. Using both left and right directions of rotation allows to avoid a number of byte rotations related to endianness. For an example of this,  refer to Figure \ref{fig:sponge-blake2b}. It shows the \texttt{SpongeBlake2b} implementation, where lines 5, 8, and 11 use a left rotation. The original Blake2b specification prescribes a right rotation for those steps. The \texttt{lyra2-java} project would then have to first call a \texttt{mem.flip} and then follow it up with a call to \texttt{Sponge.rotr64}, essentially performing rotations in opposite directions. Instead, a single call to \texttt{Sponge.rotl64} takes place which performs a right rotation.
 
-The same trick cannot be performed on line \(16\) though. The rotation there is \(63\) bits to the right, which is not divisible by 8 bits (the size of one byte). Since \texttt{mem.flip} performs a byte-level rotation, it does not mix with the rotation and has to be performed explicitly. This rotation trick has accelerated the ported implementation by about 20\%. The BlaMka family of sponges are based on Blake2b and benefit from the same trick as well, see figure \ref{fig:sponge-blamka}.
+The same trick cannot be performed on line 16 though. The rotation there is 63 bits to the right, which is not divisible by 8 bits (the size of one byte). Since \texttt{mem.flip} performs a byte-level rotation, it does not mix with the rotation and has to be performed explicitly. This rotation trick has accelerated the ported implementation by about 20\%. The BlaMka family of sponges are based on Blake2b and benefit from the same trick as well, see figure \ref{fig:sponge-blamka}.
 
 \begin{figure}
 \small
@@ -415,7 +415,7 @@ The same trick cannot be performed on line \(16\) though. The rotation there is 
     }
 \end{minted}
 \normalsize
-\caption{Blake2b as instance of the Sponge class, demonstrating optimized rotations on lines 5, 8 and 11. Line 16 performs the complete set of rotations (no optimization).}
+\caption{Blake2b as instance of the \texttt{Sponge} class, demonstrating optimized rotations on lines 5, 8 and 11. Line 16 performs the complete set of rotations (no optimization).}
 \label{fig:sponge-blake2b}
 \end{figure}
 
@@ -454,6 +454,6 @@ public class SpongeBlamka extends Sponge {
 }
 \end{minted}
 \normalsize
-\caption{BlaMka as instance of the Sponge class, the same rotation trick in action on lines 16, 19 and 22. Line 27 performs the complete set of rotations (no optimization).}
+\caption{BlaMka as instance of the \texttt{Sponge} class, the same rotation trick in action on lines 16, 19 and 22. Line 27 performs the complete set of rotations (no optimization).}
 \label{fig:sponge-blamka}
 \end{figure}
