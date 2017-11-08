@@ -30,14 +30,14 @@ Memory cost (number of rows in the memory matrix) & 100 \\
 Output length (bytes) & 10 \\
 \end{tabular}
 \end{center}
-\caption{Summary of parameter values for manually tested configurations}
+\caption{Parameter Values for Manually Tested Configurations}
 \label{table:configuration-summary}
 \end{table}
 
 \subsection{Manual Testing}
 \label{sec:manual-testing}
 
-\autoref{fig:manual-testing} shows a log of manual tests. New line delimits different Lyra2 configurations. The first line of each group represents a particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is the memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
+\autoref{fig:manual-testing} shows a log of manual tests. New line delimits different Lyra2 configurations. The first line of each group starts with \texttt{\$} and represents a particular configuration instance: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is the memory cost. The second and the forth line in each group are the password and salt pairs, and the third and fifth lines are the resulting hash values. The hash values are printed in hexadecimal.
 
 \begin{code}
 \begin{minted}[fontsize=\footnotesize]{shell}
@@ -89,7 +89,7 @@ $ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcos
 > "The quick brown fox jumped over the lazy dog" "0123456789"
 > F7 A8 56 D5 81 16 AA E5 C7 4D
 \end{minted}
-\caption{Manual testing protocol, each configuration starts with \texttt{\$}, each password and salt pair is followed by the resulting hash value. The hash value is printed in hexadecimal.}
+\caption{Manual Testing Protocol of the \texttt{lyra2-java} Project}
 \label{fig:manual-testing}
 \end{code}
 
@@ -130,14 +130,14 @@ There are two figures that show how running time and consumed memory depend on m
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/mcost_256}
-    \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 256 columns, fixed time cost of 10. Blake2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 256 columns, fixed time cost of 10. Blake2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:mcost_256}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/mcost_2048}
-    \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 2048 columns, fixed time cost of 10. Blake2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 2048 columns, fixed time cost of 10. Blake2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:mcost_2048}
 \end{figure}
 
@@ -149,14 +149,14 @@ There are two figures that show how running time and consumed memory depend on t
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_256}
-    \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 256 columns, fixed memory cost of 20. Blake2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 256 columns, fixed memory cost of 20. Blake2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:tcost_256}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_2048}
-    \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: 2048 columns, fixed memory cost of 20. Blake2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 2048 columns, fixed memory cost of 20. Blake2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:tcost_2048}
 \end{figure}
 
@@ -168,28 +168,28 @@ There are four figures that show running time and memory consumption of Lyra2 wh
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blake2b_256}
-    \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: Blake2b sponge, 256 columns.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: Blake2b sponge, 256 columns.}
     \label{figure:tcost_mcost_blake2b_256}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blake2b_2048}
-    \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: Blake2b sponge, 2048 columns.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: Blake2b sponge, 2048 columns.}
     \label{figure:tcost_mcost_blake2b_2048}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blamka_256}
-    \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: BlaMka sponge, 256 columns. }
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: BlaMka sponge, 256 columns. }
     \label{figure:tcost_mcost_blamka_256}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blamka_2048}
-    \caption{\texttt{lyra2-c} compared to \texttt{lyra2-java}: BlaMka sponge, 2048 columns.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: BlaMka sponge, 2048 columns.}
     \label{figure:tcost_mcost_blamka_2048}
 \end{figure}
 
@@ -230,7 +230,7 @@ ANDROID_EMULATOR_USE_SYSTEM_LIBS=1 ./studio.sh
     Emulator: Current serial number in output stream:  43
     Emulator: Process finished with exit code 1
 \end{minted}
-\caption{Android Studio emulator: an obscure error traceback connected to \texttt{libGL}.}
+\caption{Android Studio Emulator: an error traceback connected to libGL.}
 \label{fig:traceback}
 \end{code}
 
@@ -245,27 +245,27 @@ As a result, a simple Android application was developed and is available on GitH
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-main-clean}
-  \caption{Main screen (Blake2b sponge, default)}
+  \caption{Main Screen: Blake2b sponge, default.}
   \label{fig:lyra2-mobile-main-blake2b}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-result-clean}
-  \caption{Resulting hash (Blake2b sponge, default)}
+  \caption{Resulting Hash: Blake2b sponge, default.}
   \label{fig:lyra2-mobile-result-blake2b}
 \end{subfigure}
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-main-blamka-clean}
-  \caption{Main screen (BlaMka sponge)}
+  \caption{Main Screen: BlaMka sponge.}
   \label{fig:lyra2-mobile-main-blamka}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-result-blamka-clean}
-  \caption{Resulting hash (BlaMka sponge)}
+  \caption{Resulting Hash: BlaMka sponge.}
   \label{fig:lyra2-mobile-result-blamka}
 \end{subfigure}
-\caption{Android application running Lyra2. Each of the two configurations runs for \(\approx 60\) seconds. Parameter values on the left, resulting hash in hexadecimal on the right.}
+\caption{Android Application Running Lyra2: parameter values on the left, resulting hash in hexadecimal on the right.}
 \label{fig:lyra2-mobile-demo}
 \end{figure}
