@@ -34,7 +34,7 @@ The Boost.Test is a unit testing framework which is part of Boost. It is license
 
 The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in section \ref{subsec:unit-testing-fundamentals}. Boost.Test provides the common features of a unit testing library. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \texttt{\#include<...>} and a call to the \texttt{BOOST\_AUTO\_TEST\_CASE} macro, as shown in \autoref{fig:boost-auto-test-case}.
 
-\begin{code}
+\begin{listing}
 \centering
 \begin{minted}{cpp}
 #define BOOST_TEST_MODULE example_module_name
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(name_of_test_function) {
   \end{minted}
   \caption{Automatic Unit Test Registration With Boost.Test}
   \label{fig:boost-auto-test-case}
-\end{code}
+\end{listing}
 
 Apart from that Boost.Test has a few convenience features. First of all, it was designed to be used as a header-only library. This means that the build process of a project needs only slight modification. Secondly, Boost.Test supports parametrized tests which are called "Data-driven Test Cases" and can be found in the documentation \cite{boost:2017:test-data-driven}. First step is to declare such tests with the special \texttt{BOOST\_DATA\_TEST\_CASE} macro. More details about its usage can be found in \cite{boost:2017:test-docs-data-macro}. The data also has to be wrapped into datasets which are described in more detail in \cite{boost:2017:test-docs-dataset}.
 
@@ -67,7 +67,7 @@ Firstly, both frameworks offer parametrization tests but the implementation deta
 
 Based on the comparison above, the \texttt{lyra2-java} project was developed with JUnit4. There is nothing that would prohibit the usage of the TestNG framework for the same task. However, JUnit4 offers a single approach to writing parametrized unit tests which is flexible enough and does not make the developer choose between the different methods and different return values, as TestNG does. Finally, JUnit4 is often provided by default in modern Java development environments and does not require additional setup. Such availability has also played a major part in the choice of the unit testing framework for the \texttt{lyra2-java} project.
 
-\begin{code}
+\begin{listing}
 \small
 \begin{minted}[linenos]{java}
 @RunWith(Parameterized.class)
@@ -119,7 +119,7 @@ public class Lyra2Test {
 \normalsize
 \caption{Example of JUnit4 Parametrized Testing for the \texttt{lyra2-java} Project}
 \label{fig:junit4-parametrization}
-\end{code}
+\end{listing}
 
 \autoref{fig:junit4-parametrization} provides a simplified example of the way unit tests are organized in the \texttt{lyra2-java} project. The testing logic is in the \texttt{simpleTest} method: configuration parameters are constructed using the values from the \texttt{entry} instance variable, then a call to the \texttt{Lyra2.phs} method is made to compute the hash. The result of the computation is then compared to the correct answer by the call to the \texttt{assertArrayEquals} method.
 
@@ -136,7 +136,7 @@ The design of the unittest framework does not offer a dedicated mechanism to wri
 
 Unfortunately, the Nose unit testing framework is currently in maintenance mode. This framework is no longer in active development and therefore is not recommended for new projects. This is why the Python build harness for the reference Lyra2 implementation uses the py.test framework.
 
-\begin{code}
+\begin{listing}
 \begin{minted}[linenos]{python}
 import pytest
 import subprocess
@@ -158,7 +158,7 @@ def test_sanity_0(path, pwd, salt, k, t, m):
 \end{minted}
 \caption{Simplified Example of py.test Parametrized Testing for Python Build Harness}
 \label{fig:pytest-parametrization}
-\end{code}
+\end{listing}
 
 \autoref{fig:pytest-parametrization} shows why parametrization testing is important when building different configurations of the reference Lyra2 implementation. Before running those configurations with a long list of parameters it is worth to make sure that the compiled executables actually work. However, writing a test for each individual possible configuration is not feasible. Instead, the first decorator \texttt{@pytest.mark.parametrize('path')} fetches all filenames that start with \texttt{lyra2-} (convention for Lyra2 executable names) from a specific directory. These names are later passed into a specific unit test by the \texttt{path} parameter.
 
@@ -183,7 +183,7 @@ The \texttt{data} group of parameters specifies the test vectors which will be u
 
 Finally, compilation flags are also part of the configuration and their defaults can be seen in \autoref{fig:compile-flags}.
 
-\begin{code}
+\begin{listing}
     \begin{minted}{yaml}
     blocks: 8
     columns: 16
@@ -211,10 +211,10 @@ Finally, compilation flags are also part of the configuration and their defaults
     \end{minted}
     \caption{Example of YAML Test Data File: distinct documents are separated with \mintinline{shell}{---}}
     \label{fig:yaml-data}
-\end{code}
+\end{listing}
 
 
-\begin{code}
+\begin{listing}
     \begin{minted}{yaml}
     CFLAGS:
       - -std=c99
@@ -232,4 +232,4 @@ Finally, compilation flags are also part of the configuration and their defaults
       \end{minted}
       \caption{Compilation Flags Used by the \texttt{lyra2-c} Project}
       \label{fig:compile-flags}
-  \end{code}
+  \end{listing}
