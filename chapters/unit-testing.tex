@@ -12,7 +12,7 @@ Furthermore, when it comes to the C/C++ ecosystem, the choice of the framework i
     Name & License & Parametrization & Parallelism \\ \hline
 Boost.Test & Boost Software License & yes & needs 3\textsuperscript{rd} party runner (\texttt{cmake}) \\
 JUnit4 & Eclipse Public License & yes & needs 3\textsuperscript{rd} party runner (\texttt{mvn}) \\
-py.test & MIT & yes & needs 3\textsuperscript{rd} party plugin (\texttt{pytest.xdist})
+py.test & MIT & yes & needs 3\textsuperscript{rd} party plugin (\texttt{xdist})
 % Google Test & MIT & parameters? & yes
 \end{tabular}
 \caption{Important Features of Several Unit Testing Frameworks}
@@ -30,11 +30,11 @@ A similar story could be observed for the reference Lyra2 project \cite{github:2
 
 Boost itself is a large collection of different libraries for C++. It was originally founded by Dawes and Abrahams but today the number of contributors is in the hundreds. The scope of the libraries spans from concurrent programming to regular expressions to linear algebra. There is a formal submission process for any library that would like to be included into the collection \cite{boost:2017:submission-process} as well as rigorous review in the mailing lists \cite{boost:2017:mailing-list}. Many of the ideas that originate in Boost are later adopted by the C++ language standard.
 
-The Boost.Test is a unit testing framework which is part of Boost. It is licensed under the Boost Software License which is a free software license, approved by the Open Source Initiative and compatible with the \gls{gpl}. The library documentation is located in \cite{boost:2017:test-docs}.
+The Boost.Test is a unit testing framework which is part of Boost. It is licensed under the Boost Software License which is a free software license, approved by the Open Source Initiative and compatible with the \gls{gpl}. The library documentation can be found online \cite{boost:2017:test-docs}.
 
 The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in section \ref{subsec:unit-testing-fundamentals}. Boost.Test provides the common features of a unit testing library. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \texttt{\#include<...>} and a call to the \texttt{BOOST\_AUTO\_TEST\_CASE} macro, as shown in \autoref{fig:boost-auto-test-case}.
 
-\begin{figure}
+\begin{code}
 \centering
 \begin{minted}{cpp}
 #define BOOST_TEST_MODULE example_module_name
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(name_of_test_function) {
   \end{minted}
   \caption{Automatic Unit Test Registration With Boost.Test}
   \label{fig:boost-auto-test-case}
-\end{figure}
+\end{code}
 
 Apart from that Boost.Test has a few convenience features. First of all, it was designed to be used as a header-only library. This means that the build process of a project needs only slight modification. Secondly, Boost.Test supports parametrized tests which are called "Data-driven Test Cases" and can be found in the documentation \cite{boost:2017:test-data-driven}. First step is to declare such tests with the special \texttt{BOOST\_DATA\_TEST\_CASE} macro. More details about its usage can be found in \cite{boost:2017:test-docs-data-macro}. The data also has to be wrapped into datasets which are described in more detail in \cite{boost:2017:test-docs-dataset}.
 
@@ -55,7 +55,19 @@ This section should have given the reader a hint that setting up Boost.Test for 
 \section{JUnit and TestNG}
 \label{sec:unit-junit-testng}
 
-\begin{figure}
+The Java ecosystem offers JUnit, which is a unit testing framework inspired by xUnit. The latter is a collective name for a specific architecture which was first introduced by NUnit. This architecture is described below.
+
+The main element of JUnit is a \emph{test case} which is usually a class that contains testing logic. Such a class might have special methods called \emph{fixtures} which are responsible for setting up and tearing down the context in which a test is executed. For example, this might include repeatedly creating a set of objects or opening a database connection. The methods marked with the \texttt{@Before} (respectively, \texttt{@After}) annotation are executed before (respectively, after) each individual test. The \texttt{@BeforeClass} (respectively, \texttt{@AfterClass}) annotation ensures that a method is run exactly once before (respectively, after) the test class is instantiated.
+
+Several test cases can be collected into a single \emph{test suite}. Finally, a program called a \emph{test runner} is responsible for discovering the test cases, running them and reporting the results back to the user. The test runner can be instructed to run (or skip) specific test suits.
+
+As well as JUnit, the Java ecosystem has a unit testing framework called TestNG \cite{testng:2017:home}. Below is a short comparison of the functionality relevant to testing password hashing algorithms.
+
+Firstly, both frameworks offer parametrization tests but the implementation details are different. JUnit4 requires the developer to mark the class with the \texttt{@RunWith} annotation as well as provide a class method marked with the \texttt{@Parameters} annotation. The last method should return a single \texttt{Collections<Object[]>} collection of test data. On the other hand, TestNG has two distinct mechanisms, one of which uses the \texttt{testng.xml} file and the other relies on a method with the \texttt{@DataProvider} annotation. In the second case the method should return either a single \texttt{Object[][]} array of test data or an \texttt{Iterator<Object[]>} iterator over such an array. With the first mechanism, the test data is stored directly in the \texttt{testng.xml} file. So, only the second approach allows to generate test data while  the tests are being run \cite{testng:2017:parametrized-testing}.
+
+Based on the comparison above, the \texttt{lyra2-java} project was developed with JUnit4. There is nothing that would prohibit the usage of the TestNG framework for the same task. However, JUnit4 offers a single approach to writing parametrized unit tests which is flexible enough and does not make the developer choose between the different methods and different return values, as TestNG does. Finally, JUnit4 is often provided by default in modern Java development environments and does not require additional setup. Such availability has also played a major part in the choice of the unit testing framework for the \texttt{lyra2-java} project.
+
+\begin{code}
 \small
 \begin{minted}[linenos]{java}
 @RunWith(Parameterized.class)
@@ -107,36 +119,24 @@ public class Lyra2Test {
 \normalsize
 \caption{Example of JUnit4 Parametrized Testing for the \texttt{lyra2-java} Project}
 \label{fig:junit4-parametrization}
-\end{figure}
+\end{code}
 
-The Java ecosystem offers JUnit, which is a unit testing framework inspired by xUnit. The latter is a collective name for a specific architecture which was first introduced by NUnit. This architecture is described below.
+\autoref{fig:junit4-parametrization} provides a simplified example of the way unit tests are organized in the \texttt{lyra2-java} project. The testing logic is in the \texttt{simpleTest} method: configuration parameters are constructed using the values from the \texttt{entry} instance variable, then a call to the \texttt{Lyra2.phs} method is made to compute the hash. The result of the computation is then compared to the correct answer by the call to the \texttt{assertArrayEquals} method.
 
-The main element of JUnit is a \emph{test case} which is usually a class that contains testing logic. Such a class might have special methods called \emph{fixtures} which are responsible for setting up and tearing down the context in which a test is executed. For example, this might include repeatedly creating a set of objects or opening a database connection. The methods marked with the \texttt{@Before} (respectively, \texttt{@After}) annotation are executed before (respectively, after) each individual test. The \texttt{@BeforeClass} (respectively, \texttt{@AfterClass}) annotation ensures that a method is run exactly once before (respectively, after) the test class is instantiated.
+The \texttt{setupClass} method is marked with the \texttt{@Parametrized.Parameters} annotation which makes this method the provider of data. The precomputed data comes from several YAML data files whose names are stored in the \texttt{fnames} variable. More information about the file structure and YAML format in general is in Section \ref{sec:configuration-and-test-file-format}. The \texttt{for} loop on line 12 sequentially opens the YAML data files, loads their contents and collects them in the \texttt{entries} collection variable. Once the \texttt{setupClass} method returns that variable, it is used by JUnit to initialize several instances of the class, providing each constructor with one set of test data from the \texttt{entries} collection.
 
-Several test cases can be collected into a single \emph{test suite}. Finally, a program called a \emph{test runner} is responsible for discovering the test cases, running them and reporting the results back to the user. The test runner can be instructed to run (or skip) specific test suits.
-
-As well as \texttt{JUnit}, the Java ecosystem has a unit testing framework called \texttt{TestNG} \cite{testng:2017:home}. Below is a short comparison of the functionality relevant to testing password hashing algorithms.
-
-Firstly, both frameworks allow to implement parametrization tests but the implementation details are different. JUnit4 requires the developer to mark the class with the \texttt{@RunWith} decorator as well as provide a class method marked with \texttt{@Parameters} and return a single \texttt{Collections<Object[]>} of data. On the other hand, TestNG has two distinct mechanisms, one of which uses \texttt{testng.xml} and the other is a \texttt{@DataProvider} method which returns either a single \texttt{Object[][]} or an \texttt{Iterator<Object[]>}. With the first mechanism, the test data is stored separately in \texttt{testng.xml} while the second approach allows to have a function that generates the data \cite{testng:2017:parametrized-testing}.
-
-Formally, TestNG implements parametrized tests in a more flexible manner. However, in practice the \texttt{testng.xml} is not that widely used and the \texttt{Collections<Object[]>} JUnit4 API is arguably cleaner than the generic-free way of TestNG. Finally, JUnit4 is usually readily provided by Java Integrated Development Environments (IDEs) and does not require additional setup. The feature parity with TestNG and general availability were the deciding factors in using this testing framework for the \texttt{lyra2-java} project.
-
-\autoref{fig:junit4-parametrization} provides a simplified example of the way unit tests are organized in lyra2-java. The testing logic is in the \texttt{simpleTest} method: configuration parameters are constructed using the values from the \texttt{entry} instance variable, then a call to \texttt{Lyra2.phs} is made and the resulting hash is compared to the correct answer by the \texttt{assertArrayEquals} call.
-
-The \texttt{setupClass} method is marked with the \texttt{@Parametrized.Parameters} annotation which makes this method the provider of data. The precomputed data comes from several \texttt{YAML} data files whose names are stored in the \texttt{fnames} variable. More information about the file structure and \texttt{YAML} in general is in Section \ref{sec:configuration-and-test-file-format}. The \texttt{for} loop on line 12 sequentially opens the \texttt{YAML} data files, loads their contents and collects them in the \texttt{entries} variable. Once the \texttt{setupClass} method returns that variable, it is used by JUnit to initialize several instances of the class, providing each constructor with one element from the \texttt{entries} array.
-
-This is the application of the parametrized tests approach which allows to run several hundreds of tests for different configurations and input values while writing the test code only once.
+This is the application of the parametrized tests approach which allows to run several hundreds of tests for different configurations and input values while writing the logic for the testing code only once.
 
 \section{Unit Testing With py.test}
 \label{sec:unit-pytest}
 
-Python is a very popular high-level general purpose scripting language created by van Rossum. It has a built-in unit testing framework unittest which comes together with the interpreter. It keeps a fairly compatible interface with the xUnit architecture described in Section \ref{sec:unit-junit-testng}. Other two notable unit testing frameworks in Python are Nose and py.test. They both support an xUnit compatible layer and come as an external dependency. The features offered by these two external frameworks are superior to those provided by the built-in unittest.
+Python is a very popular high-level general purpose scripting language created by van Rossum. It has a built-in unit testing framework called unittest which comes together with the interpreter. It keeps a fairly compatible interface with the xUnit architecture described in Section \ref{sec:unit-junit-testng}. Other two notable unit testing frameworks in Python are Nose and py.test. They both support an xUnit compatible layer and come as an external dependency. The features offered by these two external frameworks are superior to those provided by the built-in unittest.
 
 The design of the unittest framework does not offer a dedicated mechanism to write parametrized tests. At the same time the Nose library implements parametrized testing by making use of Python generators (the \texttt{yield} keyword). They return separate functions which then later run as standalone test cases. The py.test framework fits the xUnit architecture in this regard and uses the \texttt{@mark.parametrized} decorator, see \autoref{fig:pytest-parametrization}.
 
 Unfortunately, the Nose unit testing framework is currently in maintenance mode. This framework is no longer in active development and therefore is not recommended for new projects. This is why the Python build harness for the reference Lyra2 implementation uses the py.test framework.
 
-\begin{figure}
+\begin{code}
 \begin{minted}[linenos]{python}
 import pytest
 import subprocess
@@ -158,7 +158,7 @@ def test_sanity_0(path, pwd, salt, k, t, m):
 \end{minted}
 \caption{Simplified Example of py.test Parametrized Testing for Python Build Harness}
 \label{fig:pytest-parametrization}
-\end{figure}
+\end{code}
 
 \autoref{fig:pytest-parametrization} shows why parametrization testing is important when building different configurations of the reference Lyra2 implementation. Before running those configurations with a long list of parameters it is worth to make sure that the compiled executables actually work. However, writing a test for each individual possible configuration is not feasible. Instead, the first decorator \texttt{@pytest.mark.parametrize('path')} fetches all filenames that start with \texttt{lyra2-} (convention for Lyra2 executable names) from a specific directory. These names are later passed into a specific unit test by the \texttt{path} parameter.
 
@@ -173,7 +173,7 @@ The data for parametrized tests is stored in YAML files. Those files are produce
 
 YAML stands for \emph{YAML Ain't Markup Language} and is a superset of JSON, another popular data format. YAML targets human readability and provides native support for custom datatypes: scalars, arrays, structures, etc. Most programming languages provide support for reading and writing of YAML files, including both Java and Python.
 
-A single file in YAML can hold several documents. This is leveraged by the Python build harness: each file corresponds to a single Lyra2 executable. This guarantees that the compile time parameters are fixed. These parameters are stored together with all the runtime parameters and the resulting hash. See \autoref{fig:yaml-data} for reference. The \texttt{hash} field is stored as an array of strings which ensures that different YAML libraries deduce the content type of this array correctly. The \texttt{\-\-\-} is a delimiter between the two YAML documents. This feature allows to store several sets of data in one file.
+A single file in YAML can hold several documents. This is leveraged by the Python build harness: each file corresponds to a single Lyra2 executable. This guarantees that the compile time parameters are fixed. These parameters are stored together with all the runtime parameters and the resulting hash. See \autoref{fig:yaml-data} for reference. The \texttt{hash} field is stored as an array of strings which ensures that different YAML libraries deduce the content type of this array correctly. The \mintinline{shell}{---} is a delimiter between the two YAML documents. This feature allows to store several sets of data in one file.
 
 The YAML format is also used to store default configuration for the Python build harness of the reference Lyra2 project. It can be found on the \texttt{harness} branch of the forked reference repository in the \texttt{harness.yml} file \cite{github:2017:lyra-copy}. The primary parameters are \texttt{build\_path} and \texttt{makefile\_path}. The first one defines the location for the compiled Lyra2 executable files and the second one points to the original \texttt{Makefile}.
 
@@ -183,7 +183,7 @@ The \texttt{data} group of parameters specifies the test vectors which will be u
 
 Finally, compilation flags are also part of the configuration and their defaults can be seen in \autoref{fig:compile-flags}.
 
-\begin{figure}
+\begin{code}
     \begin{minted}{yaml}
     blocks: 8
     columns: 16
@@ -209,12 +209,12 @@ Finally, compilation flags are also part of the configuration and their defaults
     tcost: 1
     threads: 1
     \end{minted}
-    \caption{Example of YAML Test Data File: two distinct documents are separated with \texttt{\-\-\-}}
+    \caption{Example of YAML Test Data File: distinct documents are separated with \mintinline{shell}{---}}
     \label{fig:yaml-data}
-  \end{figure}
+\end{code}
 
 
-\begin{figure}
+\begin{code}
     \begin{minted}{yaml}
     CFLAGS:
       - -std=c99
@@ -232,4 +232,4 @@ Finally, compilation flags are also part of the configuration and their defaults
       \end{minted}
       \caption{Compilation Flags Used by the \texttt{lyra2-c} Project}
       \label{fig:compile-flags}
-  \end{figure}
+  \end{code}
