@@ -3,12 +3,12 @@
 \label{sec:results}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-This chapter presents the main results of the porting effort. In particular, section \ref{sec:it-works} covers algorithm-level compatibility. Section \ref{sec:performance-comparison} compares performance of the reference and the ported implementations on a number of different configurations of the Lyra2 algorithm. Finally, section \ref{sec:mobile-application} demonstrates the ease of integration of the ported project into an Android mobile application.
+This chapter presents the main results of the porting effort. In particular, Section \ref{sec:it-works} covers algorithm-level compatibility. Section \ref{sec:performance-comparison} compares performance of the reference and the ported implementations on a number of different configurations of the Lyra2 algorithm. Finally, Section \ref{sec:mobile-application} demonstrates the ease of integration of the ported project into an Android mobile application.
 
 \section{Algorithm-level Compatibility}
 \label{sec:it-works}
 
-The primary goal of this work was to port Lyra2 to Java so that it would produce the same hash values as the reference implementation when given the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in section \ref{sec:manual-testing} and section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit-testing framework which uses them to verify hash results.
+The primary goal of this work was to port Lyra2 to Java so that it would produce the same hash values as the reference implementation when given the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in Section \ref{sec:manual-testing} and Section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit-testing framework which uses them to verify hash results.
 
 \subsection{Configuration Choice}
 By design Lyra2 has a large number of configurable parameters. This section will provide the reasoning behind the choice of particular values. The short summary can be found in table \ref{table:configuration-summary}.
@@ -37,7 +37,7 @@ Output length (bytes) & 10 \\
 \subsection{Manual Testing}
 \label{sec:manual-testing}
 
-Figure \ref{fig:manual-testing} shows a log of manual tests. New line delimits different Lyra2 configurations. The first line of each group represents a particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is the memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
+\autoref{fig:manual-testing} shows a log of manual tests. New line delimits different Lyra2 configurations. The first line of each group represents a particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is the memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
 
 \begin{figure}[p]
 \begin{minted}[fontsize=\footnotesize]{shell}
@@ -96,7 +96,7 @@ $ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcos
 \subsection{Automated Testing}
 \label{sec:automated-testing}
 
-The automated testing is possible because of the additional code that was added to the reference implementation. As mentioned in section \ref{sec:reference-implementation}, there is a \verb|harness| branch which could be found in the forked GitHub project \cite{github:2017:lyra-copy} and the corresponding pull request \cite{github:2017:lyra-pr}. This branch introduces the \verb|Lyra2/tests/harness.py| script written in Python 3 which allows to compile several configurations of Lyra2 and then use those to compute and store hash values.
+The automated testing is possible because of the additional code that was added to the reference implementation. As mentioned in Section \ref{sec:reference-implementation}, there is a \verb|harness| branch which could be found in the forked GitHub project \cite{github:2017:lyra-copy} and the corresponding pull request \cite{github:2017:lyra-pr}. This branch introduces the \verb|Lyra2/tests/harness.py| script written in Python 3 which allows to compile several configurations of Lyra2 and then use those to compute and store hash values.
 
 Additionally, the \verb|Lyra2/tests/take.py| Python 3 script was used to choose a number of random hash values from those previously precomputed. These were then used in the Java project to unit-test the implementation. Some of the hash values were also included into the continuous integration service and their status can be verified by visiting \cite{travis:2017:lyra}. However, continuous integration runs only a subset of the vectors that were run locally due to the limited amount of memory available on the remote machines. In conclusion, both manual and automated testing indicate that the ported implementation does not contain immediately visible problems.
 
@@ -109,7 +109,7 @@ The single-threaded configuration of the reference C implementation was compared
 
 The comparison project \cite{github:2017:lyra2-compare} is a combination of two Jupyter Notebooks \cite{jupyter:2017:jupyter} and an SQlite database. The two created notebooks follow the producer-consumer strategy. The \mintinline{shell}{src/compare.ipynb} is the producer notebook which is responsible for compiling both C and Java implementations as well as dispatching computation tasks. The results are then collected into the \mintinline{shell}{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \mintinline{shell}{src/plot.ipynb} notebook which reads the data from the SQLite database and plots the figures shown below.
 
-Lyra2 provides two main adjustable parameters: time and memory cost. Changing both of the parameters at the same time cannot be easily shown on a single graph which is why the comparison contains three main parts. Subsections \ref{sec:fixed-time-cost} and \ref{sec:fixed-memory-cost} show how several Lyra2 configurations behave when time cost and memory cost is fixed, respectively. Subsection \ref{sec:no-fixed-costs} shows a grid of values for both time and memory costs. In all the sections, the two projects are compared using four configurations:
+Lyra2 provides two main adjustable parameters: time and memory cost. Changing both of the parameters at the same time cannot be easily shown on a single graph which is why the comparison contains three main parts. Section \ref{sec:fixed-time-cost} and Section \ref{sec:fixed-memory-cost} show how several Lyra2 configurations behave when time cost and memory cost is fixed, respectively. Section \ref{sec:no-fixed-costs} shows a grid of values for both time and memory costs. In all the sections, the two projects are compared using four configurations:
 
 \begin{itemize}
     \item Blake2b sponge with 256 columns, figures \ref{figure:mcost_256}, \ref{figure:tcost_256} and \ref{figure:tcost_mcost_blake2b_256}
@@ -120,7 +120,7 @@ Lyra2 provides two main adjustable parameters: time and memory cost. Changing bo
 
 Configurations were run in parallel, creating one process per configuration. Running time was measured as the time between process creation and its termination. Memory consumption was recorded from the parent process and its peak value was stored. For more details, please consult the \texttt{src/compare.ipynb} and \texttt{src/plot.ipynb} notebooks from \cite{github:2017:lyra2-compare}.
 
-Finally, in subsection \ref{sec:no-fixed-costs} the grid of time and memory cost parameters is \(200 \times 200\) with a step of \(10\), which results in a total of \(8 \times 21 \times 21 = 3528\) measurements used to build all the graphics.
+Finally, in Section \ref{sec:no-fixed-costs} the grid of time and memory cost parameters is \(200 \times 200\) with a step of \(10\), which results in a total of \(8 \times 21 \times 21 = 3528\) measurements used to build all the graphics.
 
 \subsection{Fixed Time Cost}
 \label{sec:fixed-time-cost}
@@ -206,7 +206,7 @@ Part of the porting effort is a small proof of concept mobile application. This 
 
 One of the first steps is to determine the minimum versions of Android devices and API levels necessary. Since lyra2-java makes use of unsigned 64-bit number arithmetic, Java 1.8 support is required. This translates into the minimum Android version of 7.0 and the API level of 24 \cite{android:2017:java-support}.
 
-One of the most common development environments for Android applications is the Android Studio. Support for Java 1.8 features has not yet landed into the release version of this IDE. So, in order to be able to develop a mobile application with Lyra2, a development version \texttt{3.0} needs to be installed. If you encounter a (similar) traceback as shown in figure \ref{fig:traceback}, one possible workaround is to instruct Android Studio to use system libraries:
+One of the most common development environments for Android applications is the Android Studio. Support for Java 1.8 features has not yet landed into the release version of this IDE. So, in order to be able to develop a mobile application with Lyra2, a development version \texttt{3.0} needs to be installed. If you encounter a (similar) traceback as shown in \autoref{fig:traceback}, one possible workaround is to instruct Android Studio to use system libraries:
 
 \begin{minted}{shell}
 ANDROID_EMULATOR_USE_SYSTEM_LIBS=1 ./studio.sh
