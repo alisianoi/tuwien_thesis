@@ -11,7 +11,7 @@ This chapter presents the main results of the porting effort. In particular, Sec
 The primary goal of this work was to port Lyra2 to Java so that it would produce the same hash values as the reference implementation when given the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in Section \ref{sec:manual-testing} and Section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit-testing framework which uses them to verify hash results.
 
 \subsection{Configuration Choice}
-By design Lyra2 has a large number of configurable parameters. This section will provide the reasoning behind the choice of particular values. The short summary can be found in table \ref{table:configuration-summary}.
+By design Lyra2 has a large number of configurable parameters. This section will provide the reasoning behind the choice of particular values. The short summary can be found in \autoref{table:configuration-summary}.
 
 There are three sponges that could be tested: Blake2b, BlaMka and half-round BlaMka. Only the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values made it into the shortlist. The columns of the memory matrix can be any positive number. The \path{Lyra2/src/runBenchCPU.sh} benchmarking script as well as other sources suggest that the values of 256 and 512 should be chosen.
 
@@ -39,7 +39,7 @@ Output length (bytes) & 10 \\
 
 \autoref{fig:manual-testing} shows a log of manual tests. New line delimits different Lyra2 configurations. The first line of each group represents a particular configuration group: \verb|--outlen| is the output length, \verb|--tcost| is the time cost, \verb|--mcost| is the memory cost. The second and the forth line in each group is the password and salt pair, and the third and fifth lines are the resulting hash values.
 
-\begin{figure}[p]
+\begin{code}
 \begin{minted}[fontsize=\footnotesize]{shell}
 $ lyra2 --sponge blake2b --blocks 8 --columns 256 --outlen 10 --tcost 100 --mcost 100
 > "password" "salt"
@@ -91,7 +91,7 @@ $ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcos
 \end{minted}
 \caption{Manual testing protocol, each configuration starts with \texttt{\$}, each password and salt pair is followed by the resulting hash value. The hash value is printed in hexadecimal.}
 \label{fig:manual-testing}
-\end{figure}
+\end{code}
 
 \subsection{Automated Testing}
 \label{sec:automated-testing}
@@ -212,7 +212,7 @@ One of the most common development environments for Android applications is the 
 ANDROID_EMULATOR_USE_SYSTEM_LIBS=1 ./studio.sh
   \end{minted}
 
-\begin{figure}
+\begin{code}
 \begin{minted}{shell}
     Emulator: libGL error: unable to load driver: i965_dri.so
     Emulator: libGL error: driver pointer missing
@@ -232,7 +232,7 @@ ANDROID_EMULATOR_USE_SYSTEM_LIBS=1 ./studio.sh
 \end{minted}
 \caption{Android Studio emulator: an obscure error traceback connected to \texttt{libGL}.}
 \label{fig:traceback}
-\end{figure}
+\end{code}
 
 Once these preliminary steps are performed, the development of the application becomes straightforward. Android Studio is based on IntelliJ Studio and therefore picks up lyra2-java from the Maven Central repository in a matter of a couple clicks.
 
