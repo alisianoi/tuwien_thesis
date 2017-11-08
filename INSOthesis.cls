@@ -615,7 +615,7 @@
 	% \fi
     \listoflistings
     \@AfterListOfListings
-	\cleardoublepage
+	% \cleardoublepage
   \fi
 }
 \def\@makelistofalgorithm{
