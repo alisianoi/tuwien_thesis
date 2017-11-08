@@ -95,7 +95,7 @@ As shown in figure \ref{figure:sponge-construction}, a sponge function consists 
   \draw [->] ($(f4.east) + (0, -1)$) -- ($(f4.east) + (1, -1)$);
 
   \end{tikzpicture}
-  \caption{The sponge construction, adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}}
+  \caption{Sponge Construction: adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}}
   \label{figure:sponge-construction}
 \end{figure}
 
@@ -186,7 +186,7 @@ A similar cryptographic primitive is the \emph{duplex construction}. The main di
   \draw [->,dashed] ($(f3.east) + (0, -1)$) -- (x24);
 
   \end{tikzpicture}
-  \caption{The duplex construction, adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}}
+  \caption{Duplex Construction: adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}}
   \label{figure:duplex-construction}
 \end{figure}
 
@@ -216,7 +216,7 @@ For a much more thorough introduction please consult the original paper \cite{an
       \draw [->] (phase1) -- (phase2);
       \draw [->] (phase2) -- (phase3);
   \end{tikzpicture}
-  \caption{Basic Structure of Lyra2: strictly sequential design.}
+  \caption{Strictly Sequential Design of Lyra2}
   \label{fig:basic-structure-lyra2}
 \end{figure}
 
@@ -343,7 +343,7 @@ The architecture of the Java project underwent iterative improvements and a reas
         \umlHVinherit{SpongeHalfBlamka}{Sponge}
       \end{umlpackage}
   \end{tikzpicture}
-  \caption{Approximate Class Diagram for the \texttt{lyra2-java} project}
+  \caption{Approximate Class Diagram for the \texttt{lyra2-java} Project}
   \label{fig:uml}
   \end{figure}
 
@@ -414,7 +414,7 @@ The same trick cannot be performed on line 16 though. The rotation there is 63 b
     }
 \end{minted}
 \normalsize
-\caption{Blake2b as instance of the \texttt{Sponge} class, demonstrating optimized rotations on lines 5, 8 and 11. Line 16 performs the complete set of rotations (no optimization).}
+\caption{Blake2b as Instance of the \texttt{Sponge} Class}
 \label{fig:sponge-blake2b}
 \end{code}
 
@@ -452,6 +452,6 @@ public class SpongeBlamka extends Sponge {
 }
 \end{minted}
 \normalsize
-\caption{BlaMka as instance of the \texttt{Sponge} class, the same rotation trick in action on lines 16, 19 and 22. Line 27 performs the complete set of rotations (no optimization).}
+\caption{BlaMka as Instance of the \texttt{Sponge} Class}
 \label{fig:sponge-blamka}
 \end{code}
