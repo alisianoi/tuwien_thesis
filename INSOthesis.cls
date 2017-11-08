@@ -50,7 +50,7 @@
 \newif\ifthesis@acknowledgements	\thesis@acknowledgementstrue
 \newif\ifthesis@listoffigures		\thesis@listoffigurestrue
 \newif\ifthesis@listoftables		\thesis@listoftablestrue
-\newif\ifthesis@listoflistings		\thesis@listoflistingsfalse
+\newif\ifthesis@listoflistings		\thesis@listoflistingstrue
 \newif\ifthesis@listofalgorithms	\thesis@listofalgorithmsfalse
 \newif\ifthesis@listofabbrev		\thesis@listofabbrevtrue
 \newif\ifthesis@todonotes		\thesis@todonotesfalse
@@ -172,7 +172,6 @@
 \RequirePackage{ifpdf}
 \let\footruleskip\relax % for compatibility of memoir and fancyhdr
 \RequirePackage[breakall]{truncate}
-\RequirePackage[newfloat]{minted}
 
 % important packages
 \RequirePackage{styles/INSO}
@@ -180,6 +179,7 @@
 \RequirePackage[backend=bibtex,style=numeric-comp]{biblatex}
 \RequirePackage[lined,linesnumbered,algochapter]{algorithm2e} % Algorithm-Environment
 \RequirePackage{listings}
+\RequirePackage[newfloat=true]{minted}
 \RequirePackage[hang,bottom,norule]{footmisc}
 % glossaries
 % \RequirePackage{glossaries}
@@ -527,7 +527,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%   ABBREVIATIONS                     %
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  % \@makeabbreviations
+  \@makeabbreviations
 }
 
 \gdef\AfterTitlePages#1{\gdef\@AfterTitlePages{#1}}
@@ -610,10 +610,10 @@
   \ifthesis@listoflistings
 	\cleardoublepage
 	\phantomsection
-	\ifthesis@toc
-		\addcontentsline{toc}{chapter}{\listingslabel}
-	\fi
-    \lstlistoflistings
+	% \ifthesis@toc
+	% 	\addcontentsline{toc}{chapter}{\listoflistingscaption}
+	% \fi
+    \listoflistings
     \@AfterListOfListings
 	\cleardoublepage
   \fi
