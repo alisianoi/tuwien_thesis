@@ -95,7 +95,7 @@ As shown in figure \ref{figure:sponge-construction}, a sponge function consists 
   \draw [->] ($(f4.east) + (0, -1)$) -- ($(f4.east) + (1, -1)$);
 
   \end{tikzpicture}
-  \caption{Sponge Construction: adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}}
+  \caption{Sponge Construction: adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}.}
   \label{figure:sponge-construction}
 \end{figure}
 
@@ -186,7 +186,7 @@ A similar cryptographic primitive is the \emph{duplex construction}. The main di
   \draw [->,dashed] ($(f3.east) + (0, -1)$) -- (x24);
 
   \end{tikzpicture}
-  \caption{Duplex Construction: adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}}
+  \caption{Duplex Construction: adapted from \cite{bertoni:2011:duplexing,marcos:2015:lyra2}.}
   \label{figure:duplex-construction}
 \end{figure}
 
@@ -392,7 +392,7 @@ The \texttt{lyra2-c} project requires just one type of rotations. On the other h
 
 The same trick cannot be performed on line 16 though. The rotation there is 63 bits to the right, which is not divisible by 8 bits (the size of one byte). Since \texttt{mem.flip} performs a byte-level rotation, it does not mix with the rotation and has to be performed explicitly. This rotation trick has accelerated the ported implementation by about 20\%. The BlaMka family of sponges are based on Blake2b and benefit from the same trick as well, see \autoref{fig:sponge-blamka}.
 
-\begin{code}
+\begin{listing}
 \begin{minted}[linenos]{java}
     public class SpongeBlake2b extends Sponge {
         @Override
@@ -416,10 +416,10 @@ The same trick cannot be performed on line 16 though. The rotation there is 63 b
 \normalsize
 \caption{Blake2b as Instance of the \texttt{Sponge} Class}
 \label{fig:sponge-blake2b}
-\end{code}
+\end{listing}
 
 
-\begin{code}
+\begin{listing}
 \begin{minted}[linenos]{java}
 public class SpongeBlamka extends Sponge {
     private long fBlaMka(final long x, final long y) {
@@ -454,4 +454,4 @@ public class SpongeBlamka extends Sponge {
 \normalsize
 \caption{BlaMka as Instance of the \texttt{Sponge} Class}
 \label{fig:sponge-blamka}
-\end{code}
+\end{listing}
