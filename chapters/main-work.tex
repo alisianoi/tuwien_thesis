@@ -392,8 +392,7 @@ The \texttt{lyra2-c} project requires just one type of rotations. On the other h
 
 The same trick cannot be performed on line 16 though. The rotation there is 63 bits to the right, which is not divisible by 8 bits (the size of one byte). Since \texttt{mem.flip} performs a byte-level rotation, it does not mix with the rotation and has to be performed explicitly. This rotation trick has accelerated the ported implementation by about 20\%. The BlaMka family of sponges are based on Blake2b and benefit from the same trick as well, see \autoref{fig:sponge-blamka}.
 
-\begin{figure}
-\small
+\begin{code}
 \begin{minted}[linenos]{java}
     public class SpongeBlake2b extends Sponge {
         @Override
@@ -417,11 +416,10 @@ The same trick cannot be performed on line 16 though. The rotation there is 63 b
 \normalsize
 \caption{Blake2b as instance of the \texttt{Sponge} class, demonstrating optimized rotations on lines 5, 8 and 11. Line 16 performs the complete set of rotations (no optimization).}
 \label{fig:sponge-blake2b}
-\end{figure}
+\end{code}
 
 
-\begin{figure}
-\small
+\begin{code}
 \begin{minted}[linenos]{java}
 public class SpongeBlamka extends Sponge {
     private long fBlaMka(final long x, final long y) {
@@ -456,4 +454,4 @@ public class SpongeBlamka extends Sponge {
 \normalsize
 \caption{BlaMka as instance of the \texttt{Sponge} class, the same rotation trick in action on lines 16, 19 and 22. Line 27 performs the complete set of rotations (no optimization).}
 \label{fig:sponge-blamka}
-\end{figure}
+\end{code}
