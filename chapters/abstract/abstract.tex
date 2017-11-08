@@ -4,9 +4,9 @@
 \begin{otherlanguage}{english}
 \chapter*{Abstract}
 
-This work describes the process of porting a password hashing scheme called Lyra2 from C99 to Java 1.8. A native Java implementation should ease integration with other Java projects and simplify its usage on other platforms, such as Android phones.
+This work describes the process of porting a \gls{phs} called Lyra2 from C99 to Java 1.8. A native Java implementation should ease integration with other Java projects and simplify its usage on other platforms, such as Android phones.
 
-The question of secure password storage is what motivated the Password Hashing Competition which took place between 2013 and 2015. The competition resulted in the development of several memory-hard password hashing algorithms. These algorithms are designed to consume a significant amount of memory as well as processing time. Requiring more memory is the novel feature which should discourage highly parallelized password recovery attacks that use \gls{gpus} (or other hardware like \gls{fpgas} and \gls{asics}). The cornerstone assumption is that such hardware has a lot less memory per processing unit than the \gls{cpus} of desktop computers and mobile phones.
+The question of secure password storage is what motivated the Password Hashing Competition which took place between 2013 and 2015. The competition resulted in the development of several memory-hard password hashing algorithms. These algorithms are designed to consume a significant amount of memory as well as processing time. Requiring more memory is the novel feature which should discourage highly parallelized password recovery attacks that use \glspl{gpu} (or other hardware like \glspl{fpga} and \glspl{asic}). The cornerstone assumption is that such hardware has a lot less memory per processing unit than the \glspl{cpu} of desktop computers and mobile phones.
 
 Lyra2 is one of the finalists of the Password Hashing Competition. It was originally implemented in C and this work describes its porting to Java. An implementation in a different language should provide an adoption boost and simplify the algorithm's integration into other projects.
 
