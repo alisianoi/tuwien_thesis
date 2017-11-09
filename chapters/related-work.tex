@@ -9,7 +9,7 @@ This chapter is divided into three parts: Section \ref{sec:secure-authentication
 This section presents a brief overview of different methods for secure authentication as well as a short summary of some types of attacks. The presented taxonomy was in part borrowed from Raza et al. \cite{raza:2012:password-attacks-survey} and then expanded and filled with details from other sources.
 
 \subsection{Authentication Approaches}
-\label{subsec:authentication-approaches}
+\label{sec:authentication-approaches}
 
 Several authentication approaches have emerged over the years. Some of them are really widespread and quite old.  At the same time others are rather novel and aim to overcome known issues. Below is a list of common authentication schemes.
 
@@ -33,9 +33,9 @@ An immediate challenge is that in this scenario authentication becomes \emph{pro
 Aloul, Zahidi and El-Hajj \cite{aloul:2009:two-factor-auth}.
 
 \subsection{Conventional Password Strength}
-\label{subsec:password-strength}
+\label{sec:password-strength}
 
-Conventional passwords are the most widespread means of user authentication, despite their many flaws and a number of alternative authentication approaches outlined in \ref{subsec:authentication-approaches}. Therefore, being able to distinguish strong and weak passwords is an important requirement. Several methods to do so are presented below.
+Conventional passwords are the most widespread means of user authentication, despite their many flaws and a number of alternative authentication approaches outlined in Section \ref{sec:authentication-approaches}. Therefore, being able to distinguish strong and weak passwords is an important requirement. Several methods to do so are presented below.
 
 \emph{Information Entropy} is the usual way to assess password strength. It is a base-two logarithm of the number of guesses which are required to recover a password with complete certainty. Information entropy is measured in bits. For example, if the password is completely random and has \(x\) bits of information entropy, then an attacker must compute \(2^x\) password candidates to be guaranteed a successful recovery.
 
@@ -57,9 +57,9 @@ The last bonus is not assigned to passwords of length 20 and above because it is
 \emph{Guess Number Calculation} is a different approach to estimating password strength suggested by Kelley et al. \cite{kelley2012guess}. The idea behind this method is to first choose a particular algorithm for password cracking which is known to work well. The number of password candidates which this algorithm needs to try before recovering the target password becomes the indicator of this password's strength. Such an approach was shown to perform reasonably well but it also comes with its own challenges, as pointed out by Weir et al. \cite{weir2010testing} or Zhang, Monrose and Reiter \cite{zhang2010security}. First of all, the choice of the algorithm is arbitrary. Secondly, many state of the art password cracking algorithms require a training set to fine tune their parameters. Changing the training set essentially produces a different configuration of the algorithm. This in turn leads to a recalculation of guess numbers. So, this approach in general is mainly empirical and often volatile.
 
 \subsection{Authentication Attacks}
-\label{subsec:authentication-attacks}
+\label{sec:authentication-attacks}
 
-Having described authentication approaches in section \ref{subsec:authentication-approaches} and password strength in section \ref{subsec:password-strength}, it is only fair to consider the common types of authentication attacks next. This section will provide an overview of the most well-known techniques.
+Having described authentication approaches in Section \ref{sec:authentication-approaches} and password strength in Section \ref{sec:password-strength}, it is only fair to consider the common types of authentication attacks next. This section will provide an overview of the most well-known techniques.
 
 \emph{Brute Force} is the most common and least sophisticated type of a password attack. The attacker begins by choosing a specific password domain and then launches the trial and error guessing process. For example, one could try all passwords that are up to 8 characters in length and consist of lowercase latin letters. This domain contains \(217180147158\) unique passwords. Assuming that the attacker can try \(1000\) passwords per second, it will take them \(\approx 6.8\) years to complete the search. This might sound like a lot of time but the \(1000\) passwords per second is a conservative speed estimate. Depending on the available hardware, the hash algorithm and other factors, this speed could be a \emph{a lot} higher. Table \ref{table:hashcat-speed} shows some real world speeds for a few password hashing algorithms as measured by running a common hash computation tool on ordinary consumer hardware available to the author of this paper.
 
@@ -92,7 +92,7 @@ Having described authentication approaches in section \ref{subsec:authentication
 Having described methods of secure authentication in Section \ref{sec:secure-authentication}, we shall discuss the two approaches to establishing a secure communication channel over an insecure connection next.
 
 \subsection{Secure Sockets Layer and Transport Layer Security}
-\label{subsec:ssl-tls}
+\label{sec:ssl-tls}
 
 Secure Sockets Layer (SSL), as standardized by Freier, Karlton and Kocher \cite{rfc6101}, and Transport Layer Security (TLS), as formalized by Dierks and Rescorla \cite{rfc5246}, is a pair of protocols widely used to ensure secure communication. TLS first appeared in 1999 and is the successor to SSL. The TLS protocol guarantees that the connection between communicating parties is \emph{secure} (i.e. a passive eavesdropper will not obtain information) and \emph{reliable} (i.e. an active attempt to tamper with the connection will be detected). The authentication of communicating parties can occur with the help of \emph{public key cryptography}. With a bit of additional configuration \emph{forward secrecy} can be achieved as well, as shown by Adrian et al. \cite{Adrian:2015:IFS:2810103.2813707}. Forward secrecy means that if at some later point the service is compromised and its private keys are leaked, the contents of the past communication sessions will not be affected.
 
@@ -115,10 +115,10 @@ During the handshake different algorithms can be negotiated: \gls{rsa}, Diffie-H
     \item Libraries that implement the protocol have had major security issues. One of the most well-known examples is \emph{Heartbleed}, as described by Durumeric et al. \cite{durumeric2014matter}. It was a major vulnerability that existed between 2012 and 2014 in a widely used OpenSSL library. The bug allowed anyone access to arbitrary data as a result of a buffer overflow.
   \end{itemize}
 
-The list of incidents and issues is by no means complete. It is enough to illustrate a point though. However, since SSL/TLS is such a ubiquitous protocol, a few design and usage problems are expected to surface. The \emph{lack of trust} in CAs remains a cornerstone issue which lead to the development of a number of alternative secure communication methods that do not rely on the current PKI. One such family of methods is described in subsection \ref{subsec:pake} next.
+The list of incidents and issues is by no means complete. It is enough to illustrate a point though. However, since SSL/TLS is such a ubiquitous protocol, a few design and usage problems are expected to surface. The \emph{lack of trust} in CAs remains a cornerstone issue which lead to the development of a number of alternative secure communication methods that do not rely on the current PKI. One such family of methods is described in Section \ref{sec:pake} next.
 
 \subsection{Password Authenticated Key Exchange}
-\label{subsec:pake}
+\label{sec:pake}
 
 \emph{Password Authenticated Key Exchange (PAKE)} is a family of methods that establish secure communications over an insecure channel without the need for a PKI. Insight into a select couple of protocols is provided below. In each case the described protocols provide the following guarantees:
 
@@ -227,10 +227,10 @@ One possible approach to ensure that the two programs work the same way is to ut
 
 Instead, the \texttt{lyra2-java} project relies on a more practical verification approach, namely unit testing. Of course, unit testing is not a strict and formal compatibility and correctness guarantee. Nonetheless it has been shown useful for building confidence in the written code by Williams and Kudrjavets \cite{williams:2010:unit-tests-rock}. Unit testing comes with its own classical questions: which tools and frameworks to use, as discussed by Daka and Fraser \cite{daka:2014:unit-testing-tools}, and how to know that enough effort has been spent on writing tests, as demonstrated by Elberzhager et al. \cite{elberzhager:2012:reducing-effort}
 
-The upcoming section \ref{subsec:unit-testing-fundamentals} deals with the terms, definitions and best practices. Chapter \ref{sec:unit-testing-framework-choice} is devoted to the choice of particular unit testing tools for lyra2-java and the Python build harness.
+The upcoming Section \ref{sec:unit-testing-fundamentals} deals with the terms, definitions and best practices. Chapter \ref{sec:unit-testing-framework-choice} is devoted to the choice of particular unit testing tools for lyra2-java and the Python build harness.
 
 \subsection{Unit Testing Fundamentals}
-\label{subsec:unit-testing-fundamentals}
+\label{sec:unit-testing-fundamentals}
 
 \emph{Unit testing} is the process of verifying that the program produces expected results when given specific inputs, consult e.g. Cheon and Leavens \cite{cheon2002simple}. \emph{Unit under test} is a common term that refers to the specific part of the code that is being tested by a specific \emph{test case}. Unit testing is often powered by a \emph{unit testing framework} which is a set of tools dedicated to simplify both writing and running unit tests. \emph{Test Driven Development} is a software development practice which expects a piece of functionality to be produced together with the accompanying tests, as described e.g. by Astels in \cite{Astels:2003:TDD:864016}.
 

@@ -1,7 +1,7 @@
 \chapter{Unit Testing Framework Choice}
 \label{sec:unit-testing-framework-choice}
 
-Having previously described the basic practices and definitions of unit testing in Section \ref{subsec:unit-testing-fundamentals}, we shall turn to the choice of particular unit testing frameworks next. Section \ref{sec:unit-boost-google} discusses how two similar projects, the \texttt{lyra2-c} project and Argon2, address testing. Section \ref{sec:unit-junit-testng} and Section \ref{sec:unit-pytest} motivate the choice of tools and techniques for the \texttt{lyra2-java} project and the Python build harness.
+Having previously described the basic practices and definitions of unit testing in Section \ref{sec:unit-testing-fundamentals}, we shall turn to the choice of particular unit testing frameworks next. Section \ref{sec:unit-boost-google} discusses how two similar projects, the \texttt{lyra2-c} project and Argon2, address testing. Section \ref{sec:unit-junit-testng} and Section \ref{sec:unit-pytest} motivate the choice of tools and techniques for the \texttt{lyra2-java} project and the Python build harness.
 
 Although the \texttt{lyra2-c} project has automated tests, it does not use a dedicated unit testing framework \cite{github:2017:lyra}. This is a justifiable choice which has its advantages. In particular, it allows to keep the complexity of the project lower and not rely on external libraries. The build process is somewhat simplified as well.
 
@@ -32,7 +32,7 @@ Boost itself is a large collection of different libraries for C++. It was origin
 
 The Boost.Test is a unit testing framework which is part of Boost. It is licensed under the Boost Software License which is a free software license, approved by the Open Source Initiative and compatible with the \gls{gpl}. The library documentation can be found online \cite{boost:2017:test-docs}.
 
-The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in section \ref{subsec:unit-testing-fundamentals}. Boost.Test provides the common features of a unit testing library. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \texttt{\#include<...>} and a call to the \texttt{BOOST\_AUTO\_TEST\_CASE} macro, as shown in \autoref{fig:boost-auto-test-case}.
+The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in Section \ref{sec:unit-testing-fundamentals}. Boost.Test provides the common features of a unit testing library. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \texttt{\#include<...>} and a call to the \texttt{BOOST\_AUTO\_TEST\_CASE} macro, as shown in \autoref{fig:boost-auto-test-case}.
 
 \begin{listing}
 \centering
