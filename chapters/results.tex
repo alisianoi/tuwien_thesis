@@ -107,7 +107,7 @@ The single-threaded configuration of the reference C implementation was compared
 
 \subsection{Project Structure}
 
-The comparison project \cite{github:2017:lyra2-compare} is a combination of two Jupyter Notebooks \cite{jupyter:2017:jupyter} and an SQlite database. The two created notebooks follow the producer-consumer strategy. The \mintinline{shell}{src/compare.ipynb} is the producer notebook which is responsible for compiling both C and Java implementations as well as dispatching computation tasks. The results are then collected into the \mintinline{shell}{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \mintinline{shell}{src/plot.ipynb} notebook which reads the data from the SQLite database and plots the figures shown below.
+The comparison project \cite{github:2017:lyra2-compare} is a combination of two Jupyter Notebooks \cite{jupyter:2017:jupyter} and an SQlite database. The two created notebooks follow the producer-consumer strategy. The \texttt{src/compare.ipynb} is the producer notebook which is responsible for compiling both C and Java implementations as well as dispatching computation tasks. The results are then collected into the \texttt{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \texttt{src/plot.ipynb} notebook which reads the data from the SQLite database and plots the figures shown below.
 
 Lyra2 provides two main adjustable parameters: time and memory cost. Changing both of the parameters at the same time cannot be easily shown on a single graph which is why the comparison contains three main parts. Section \ref{sec:fixed-time-cost} and Section \ref{sec:fixed-memory-cost} show how several Lyra2 configurations behave when time cost and memory cost is fixed, respectively. Section \ref{sec:no-fixed-costs} shows a grid of values for both time and memory costs. In all the sections, the two projects are compared using four configurations:
 
@@ -245,27 +245,27 @@ As a result, a simple Android application was developed and is available on GitH
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-main-clean}
-  \caption{Main Screen: Blake2b sponge, default.}
+  \caption{Main Screen With the Blake2b Sponge}
   \label{fig:lyra2-mobile-main-blake2b}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-result-clean}
-  \caption{Resulting Hash: Blake2b sponge, default.}
+  \caption{Resulting Hash With the Blake2b Sponge}
   \label{fig:lyra2-mobile-result-blake2b}
 \end{subfigure}
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-main-blamka-clean}
-  \caption{Main Screen: BlaMka sponge.}
+  \caption{Main Screen With the BlaMka Sponge}
   \label{fig:lyra2-mobile-main-blamka}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-result-blamka-clean}
-  \caption{Resulting Hash: BlaMka sponge.}
+  \caption{Resulting Hash With the BlaMka Sponge}
   \label{fig:lyra2-mobile-result-blamka}
 \end{subfigure}
-\caption{Android Application Running Lyra2: parameter values on the left, resulting hash in hexadecimal on the right.}
+\caption{Android Application Running Lyra2}
 \label{fig:lyra2-mobile-demo}
 \end{figure}
