@@ -35,11 +35,11 @@ Aloul, Zahidi and El-Hajj \cite{aloul:2009:two-factor-auth}.
 \subsection{Conventional Password Strength}
 \label{sec:password-strength}
 
-Conventional passwords are the most widespread means of user authentication, despite their many flaws and a number of alternative authentication approaches outlined in Section \ref{sec:authentication-approaches}. Therefore, being able to distinguish strong and weak passwords is an important requirement. Several methods to do so are presented below.
+Previous Section \ref{sec:authentication-approaches} describes several approaches to user authentication. It mentions that conventional passwords are the most widespread means of user authentication \cite{bonneau:2015:passwords-and-evolution-of-auth}. That section also shows that conventional passwords have their set of problems \cite{yan:2004:password, braz:2006:security, jobusch:1989:survey-of-password-mechanisms-1, jobusch:1989:survey-of-password-mechanisms-2}. Therefore, being able to distinguish between strong and weak passwords is important. Several methods to do so are presented below.
 
-\emph{Information Entropy} is the usual way to assess password strength. It is a base-two logarithm of the number of guesses which are required to recover a password with complete certainty. Information entropy is measured in bits. For example, if the password is completely random and has \(x\) bits of information entropy, then an attacker must compute \(2^x\) password candidates to be guaranteed a successful recovery.
+\emph{Information Entropy} is the usual way to assess password strength, consult e.g. Bonneau \cite{bonneau:2012:the-science-of-guessing}. It is a base-two logarithm of the number of guesses which are required to recover a password with complete certainty. Information entropy is measured in bits. For example, if the password is completely random and has \(x\) bits of information entropy, then an attacker must compute \(2^x\) password candidates to be guaranteed a successful recovery.
 
-Human generated passwords, however, are notorious for not being truly random. Which is why computing information entropy often produces overly optimistic results.
+Human generated passwords, however, are notorious for not being truly random. Which is why computing information entropy often produces inaccurate results \cite{bonneau:2012:the-science-of-guessing}.
 
 \emph{NIST Special Publication 800-63-2} by Burr et al. \cite{burr2013electronic} tried to address this problem and suggested a refined way of computing information entropy for passwords:
 
