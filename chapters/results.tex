@@ -13,7 +13,7 @@ The primary goal of this work was to port Lyra2 to Java so that it would produce
 \subsection{Configuration Choice}
 By design Lyra2 has a large number of configurable parameters. This section will provide the reasoning behind the choice of particular values. The short summary can be found in \autoref{table:configuration-summary}.
 
-There are three sponges that could be tested: Blake2b, BlaMka and half-round BlaMka. Only the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values made it into the shortlist. The columns of the memory matrix can be any positive number. The \path{Lyra2/src/runBenchCPU.sh} benchmarking script as well as other sources suggest that the values of 256 and 512 should be chosen.
+There are three sponges that could be tested: BLAKE2b, BlaMka and half-round BlaMka. Only the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values made it into the shortlist. The columns of the memory matrix can be any positive number. The \path{Lyra2/src/runBenchCPU.sh} benchmarking script as well as other sources suggest that the values of 256 and 512 should be chosen.
 
 Finally, time and memory costs are fixed at an arbitrary value of 100. The output length is chosen to be 10 so that the resulting hash value would fit easily on the page.
 
@@ -21,7 +21,7 @@ Finally, time and memory costs are fixed at an arbitrary value of 100. The outpu
     \begin{center}
         \begin{tabular}{l r}
             Parameter & Value \\ \hline
-            Sponge & Blake2b, BlaMka \\
+            Sponge & BLAKE2b, BlaMka \\
             Sponge blocks & 8, 12 \\
             Sponge rounds & 12 \\
             Columns in the memory matrix & 256, 512 \\
@@ -112,8 +112,8 @@ The comparison project \cite{github:2017:lyra2-compare} is a combination of two 
 Lyra2 provides two main adjustable parameters: time and memory cost. Changing both of the parameters at the same time cannot be easily shown on a single graph which is why the comparison contains three main parts. Section \ref{sec:fixed-time-cost} and Section \ref{sec:fixed-memory-cost} show how several Lyra2 configurations behave when time cost and memory cost is fixed, respectively. Section \ref{sec:no-fixed-costs} shows a grid of values for both time and memory costs. In all the sections, the two projects are compared using four configurations:
 
 \begin{itemize}
-    \item Blake2b sponge with 256 columns, figures \ref{figure:mcost_256}, \ref{figure:tcost_256} and \ref{figure:tcost_mcost_blake2b_256}
-    \item Blake2b sponge with 2048 columns, figures \ref{figure:mcost_2048}, \ref{figure:tcost_2048} and \ref{figure:tcost_mcost_blake2b_2048}
+    \item BLAKE2b sponge with 256 columns, figures \ref{figure:mcost_256}, \ref{figure:tcost_256} and \ref{figure:tcost_mcost_blake2b_256}
+    \item BLAKE2b sponge with 2048 columns, figures \ref{figure:mcost_2048}, \ref{figure:tcost_2048} and \ref{figure:tcost_mcost_blake2b_2048}
     \item BlaMka sponge with 256 columns, figures \ref{figure:mcost_256}, \ref{figure:tcost_256} and \ref{figure:tcost_mcost_blamka_256}
     \item BlaMka sponge with 2048 columns, figures \ref{figure:mcost_2048}, \ref{figure:tcost_2048} and \ref{figure:tcost_mcost_blamka_2048}
   \end{itemize}
@@ -130,14 +130,14 @@ There are two figures that show how running time and consumed memory depend on m
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/mcost_256}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 256 columns, fixed time cost of 10. Blake2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 256 columns, fixed time cost of 10. BLAKE2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:mcost_256}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/mcost_2048}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 2048 columns, fixed time cost of 10. Blake2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 2048 columns, fixed time cost of 10. BLAKE2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:mcost_2048}
 \end{figure}
 
@@ -149,33 +149,33 @@ There are two figures that show how running time and consumed memory depend on t
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_256}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 256 columns, fixed memory cost of 20. Blake2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 256 columns, fixed memory cost of 20. BLAKE2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:tcost_256}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_2048}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 2048 columns, fixed memory cost of 20. Blake2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 2048 columns, fixed memory cost of 20. BLAKE2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:tcost_2048}
 \end{figure}
 
 \subsection{Variable Time and Memory Costs}
 \label{sec:no-fixed-costs}
 
-There are four figures that show running time and memory consumption of Lyra2 when both time and memory costs change. Figures \ref{figure:tcost_mcost_blake2b_256} and \ref{figure:tcost_mcost_blake2b_2048} correspond to a 256- and 2048-column configurations of Lyra2 that both use the Blake2b sponge. Figures \ref{figure:tcost_mcost_blamka_256} and \ref{figure:tcost_mcost_blamka_2048} are the 256- and 2048-column configurations of Lyra2 with the BlaMka sponge. All of these four figures share the same properties. First of all, the reference implementation is faster and consumes less memory than its Java counterpart. Secondly, the running time as well as required space depend roughly linearly on the time and memory cost parameters. However, together they create a quadratic time growth during the \emph{Wandering phase}. This still allows for predictable and fine-tuned control of the time and memory resources required by the algorithm.
+There are four figures that show running time and memory consumption of Lyra2 when both time and memory costs change. Figures \ref{figure:tcost_mcost_blake2b_256} and \ref{figure:tcost_mcost_blake2b_2048} correspond to a 256- and 2048-column configurations of Lyra2 that both use the BLAKE2b sponge. Figures \ref{figure:tcost_mcost_blamka_256} and \ref{figure:tcost_mcost_blamka_2048} are the 256- and 2048-column configurations of Lyra2 with the BlaMka sponge. All of these four figures share the same properties. First of all, the reference implementation is faster and consumes less memory than its Java counterpart. Secondly, the running time as well as required space depend roughly linearly on the time and memory cost parameters. However, together they create a quadratic time growth during the \emph{Wandering phase}. This still allows for predictable and fine-tuned control of the time and memory resources required by the algorithm.
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blake2b_256}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: Blake2b sponge, 256 columns.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: BLAKE2b sponge, 256 columns.}
     \label{figure:tcost_mcost_blake2b_256}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blake2b_2048}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: Blake2b sponge, 2048 columns.}
+    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: BLAKE2b sponge, 2048 columns.}
     \label{figure:tcost_mcost_blake2b_2048}
 \end{figure}
 
@@ -236,7 +236,7 @@ ANDROID_EMULATOR_USE_SYSTEM_LIBS=1 ./studio.sh
 
 Once these preliminary steps are performed, the development of the application becomes straightforward. Android Studio is based on IntelliJ Studio and therefore picks up lyra2-java from the Maven Central repository in a matter of a couple clicks.
 
-As a result, a simple Android application was developed and is available on GitHub \cite{github:2017:lyra2-mobile}. It consists of a main screen and a results screen. The main screen allows the user to choose some particular configuration of Lyra2. By default, the Blake2b sponge with the time and memory cost of 100 will be used. The password and salt fields are set to the default values of "password" and "salt" respectively, the number of columns is 256 with each column being 12 blocks wide. The permutation inside the sponge makes a total 12 rounds of computations. All of the parameters above can be adjusted.
+As a result, a simple Android application was developed and is available on GitHub \cite{github:2017:lyra2-mobile}. It consists of a main screen and a results screen. The main screen allows the user to choose some particular configuration of Lyra2. By default, the BLAKE2b sponge with the time and memory cost of 100 will be used. The password and salt fields are set to the default values of "password" and "salt" respectively, the number of columns is 256 with each column being 12 blocks wide. The permutation inside the sponge makes a total 12 rounds of computations. All of the parameters above can be adjusted.
 
 \autoref{fig:lyra2-mobile-demo} summarizes the result. In particular, \autoref{fig:lyra2-mobile-main-blake2b} and \autoref{fig:lyra2-mobile-result-blake2b} show the main screen and the results screen when running Lyra2 in the mobile emulator with the default parameters. At the same time \autoref{fig:lyra2-mobile-main-blamka} and \autoref{fig:lyra2-mobile-result-blamka} show the settings and the result for the BlaMka sponge. In both cases the hash values match those from the manual testing Section \ref{sec:manual-testing}. In each case the computation lasted for approximately 60 seconds which is consistent with the desktop version times. However, it should once again be noted that the application was run in an emulator and not on an actual mobile device.
 
@@ -245,13 +245,13 @@ As a result, a simple Android application was developed and is available on GitH
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-main-clean}
-  \caption{Main Screen With the Blake2b Sponge}
+  \caption{Main Screen With the BLAKE2b Sponge}
   \label{fig:lyra2-mobile-main-blake2b}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figures/lyra2-mobile-result-clean}
-  \caption{Resulting Hash With the Blake2b Sponge}
+  \caption{Resulting Hash With the BLAKE2b Sponge}
   \label{fig:lyra2-mobile-result-blake2b}
 \end{subfigure}
 \begin{subfigure}{.5\textwidth}

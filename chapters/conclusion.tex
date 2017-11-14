@@ -5,7 +5,7 @@
 
 The reference \texttt{lyra2-c} implementation of Lyra2 was successfully ported from C99 to Java 1.8. The resulting \texttt{lyra2-java} implementation produces identical hash values. In order to achieve that, several compatibility issues had to be addressed. In particular, the mismatching endianness had to be constantly accounted for throughout all stages of the algorithm.
 
-The extra byte rotations introduced by that require additional processing time. They cannot be avoided by design but can sometimes be performed simultaneously during other operations. In particular, the Blake2b and BlaMka sponge classes were adjusted to use both left and right rotations. This allowed to cut three quarters of the extra operations. Other compatibility issues included the need for pointer arithmetic simulation as well as 64-bit unsigned division.
+The extra byte rotations introduced by that require additional processing time. They cannot be avoided by design but can sometimes be performed simultaneously during other operations. In particular, the BLAKE2b and BlaMka sponge classes were adjusted to use both left and right rotations. This allowed to cut three quarters of the extra operations. Other compatibility issues included the need for pointer arithmetic simulation as well as 64-bit unsigned division.
 
 The performance comparison of the two projects showed that the reference C implementation in general performs faster and requires less memory than its Java counterpart. This could be explained by the extra steps which the Java version has to take in order to produce compatible hash values. As well as that programming skill and language features could have played a part.
 
