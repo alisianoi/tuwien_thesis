@@ -32,7 +32,7 @@ Boost itself is a large collection of different libraries for C++. It was origin
 
 The Boost.Test is a unit testing framework which is part of Boost. It is licensed under the Boost Software License which is a free software license, approved by the Open Source Initiative and compatible with the \gls{gpl}. The library documentation can be found online \cite{boost:2017:test-docs}.
 
-The main features of the library are summarized in table \ref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in Section \ref{sec:unit-testing-fundamentals}. Boost.Test provides the common features of a unit testing library. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \texttt{\#include<...>} and a call to the \texttt{BOOST\_AUTO\_TEST\_CASE} macro, as shown in \autoref{fig:boost-auto-test-case}.
+The main features of the library are summarized in \autoref{table:framework-features-cpp}. When it comes to password hashing, support for test parametrization becomes important because of the common test scenario described in Section \ref{sec:software-compatibility}. Boost.Test provides the common features of a unit testing library. The tests can be completely decoupled from the implementation, subdivided  into test suits and automatically registered with the test runner. The registration can be accomplished with a single \texttt{\#include<...>} and a call to the \texttt{BOOST\_AUTO\_TEST\_CASE} macro, as shown in \autoref{fig:boost-auto-test-case}.
 
 \begin{listing}
 \centering
