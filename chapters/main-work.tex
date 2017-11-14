@@ -190,7 +190,7 @@ A similar cryptographic primitive is the \emph{duplex construction}. The main di
   \label{figure:duplex-construction}
 \end{figure}
 
-The next important component of Lyra2 design is the memory matrix. Its size is directly controlled by the memory cost parameter which corresponds to the number of rows of the matrix. An implementation detail are two other parameters: the number of columns and block length (switches \texttt{--columns} and \texttt{--blocks} in the lyra2-java project). Their product equals to the number of 64-bit words in a single row of the memory matrix. The reference C implementation sets both of these parameters at compile time while the Java implementation exposes them at runtime.
+The next important component of Lyra2 design is the memory matrix. Its size is directly controlled by the memory cost parameter which corresponds to the number of rows of the matrix. An implementation detail are two other parameters: the number of columns and block length (switches \texttt{-{}-columns} and \texttt{-{}-blocks} in the \texttt{lyra2-java} project). Their product equals to the number of 64-bit words in a single row of the memory matrix. The reference C implementation sets both of these parameters at compile time while the Java implementation exposes them at runtime.
 
 Conceptually, Lyra2 is an application of a duplex construction which continuously reads and writes blocks to and from the memory matrix. The algorithm is structured into four sequential phases: \emph{Bootstrapping}, \emph{Setup}, \emph{Wandering}, and \emph{Wrap-up}, see \autoref{fig:basic-structure-lyra2} for reference.
 
