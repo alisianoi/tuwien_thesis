@@ -136,7 +136,7 @@ Python is a popular high-level general purpose scripting language created by van
 
 The design of the unittest framework does not offer a dedicated mechanism to write parametrized tests. At the same time the Nose library implements parametrized testing by making use of Python generators (the \texttt{yield} keyword). They generate separate functions at running time which are then executed as standalone test cases \cite{nose:2017:parametrized-testing}. The py.test framework, on the other hand, does not use Python generators. Instead, it follows the xUnit architecture and uses the \texttt{@mark.parametrized} decorator \cite{pytest:2017:parametrized-testing}. A usage example can be found in \autoref{fig:pytest-parametrization}.
 
-Unfortunately, the Nose unit testing framework is currently in maintenance mode. This framework is no longer in active development and therefore is not recommended for new projects. This is why the Python build harness for the reference Lyra2 implementation uses the py.test framework.
+Unfortunately, the Nose unit testing framework is currently in maintenance mode. This framework is no longer in active development and therefore is not recommended for new projects. This is why the Python build harness for the \texttt{lyra2-c} project uses the py.test framework.
 
 \begin{listing}
 \begin{minted}[linenos]{python}
@@ -162,7 +162,7 @@ def test_sanity_0(path, pwd, salt, k, t, m):
 \label{fig:pytest-parametrization}
 \end{listing}
 
-\autoref{fig:pytest-parametrization} shows why parametrization testing is important when building different configurations of the reference Lyra2 implementation. Before running those configurations with a long list of parameters it is worth to make sure that the compiled executables actually work. However, writing a test for each individual possible configuration is not feasible. Instead, the first decorator \texttt{@pytest.mark.parametrize('path')} fetches all filenames that start with \texttt{lyra2-} (convention for Lyra2 executable names) from a specific directory. These names are later passed into a specific unit test by the \texttt{path} parameter.
+\autoref{fig:pytest-parametrization} shows why parametrized testing is important when building different configurations of the reference Lyra2 implementation. Before running those configurations with a long list of parameters it is worth to make sure that the compiled executable files actually work. However, writing a test for each individual possible configuration is not feasible. Instead, the first decorator \texttt{@pytest.mark.parametrize('path')} fetches all filenames that start with \texttt{lyra2-} (convention for Lyra2 executable names) from a specific directory. These names are later passed into a specific unit test by the \texttt{path} parameter.
 
 This parametrized testing approach allows to write the testing logic once and reuse it for any possible Lyra2 configuration produced by the \texttt{Makefile} of the reference project.
 
