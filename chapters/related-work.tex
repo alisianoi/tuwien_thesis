@@ -11,7 +11,7 @@ This section presents a brief overview of different methods for secure authentic
 \subsection{Authentication Approaches}
 \label{sec:authentication-approaches}
 
-Several authentication approaches have emerged over the years. Some of them are really widespread and quite old.  At the same time others are rather novel and aim to overcome known issues. Below is a list of common authentication schemes.
+Several authentication approaches have emerged over the years. Some of them are quite common and rather old while at the same time others are novel and aim to overcome known issues. Below is a summary of common authentication schemes.
 
 \emph{Conventional Passwords} are by far the most common method of user authentication \cite{bonneau:2015:passwords-and-evolution-of-auth}. The service challenges the user to produce a pair of a (public) username and a (private) password. If the provided pair is correct, the user is allowed to proceed, otherwise the request is rejected. Such an intuitive approach works reasonably well but there are a number of fundamental issues.
 
@@ -108,7 +108,7 @@ TLS is a complex algorithm which allows \emph{a lot} of flexibility when it come
     \item The client and the server generate a unique session key: if perfect forward secrecy is required, then a variation of a Diffie-Hellman key exchange takes place. Otherwise, the client generates a random number and encrypts it with the server's public key. Once passed to the server, it will be decrypted with the server's private key.
   \end{enumerate}
 
-During the handshake different algorithms can be negotiated: \gls{rsa}, Diffie-Hellman, ephemeral Diffie-Hellman, Elliptic Curve Diffie-Hellman, ephemeral Elliptic Curve Diffie-Hellman, and a few others. The digital certificate relies on the \emph{\gls{pki}} which consists of users as well as registration and certificate authorities (RAs and CAs respectively). PKI in general receives a lot of criticism:
+During the handshake different algorithms can be negotiated: \gls{rsa}, Diffie-Hellman, ephemeral Diffie-Hellman, Elliptic Curve Diffie-Hellman, ephemeral Elliptic Cur\-ve Diffie-Hellman, and a few others. The digital certificate relies on the \emph{\gls{pki}} which consists of users as well as registration and certificate authorities (RAs and CAs respectively). PKI in general receives a lot of criticism:
 
 \begin{itemize}
     \item Obtaining a digital certificate costs both time and money.
