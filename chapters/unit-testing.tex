@@ -127,12 +127,12 @@ public class Lyra2Test {
 
 The \texttt{setupClass} method is marked with the \texttt{@Parametrized.Parameters} annotation which makes this method the provider of data. The precomputed data comes from several \gls{yaml} data files whose names are stored in the \texttt{fnames} variable. More information about the \gls{yaml} format in general and the test data file structure in particular can be found in Section \ref{sec:configuration-and-test-file-format}. The \texttt{for} loop on line 12 sequentially opens the \gls{yaml} data files, loads their contents and collects them in the \texttt{entries} collection variable. Once the \texttt{setupClass} method returns that variable, it is used by JUnit to initialize several instances of the class, providing each constructor with one set of test data from the \texttt{entries} collection.
 
-This is the application of the parametrized tests approach which allows to run several hundreds of tests for different configurations and input values while writing the logic for the testing code only once.
+This is the application of the parametrized testing approach which allows to run several hundreds of tests for different configurations and input values while writing the logic for the testing code only once.
 
 \section{Unit Testing With py.test}
 \label{sec:unit-pytest}
 
-Python is a very popular high-level general purpose scripting language created by van Rossum. It has a built-in unit testing framework called unittest which comes together with the interpreter. It keeps a fairly compatible interface with the xUnit architecture described in Section \ref{sec:unit-junit-testng}. Other two notable unit testing frameworks in Python are Nose and py.test. They both support an xUnit compatible layer and come as an external dependency. The features offered by these two external frameworks are superior to those provided by the built-in unittest.
+Python is a popular high-level general purpose scripting language created by van Rossum \cite{python:2017:homepage}. It has a built-in unit testing framework called unittest \cite{python:2017:unittest-homepage} which comes together with the interpreter. It keeps a fairly compatible interface with the xUnit architecture described in Section \ref{sec:unit-junit-testng}. Other two notable unit testing frameworks in the Python ecosystem are Nose \cite{nose:2017:homepage} and py.test \cite{pytest:2017:homepage}. They both support an xUnit compatible layer and come as an external dependency.
 
 The design of the unittest framework does not offer a dedicated mechanism to write parametrized tests. At the same time the Nose library implements parametrized testing by making use of Python generators (the \texttt{yield} keyword). They return separate functions which then later run as standalone test cases. The py.test framework fits the xUnit architecture in this regard and uses the \texttt{@mark.parametrized} decorator, see \autoref{fig:pytest-parametrization}.
 
