@@ -107,7 +107,7 @@ The single-threaded configuration of the reference C implementation was compared
 
 \subsection{Project Structure}
 
-The comparison project \cite{github:2017:lyra2-compare} is a combination of two Jupyter Notebooks \cite{jupyter:2017:jupyter} and an SQlite database. The two created notebooks follow the producer-consumer strategy. The \texttt{src/compare.ipynb} is the producer notebook which is responsible for compiling both C and Java implementations as well as dispatching computation tasks. The results are then collected into the \texttt{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \texttt{src/plot.ipynb} notebook which reads the data from the SQLite database and plots the figures shown below.
+The comparison project \cite{github:2017:lyra2-compare} is a combination of two Jupyter Notebooks \cite{jupyter:2017:jupyter} and an SQlite database. The two created notebooks follow the producer-consumer strategy. The producer notebook is \texttt{src/compare.ipynb} and it is responsible for compiling both C and Java implementations. It is then used to asynchronously dispatch computation tasks. The results are collected into the \texttt{measurements.db} SQLite database (which also serves as a cache layer). The consumer is the \texttt{src/plot.ipynb} notebook which reads the data from the SQLite database and plots the figures shown below.
 
 Lyra2 provides two main adjustable parameters: time and memory cost. Changing both of the parameters at the same time cannot be easily shown on a single graph which is why the comparison contains three main parts. Section \ref{sec:fixed-time-cost} and Section \ref{sec:fixed-memory-cost} show how several Lyra2 configurations behave when time cost and memory cost is fixed, respectively. Section \ref{sec:no-fixed-costs} shows a grid of values for both time and memory costs. In all the sections, the two projects are compared using four configurations:
 
@@ -118,78 +118,76 @@ Lyra2 provides two main adjustable parameters: time and memory cost. Changing bo
     \item BlaMka sponge with 2048 columns, figures \ref{figure:mcost_2048}, \ref{figure:tcost_2048} and \ref{figure:tcost_mcost_blamka_2048}
   \end{itemize}
 
-Configurations were run in parallel, creating one process per configuration. Running time was measured as the time between process creation and its termination. Memory consumption was recorded from the parent process and its peak value was stored. For more details, please consult the \texttt{src/compare.ipynb} and \texttt{src/plot.ipynb} notebooks from \cite{github:2017:lyra2-compare}.
-
-Finally, in Section \ref{sec:no-fixed-costs} the grid of time and memory cost parameters is \(200 \times 200\) with a step of \(10\), which results in a total of \(8 \times 21 \times 21 = 3528\) measurements used to build all the graphics.
+Configurations were run in parallel, creating one process per configuration. Running time was measured as the time between process creation and its termination. Memory consumption was recorded from the parent process and its peak value was stored. For more details, please consult the \texttt{src/compare.ipynb} and \texttt{src/plot.ipynb} notebooks \cite{github:2017:lyra2-compare}.
 
 \subsection{Fixed Time Cost}
 \label{sec:fixed-time-cost}
 
-There are two figures that show how running time and consumed memory depend on memory cost when time cost is fixed. Figure \ref{figure:mcost_256} shows a 256-column and figure \ref{figure:mcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the reference implementation works faster and consumes less memory than its Java counterpart. A nice property is that both the running time and memory consumption are changing roughly linearly as the memory cost parameter is changed. This is consistent with the fact that the memory cost parameter corresponds to the number of rows of the in-memory matrix. There are some outliers with respect to both running time and memory consumption which can be attributed to different system loads.
+There are two figures that show how running time and consumed memory depend on memory cost when time cost is fixed. \autoref{figure:mcost_256} shows a 256-column and \autoref{figure:mcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the reference implementation works faster and consumes less memory than its Java counterpart. A nice property is that both the running time and memory consumption are changing roughly linearly as the memory cost parameter is changed. This is consistent with the fact that the memory cost parameter corresponds to the number of rows of the in-memory matrix. There are some outliers with respect to both running time and memory consumption which can be attributed to different system loads.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/mcost_256}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 256 columns, fixed time cost of 10. BLAKE2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison of \texttt{lyra2-c} and \texttt{lyra2-java}: 256 columns, fixed time cost of 10. BLAKE2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:mcost_256}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/mcost_2048}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 2048 columns, fixed time cost of 10. BLAKE2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison of \texttt{lyra2-c} and \texttt{lyra2-java}: 2048 columns, fixed time cost of 10. BLAKE2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:mcost_2048}
 \end{figure}
 
 \subsection{Fixed Memory Cost}
 \label{sec:fixed-memory-cost}
 
-There are two figures that show how running time and consumed memory depend on time cost when memory cost is fixed. Figure \ref{figure:tcost_256} shows a 256-column and figure \ref{figure:tcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the original C implementation works faster and consumes less memory than its Java counterpart. The running time changes roughly linearly as the time cost parameter is changed which is consistent with the fact that time cost corresponds to the number of iterations done by Lyra2. Memory consumption stays roughly the same which is also consistent with the fact that the largest memory consumer is the in-memory matrix. This matrix has the same size for all of the configurations. Admittedly, there are some deviations in memory consumption of the Java implementation. The second set of figures \ref{figure:tcost_2048} even has a slight downward trend. The possible reasons for that include: the built-in garbage collector and the fact that the measurements run for several days, resulting in potentially different system loads.
+There are two figures that show how running time and consumed memory depend on time cost when memory cost is fixed. \autoref{figure:tcost_256} shows a 256-column and \autoref{figure:tcost_2048} shows a 2048-column configuration of Lyra2. Both these figures show that the original C implementation works faster and consumes less memory than its Java counterpart. The running time changes roughly linearly as the time cost parameter is changed which is consistent with the fact that time cost corresponds to the number of iterations done by Lyra2. Memory consumption stays roughly the same which is also consistent with the fact that the largest memory consumer is the in-memory matrix. This matrix has the same size for all of the configurations. Admittedly, there are some deviations in memory consumption of the Java implementation. \autoref{figure:tcost_2048} even has a slight downward trend. The possible reasons for that include: the built-in garbage collector and the fact that the measurements run for several days, resulting in potentially different system loads.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_256}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 256 columns, fixed memory cost of 20. BLAKE2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison of \texttt{lyra2-c} and \texttt{lyra2-java}: 256 columns, fixed memory cost of 20. BLAKE2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:tcost_256}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_2048}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: 2048 columns, fixed memory cost of 20. BLAKE2b sponge on the left, BlaMka sponge on the right.}
+    \caption{Comparison of \texttt{lyra2-c} and \texttt{lyra2-java}: 2048 columns, fixed memory cost of 20. BLAKE2b sponge on the left, BlaMka sponge on the right.}
     \label{figure:tcost_2048}
 \end{figure}
 
 \subsection{Variable Time and Memory Costs}
 \label{sec:no-fixed-costs}
 
-There are four figures that show running time and memory consumption of Lyra2 when both time and memory costs change. Figures \ref{figure:tcost_mcost_blake2b_256} and \ref{figure:tcost_mcost_blake2b_2048} correspond to a 256- and 2048-column configurations of Lyra2 that both use the BLAKE2b sponge. Figures \ref{figure:tcost_mcost_blamka_256} and \ref{figure:tcost_mcost_blamka_2048} are the 256- and 2048-column configurations of Lyra2 with the BlaMka sponge. All of these four figures share the same properties. First of all, the reference implementation is faster and consumes less memory than its Java counterpart. Secondly, the running time as well as required space depend roughly linearly on the time and memory cost parameters. However, together they create a quadratic time growth during the \emph{Wandering phase}. This still allows for predictable and fine-tuned control of the time and memory resources required by the algorithm.
+There are four figures that show running time and memory consumption of Lyra2 when both time and memory costs change. \autoref{figure:tcost_mcost_blake2b_256} and \autoref{figure:tcost_mcost_blake2b_2048} correspond to a 256- and 2048-column configurations of Lyra2 that both use the BLAKE2b sponge. \autoref{figure:tcost_mcost_blamka_256} and \autoref{figure:tcost_mcost_blamka_2048} are the 256- and 2048-column configurations of Lyra2 with the BlaMka sponge. All of these four figures share the same properties. First of all, the reference implementation is faster and consumes less memory than its Java counterpart. Secondly, the running time as well as required space depend roughly linearly on the time and memory cost parameters. However, together they create a quadratic time growth during the \emph{Wandering phase}. Arguably, this still allows for predictable and fine-tuned control of the time and memory resources required by the algorithm.
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blake2b_256}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: BLAKE2b sponge, 256 columns.}
+    \caption{Comparison of \texttt{lyra2-c} and \texttt{lyra2-java}: BLAKE2b sponge, 256 columns.}
     \label{figure:tcost_mcost_blake2b_256}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blake2b_2048}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: BLAKE2b sponge, 2048 columns.}
+    \caption{Comparison of \texttt{lyra2-c} and \texttt{lyra2-java}: BLAKE2b sponge, 2048 columns.}
     \label{figure:tcost_mcost_blake2b_2048}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blamka_256}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: BlaMka sponge, 256 columns. }
+    \caption{Comparison of \texttt{lyra2-c} and \texttt{lyra2-java}: BlaMka sponge, 256 columns. }
     \label{figure:tcost_mcost_blamka_256}
 \end{figure}
 
 \begin{figure}[p]
     \centering
     \includegraphics[width=\linewidth,keepaspectratio]{figures/tcost_mcost_blamka_2048}
-    \caption{Comparison Between \texttt{lyra2-c} and \texttt{lyra2-java}: BlaMka sponge, 2048 columns.}
+    \caption{Comparison of \texttt{lyra2-c} and \texttt{lyra2-java}: BlaMka sponge, 2048 columns.}
     \label{figure:tcost_mcost_blamka_2048}
 \end{figure}
 
@@ -197,7 +195,7 @@ There are four figures that show running time and memory consumption of Lyra2 wh
 \subsection{Comparison Conclusion}
 \label{sec:comparison-conclusion}
 
-The Java implementation was outperformed by the reference C implementation. This could in part be attributed to language ecosystems or programming skills but it also cannot be denied that the ported version takes a lot of extra steps in order to ensure algorithm-level compatibility. These include the extra rotations required to simulate little-endian behavior, as well as simulating pointer arithmetic and unsigned arithmetic for large 64-bit integers.
+The Java implementation was outperformed by the reference C implementation. This could in part be attributed to language ecosystems or programming skills. It also cannot be denied that the \texttt{lyra2-java} project performs extra computations in order to ensure algorithm-level compatibility. These include the extra rotations required to simulate little-endian behavior, as well as simulating pointer arithmetic and unsigned arithmetic for large 64-bit integers.
 
 \section{Android Application}
 \label{sec:mobile-application}
