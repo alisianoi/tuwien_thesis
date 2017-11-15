@@ -1,11 +1,11 @@
 \chapter{Unit Testing Framework Choice}
 \label{sec:unit-testing-framework-choice}
 
-Having previously described the basic practices and definitions of unit testing in Section \ref{sec:unit-testing-fundamentals}, we shall turn to the choice of particular unit testing frameworks next. Section \ref{sec:unit-boost-google} discusses how two similar projects, the \texttt{lyra2-c} project and Argon2, address testing. Section \ref{sec:unit-junit-testng} and Section \ref{sec:unit-pytest} motivate the choice of tools and techniques for the \texttt{lyra2-java} project and the Python build harness.
+Section \ref{sec:unit-testing-fundamentals} introduces the basic terms, definitions and practices of unit testing. Current Chapter \ref{sec:unit-testing-framework-choice} discusses the choice of particular unit testing frameworks. In particular, Section \ref{sec:unit-boost-google} discusses how two similar projects, the \texttt{lyra2-c} project and Argon2, address testing. Section \ref{sec:unit-junit-testng} and Section \ref{sec:unit-pytest} motivate the choice of tools and techniques for the \texttt{lyra2-java} project and the Python build harness.
 
 Although the \texttt{lyra2-c} project has automated tests, it does not use a dedicated unit testing framework \cite{github:2017:lyra}. This is a justifiable choice which has its advantages. In particular, it allows to keep the complexity of the project lower and not rely on external libraries. The build process is somewhat simplified as well.
 
-Furthermore, when it comes to the C/C++ ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness in \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will provide a plausible explanation. Section \ref{sec:unit-junit-testng} will provide motivation for the choice of the unit testing framework for the \texttt{lyra2-java} project and Section \ref{sec:unit-pytest} will describe the test suite for the Python build harness.
+Furthermore, when it comes to the C/C++ ecosystem, the choice of the framework is not trivial. The authors of Argon2 have also faced this choice and opted out to write their own test harness \cite{github:2017:argon2-test.c}. Section \ref{sec:unit-boost-google} will provide a plausible explanation. Section \ref{sec:unit-junit-testng} will provide motivation for the choice of the unit testing framework for the \texttt{lyra2-java} project and Section \ref{sec:unit-pytest} will describe the test suite for the Python build harness.
 
 \begin{table}
 \begin{tabular}{llll}
@@ -22,7 +22,7 @@ py.test & MIT & yes & needs 3\textsuperscript{rd} party plugin (\texttt{xdist})
 \section{Boost.Test}
 \label{sec:unit-boost-google}
 
-There is a large choice of unit testing frameworks for the C/C++ ecosystem. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, it is often more practical to write a separate test file that would run a few sanity checks.
+There is a large choice of unit testing frameworks for the C/C++ ecosystem. Given the number of available solutions, their comparison and an educated choice would be a large and daunting task for any developer. This could be one of the reasons why project authors sometimes tend to avoid actually using a unit testing framework. Instead, they often write a separate test file that runs a few sanity checks.
 
 For example, Argon2 uses its own \texttt{src/test.c} test program which was introduced on 25\textsuperscript{th} of January 2016 \cite{github:2017:argon2}. The commit hash starts with \texttt{7450df88} and it is number 317 out of (current) almost 600 in the version control history. This shows that this testing was introduced at the later stages of the project when the need for it was apparent \cite{github:2017:argon2-issue-85}.
 
