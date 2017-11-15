@@ -3,17 +3,17 @@
 \label{sec:results}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-This chapter presents the main results of the porting effort. In particular, Section \ref{sec:it-works} covers algorithm-level compatibility. Section \ref{sec:performance-comparison} compares performance of the reference and the ported implementations on a number of different configurations of the Lyra2 algorithm. Finally, Section \ref{sec:mobile-application} demonstrates the ease of integration of the ported project into an Android mobile application.
+This chapter presents the main results of the porting effort. In particular, Section \ref{sec:it-works} covers algorithm-level compatibility and explains the choice of compared configurations. Section \ref{sec:performance-comparison} compares performance of the \texttt{lyra2-c} and \texttt{lyra2-java} single-threaded implementations on a number of different configurations of the Lyra2 password hashing scheme. Finally, Section \ref{sec:mobile-application} demonstrates the ease of integration of the ported project into an Android mobile application.
 
 \section{Algorithm-level Compatibility}
 \label{sec:it-works}
 
-The primary goal of this work was to port Lyra2 to Java so that it would produce the same hash values as the reference implementation when given the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in Section \ref{sec:manual-testing} and Section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit-testing framework which uses them to verify hash results.
+The primary goal of this work was to port Lyra2 to Java in such a way that the \texttt{lyra2-java} project would produce the same hash values as the reference \texttt{lyra2-c} project when provided the same inputs. Such algorithm-level compatibility was achieved and will be demonstrated in Section \ref{sec:manual-testing} and Section \ref{sec:automated-testing}. The former deals with hand-picked test vectors while the latter demonstrates a reasonably large collection of randomly picked test vectors and a unit testing framework which uses them to verify hash results.
 
 \subsection{Configuration Choice}
 By design Lyra2 has a large number of configurable parameters. This section will provide the reasoning behind the choice of particular values. The short summary can be found in \autoref{table:configuration-summary}.
 
-There are three sponges that could be tested: BLAKE2b, BlaMka and half-round BlaMka. Only the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values made it into the shortlist. The columns of the memory matrix can be any positive number. The \path{Lyra2/src/runBenchCPU.sh} benchmarking script as well as other sources suggest that the values of 256 and 512 should be chosen.
+There are three sponges that could be tested: BLAKE2b, BlaMka and half-round BlaMka. Only the first two are in the manual testing shortlist because half-round BlaMka is similar to BlaMka. The sponge block size can be either 8, 10 or 12, so the extreme values made it into the shortlist. The columns of the memory matrix can be any positive number. The \texttt{lyra2-c} project contains a \path{Lyra2/src/runBenchCPU.sh} benchmarking script which suggests that the values of 256 and 512 should be chosen.
 
 Finally, time and memory costs are fixed at an arbitrary value of 100. The output length is chosen to be 10 so that the resulting hash value would fit easily on the page.
 
@@ -98,12 +98,12 @@ $ lyra2 --sponge blamka --blocks 12 --columns 512 --outlen 10 --tcost 100 --mcos
 
 The automated testing is possible because of the additional code that was added to the reference implementation. As mentioned in Section \ref{sec:reference-implementation}, there is a \verb|harness| branch which could be found in the forked GitHub project \cite{github:2017:lyra-copy} and the corresponding pull request \cite{github:2017:lyra-pr}. This branch introduces the \verb|Lyra2/tests/harness.py| script written in Python 3 which allows to compile several configurations of Lyra2 and then use those to compute and store hash values.
 
-Additionally, the \verb|Lyra2/tests/take.py| Python 3 script was used to choose a number of random hash values from those previously precomputed. These were then used in the Java project to unit-test the implementation. Some of the hash values were also included into the continuous integration service and their status can be verified by visiting \cite{travis:2017:lyra}. However, continuous integration runs only a subset of the vectors that were run locally due to the limited amount of memory available on the remote machines. In conclusion, both manual and automated testing indicate that the ported implementation does not contain immediately visible problems.
+Additionally, the \verb|Lyra2/tests/take.py| Python 3 script was used to choose a number of random hash values from those previously precomputed. These were then used in the Java project to test the implementation. Some of the hash values were also included into the continuous integration service and their status can be verified by visiting TravisCI \cite{travis:2017:lyra}. However, continuous integration runs only a subset of the vectors that were run locally due to the limited amount of memory available on the remote machines. In conclusion, both manual and automated testing indicate that the ported implementation does not contain immediately visible problems.
 
 \section{Performance Comparison}
 \label{sec:performance-comparison}
 
-The single-threaded configuration of the reference C implementation was compared to its ported Java counterpart. For that, a separate GitHub repository was set up in \cite{github:2017:lyra2-compare}. This repository needs to control software written in both C and Java which is why an expressive, high-level scripting language was chosen to complete this task: Python 3.
+The single-threaded configuration of the reference C implementation was compared to its ported Java counterpart. For that, a separate GitHub repository was set up \cite{github:2017:lyra2-compare}. This repository needs to control software written in both C and Java which is why an expressive, high-level scripting language was chosen to complete this task: Python 3.
 
 \subsection{Project Structure}
 
