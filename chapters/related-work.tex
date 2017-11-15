@@ -200,7 +200,7 @@ The Makwa PHS \cite{pornin:2015:makwa} at its core relies on Blum integers. A Bl
 
 The core idea of Makwa is to square the (derivative hash of) the password (together with the salt and other parameters) many times modulo a Blum integer. This squaring is primarily computation intensive and does not require a significant amount of memory. The \(p\) and \(q\) integers should be kept secret, if they are known then the computation can be accelerated considerably.
 
-One of the distinguishing features of Makwa highlighted on its website is \emph{delegation} \cite{makwa:2017:homepage}. The author points out that the complexity of password hashing is essentially an arms race between defenders and attackers. Delegation allows to use untrusted systems to perform part of the computation of the hash value with the Makwa algorithm. The exact protocol can be found in Section 4 of the specification \cite{pornin:2015:makwa-spec}.
+One of the distinguishing features of Makwa highlighted on its website is \emph{delegation} \cite{makwa:2017:homepage}. The author points out that the complexity of password hashing is essentially an arms race between defenders and attackers. Delegation allows to use untrusted systems to perform part of the computation of the hash value with the Makwa algorithm. The exact protocol can be found in Section 4 of the specification \cite{pornin:2015:makwa}.
 
 \subsection{Main Features of yescrypt}
 \label{sec:yescrypt}
