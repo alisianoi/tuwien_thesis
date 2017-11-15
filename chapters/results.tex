@@ -112,10 +112,10 @@ The comparison project \cite{github:2017:lyra2-compare} is a combination of two 
 Lyra2 provides two main adjustable parameters: time and memory cost. Changing both of the parameters at the same time cannot be easily shown on a single graph which is why the comparison contains three main parts. Section \ref{sec:fixed-time-cost} and Section \ref{sec:fixed-memory-cost} show how several Lyra2 configurations behave when time cost and memory cost is fixed, respectively. Section \ref{sec:no-fixed-costs} shows a grid of values for both time and memory costs. In all the sections, the two projects are compared using four configurations:
 
 \begin{itemize}
-    \item BLAKE2b sponge with 256 columns, figures \ref{figure:mcost_256}, \ref{figure:tcost_256} and \ref{figure:tcost_mcost_blake2b_256}
-    \item BLAKE2b sponge with 2048 columns, figures \ref{figure:mcost_2048}, \ref{figure:tcost_2048} and \ref{figure:tcost_mcost_blake2b_2048}
-    \item BlaMka sponge with 256 columns, figures \ref{figure:mcost_256}, \ref{figure:tcost_256} and \ref{figure:tcost_mcost_blamka_256}
-    \item BlaMka sponge with 2048 columns, figures \ref{figure:mcost_2048}, \ref{figure:tcost_2048} and \ref{figure:tcost_mcost_blamka_2048}
+    \item BLAKE2b sponge with 256 columns, \autoref{figure:mcost_256}, \autoref{figure:tcost_256} and \autoref{figure:tcost_mcost_blake2b_256}
+    \item BLAKE2b sponge with 2048 columns, \autoref{figure:mcost_2048}, \autoref{figure:tcost_2048} and \autoref{figure:tcost_mcost_blake2b_2048}
+    \item BlaMka sponge with 256 columns, \autoref{figure:mcost_256}, \autoref{figure:tcost_256} and \autoref{figure:tcost_mcost_blamka_256}
+    \item BlaMka sponge with 2048 columns, \autoref{figure:mcost_2048}, \autoref{figure:tcost_2048} and \autoref{figure:tcost_mcost_blamka_2048}
   \end{itemize}
 
 Configurations were run in parallel, creating one process per configuration. Running time was measured as the time between process creation and its termination. Memory consumption was recorded from the parent process and its peak value was stored. For more details, please consult the \texttt{src/compare.ipynb} and \texttt{src/plot.ipynb} notebooks \cite{github:2017:lyra2-compare}.
