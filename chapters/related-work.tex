@@ -161,7 +161,7 @@ Choosing cryptographic primitives through an open competitive process is therefo
 \subsection{Password Hashing Fundamentals}
 \label{sec:fundamentals}
 
-\emph{Password hashing} is the process of transforming a password into a hash value. Given the resulting hash value, it should be computationally infeasible to restore the original password \cite{marcos:2015:lyra2}.
+\emph{Password hashing} is the process of transforming a password into a hash value. Given the resulting hash value, it should be computationally infeasible to restore the original password, consult e.g. Simpl{\'i}cio et al. \cite{marcos:2015:lyra2}.
 
 Password hashing is common practice when user authentication is required \cite{marcos:2015:lyra2}. The user provides a password which is then hashed using some password hashing algorithm. The resulting hash is then compared against a hash value which is stored in the database and is known to be correct. If both hashes match, the user is authenticated.
 
